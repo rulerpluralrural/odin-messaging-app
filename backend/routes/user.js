@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import userController from "../controllers/user_controllers";
+import userController from "../controllers/user";
 
 // GET Route for getting a single user
 router.get("/user", userController.user_get);
