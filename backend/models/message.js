@@ -14,16 +14,16 @@ const MessageSchema = new Schema(
 					ref: "User",
 					required: [true, "User is required"],
 				},
-				sender: {
-					type: mongoose.Schema.Types.ObjectId,
-					ref: "User",
-					required: [true, "Sender is required"],
-				},
-				read: {
-					type: Date,
-				},
 			},
 		],
+		sender: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User",
+			required: [true, "Sender is required"],
+		},
+		read: {
+			type: Date,
+		},
 	},
 	{ timestamps: true }
 );

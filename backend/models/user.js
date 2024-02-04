@@ -17,6 +17,14 @@ const UserSchema = new Schema(
 			type: String,
 			required: [true, "Email is required"],
 		},
+		address: {
+			type: String,
+			default: "",
+		},
+		about: {
+			type: String,
+			default: "",
+		},
 		profileImg: {
 			publicID: {
 				type: String,
