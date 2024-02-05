@@ -33,17 +33,17 @@ export default {
 
 	// Handle login on POST
 	login: asyncHandler(async (req, res) => {
-		const { username, password } = req.body;
+		const { email, password } = req.body;
 
-		if (!username || !password) {
+		if (!email || !password) {
 			return res
 				.status(StatusCodes.BAD_REQUEST)
-				.json({ msg: "Please provide a username and password" });
+				.json({ msg: "Please provide your email and password" });
 		}
 
-		const user = await User.findOne({ username });
+		const user = await User.findOne({ email });
 		if (!user) {
-			res.status(StatusCodes.BAD_REQUEST).json({ msg: "Invalid username" });
+			res.status(StatusCodes.BAD_REQUEST).json({ msg: "Invalid email" });
 		}
 
 		const isPasswordCorrect = await user.comparePassword(password);
@@ -62,19 +62,22 @@ export default {
 
 	// Handle sign-up on POST
 	register: [
-		check("username")
+		check("firstName")
 			.trim()
-			.isLength({ min: 1 })
-			.escape()
-			.withMessage("Username is required")
-			.custom(async (value) => {
-				const existingUsername = await User.findOne({ username: value });
-				if (existingUsername) {
-					throw new BadRequestError(
-						"Username already in use, Please choose a different one"
-					);
-				}
-			}),
+			.exists({ checkFalsy: true })
+			.withMessage("You must type a first name")
+			.isLength({ min: 3 })
+			.withMessage("The first name must be at least 5 chars long")
+			.isAlpha("en-US", { ignore: " " })
+			.withMessage("The first name must contain only letters"),
+		check("lastName")
+			.trim()
+			.exists({ checkFalsy: true })
+			.withMessage("You must type a last name")
+			.isLength({ min: 3 })
+			.withMessage("The last name must be at least 5 chars long")
+			.isAlpha("en-US", { ignore: " " })
+			.withMessage("The last name must contain only letters"),
 		check("email")
 			.trim()
 			.isLength({ min: 1 })
@@ -89,6 +92,10 @@ export default {
 			})
 			.isEmail()
 			.withMessage("Email is not valid"),
+		check("address")
+			.trim(0)
+			.isLength({ min: 1 })
+			.withMessage("Please provide your address"),
 		check("password")
 			.trim()
 			.isLength({ min: 6 })
