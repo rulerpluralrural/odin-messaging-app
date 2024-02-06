@@ -2,8 +2,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express, { urlencoded } from "express";
-import connectDB from "./database/db";
-import errorHandler from "./middlewares/error-handler";
+import connectDB from "./database/db.js";
+import errorHandler from "./middlewares/error-handler.js";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -11,7 +11,7 @@ import cors from "cors";
 const app = express();
 
 // Routers
-import indexRouter from "./routes/index";
+import indexRouter from "./routes/index.js";
 
 // MIDDLEWARES
 app.use(

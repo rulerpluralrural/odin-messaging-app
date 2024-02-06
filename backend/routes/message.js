@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import messageController from "../controllers/message"
+import messageController from "../controllers/message.js"
 
 router.get("/messages", messageController.messages_get);
 

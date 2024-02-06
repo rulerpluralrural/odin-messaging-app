@@ -1,7 +1,8 @@
 import asyncHandler from "express-async-handler";
 import { check, validationResult } from "express-validator";
 import { StatusCodes } from "http-status-codes";
-import User from "../models/user";
+import { NotFoundError, BadRequestError } from "../errors/index.js";
+import User from "../models/user.js";
 
 export default {
 	// GET a single user
@@ -13,9 +14,7 @@ export default {
 		});
 
 		if (!user) {
-			return res
-				.status(StatusCodes.NOT_FOUND)
-				.json({ msg: "User ID not found" });
+			throw new NotFoundError(`There is no user with this id: ${userID}`)
 		}
 
 		res.status(StatusCodes.OK).json({ user });
@@ -28,6 +27,10 @@ export default {
 			.select("-password")
 			.exec();
 
+		if (!users) {
+			throw NotFoundError("There are no users!")
+		}
+
 		res.status(StatusCodes.OK).json(users);
 	}),
 
@@ -36,19 +39,17 @@ export default {
 		const { email, password } = req.body;
 
 		if (!email || !password) {
-			return res
-				.status(StatusCodes.BAD_REQUEST)
-				.json({ msg: "Please provide your email and password" });
+			throw new BadRequestError("Please provide your email and password")
 		}
 
 		const user = await User.findOne({ email });
 		if (!user) {
-			res.status(StatusCodes.BAD_REQUEST).json({ msg: "Invalid email" });
+			throw new BadRequestError("Invalid email")
 		}
 
 		const isPasswordCorrect = await user.comparePassword(password);
 		if (!isPasswordCorrect) {
-			res.status(StatusCodes.BAD_REQUEST).json({ msg: "Invalid password" });
+			throw new BadRequestError("Invalid password")
 		}
 
 		const token = user.createJWT();
@@ -114,7 +115,7 @@ export default {
 			const errors = validationResult(req);
 
 			if (!errors.isEmpty()) {
-				return res.status(StatusCodes.BAD_REQUEST).json(errors.array());
+				throw new BadRequestError(errors.array())
 			}
 			const user = await User.create({ ...req.body });
 
@@ -127,9 +128,7 @@ export default {
 					token,
 				});
 			} else {
-				return res
-					.status(StatusCodes.BAD_REQUEST)
-					.json({ msg: "Invalid user data" });
+				throw new BadRequestError("Invalid user data")
 			}
 		}),
 	],
