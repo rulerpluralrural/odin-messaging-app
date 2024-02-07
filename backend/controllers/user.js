@@ -101,7 +101,7 @@ export default {
 			.trim()
 			.isLength({ min: 6 })
 			.withMessage(
-				"Password is required and must be at least 5 characters long"
+				"Password is required and must be at least 6 characters long"
 			),
 		check("password2").custom(async (value, { req }) => {
 			if (value !== req.body.password) {
@@ -132,4 +132,14 @@ export default {
 			}
 		}),
 	],
+
+	// Handle user logout POST
+	logout: asyncHandler(async (req, res) => {
+		res.cookie("token", "logout", {
+			httpOnly: true,
+			expires: new Date(Date.now() + 1000),
+		});
+		req.session.token = undefined;
+		res.status(StatusCodes.OK).json({ msg: "User logged out" });
+	}),
 };

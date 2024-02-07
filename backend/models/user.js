@@ -2,20 +2,34 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 import { DateTime } from "luxon";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const UserSchema = new Schema(
 	{
 		firstName: {
 			type: String,
+			minLength: 3,
 			required: [true, "First name is required"],
 		},
 		lastName: {
 			type: String,
+			minLength: 3,
 			required: [true, "Last name is required"],
 		},
 		email: {
 			type: String,
 			required: [true, "Email is required"],
+			match: [
+				/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+				"Please provide a valid email",
+			],
+			unique: true,
+		},
+		password: {
+			type: String,
+			required: [true, "Password is required"],
+			minLength: 6,
 		},
 		address: {
 			type: String,
@@ -26,14 +40,8 @@ const UserSchema = new Schema(
 			default: "",
 		},
 		profileImg: {
-			publicID: {
-				type: String,
-				required: [true, "Public ID is required"],
-			},
-			url: {
-				type: String,
-				default: "",
-			},
+			type: String,
+			default: "",
 		},
 	},
 	{ timestamps: true }
