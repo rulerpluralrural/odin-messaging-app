@@ -64,7 +64,7 @@ const Login = ({ setUser, user }) => {
 	}
 
 	return (
-		<div className="flex flex-col items-center self-center h-screen mt-20 w-[500px] gap-3">
+		<div className="flex flex-col items-center self-center mt-20 w-[500px] gap-3">
 			<h1 className="pb-5 text-4xl font-bold w-full text-center fons-serif underline">
 				LOGIN
 			</h1>
