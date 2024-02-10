@@ -6,8 +6,10 @@ import Groups from "./pages/Groups";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import { useState } from "react";
 
 function App() {
+	const [user, setUser] = useState(null);
 	return (
 		<div className="flex flex-col">
 			<Navbar></Navbar>
@@ -16,7 +18,10 @@ function App() {
 				<Route path="/chats" element={<Chats />}></Route>
 				<Route path="/groups" element={<Groups />}></Route>
 				<Route path="/profile" element={<Profile />}></Route>
-				<Route path="/login" element={<Login />}></Route>
+				<Route
+					path="/login"
+					element={<Login setUser={setUser} user={user} />}
+				></Route>
 				<Route path="/register" element={<Register />}></Route>
 			</Routes>
 		</div>
