@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { FaRegCircleUser, FaLock, FaEye } from "react-icons/fa6";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LoggedIn from "../components/Login/LoggedIn";
 import { ClipLoader } from "react-spinners";
-
-const inputControl = "px-8 py-2 border-b-2 border-slate-700 w-full";
+import LoginForm from "../components/Login/LoginForm";
 
 const Login = ({ setUser, user }) => {
 	const [formData, setFormData] = useState({
@@ -29,7 +27,7 @@ const Login = ({ setUser, user }) => {
 
 		try {
 			setLoading(true);
-			
+
 			const response = await fetch("http://localhost:8000/api/v1/login", {
 				method: "POST",
 				body: JSON.stringify(formData),
@@ -66,73 +64,15 @@ const Login = ({ setUser, user }) => {
 
 	return (
 		<div className="flex flex-col items-center self-center gap-3 bg-slate-100 w-full h-screen">
-			<div className="w-[500px] bg-white mt-20 px-8 py-10 rounded-md shadow-md shadow-slate-800 flex flex-col gap-5">
-				<form className="flex flex-col gap-5 " onSubmit={handleSubmit}>
-					<h1 className="pb-5 text-4xl font-bold w-full text-center fons-serif underline">
-						LOGIN
-					</h1>
-					<div className="flex flex-col gap-1">
-						<label htmlFor="email" className="text-xl">
-							Email
-						</label>
-						<div className="relative">
-							<FaRegCircleUser className="absolute top-[11px] left-1 text-xl " />
-							<input
-								type="text"
-								name="email"
-								id="email"
-								placeholder="Enter your email"
-								value={email}
-								className={inputControl}
-								onChange={handleChange}
-							/>
-						</div>
-					</div>
-					<div className="flex flex-col gap-1">
-						<label htmlFor="password" className="text-xl">
-							Password
-						</label>
-						<div className="relative">
-							<FaLock className="absolute top-[11px] left-1 text-lg " />
-							<input
-								type={showPassword ? "text" : "password"}
-								name="password"
-								id="password"
-								placeholder="Enter your password"
-								value={password}
-								className={inputControl}
-								onChange={handleChange}
-							/>
-							<FaEye
-								className="absolute top-3 right-2 text-[1.5rem] cursor-pointer hover:opacity-70 transition-opacity"
-								onClick={() => {
-									setShowPassword(!showPassword);
-								}}
-							/>
-						</div>
-					</div>
-					<button
-						type="submit"
-						className="bg-slate-900 text-white p-2 rounded-sm text-lg hover:bg-slate-800 focus:bg-slate-800 transition-colors"
-					>
-						LOGIN
-					</button>
-				</form>
-				{errorMsg && (
-					<div className="bg-red-300 w-full text-center p-2 font-bold rounded-sm">
-						<p>{errorMsg}</p>
-					</div>
-				)}
-				<div className="w-full text-center text-blue-950">
-					<p className="text-sm">Don't have an account yet?</p>
-					<Link
-						to={"/register"}
-						className="font-bold hover:underline focus:underline "
-					>
-						Sign up
-					</Link>
-				</div>
-			</div>
+			<LoginForm
+				handleChange={handleChange}
+				handleSubmit={handleSubmit}
+				email={email}
+				password={password}
+				showPassword={showPassword}
+				setShowPassword={setShowPassword}
+				errorMsg={errorMsg}
+			/>
 		</div>
 	);
 };
