@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import RegisterForm from "../components/Register/RegisterForm";
+import { useNavigate } from "react-router-dom";
 
 const Register = ({ setUser, user }) => {
 	const [loading, setLoading] = useState(false);
-	const [errorMsg, setErrorMsg] = useState([]);
+	const [errorMsg, setErrorMsg] = useState({});
 	const [formData, setFormData] = useState({
 		firstName: "",
 		lastName: "",
@@ -16,11 +17,12 @@ const Register = ({ setUser, user }) => {
 	const { firstName, lastName, address, email, password, password2 } = formData;
 	const [showPassword1, setShowPassword1] = useState(false);
 	const [showPassword2, setShowPassword2] = useState(false);
+	const navigate = useNavigate()
 
 	const handleChange = (e) => {
 		setFormData((prevState) => ({
 			...prevState,
-			[e.target.name]: [e.target.value],
+			[e.target.name]: e.target.value,
 		}));
 	};
 
@@ -42,11 +44,9 @@ const Register = ({ setUser, user }) => {
 
 			if (response.token) {
 				setUser(response.user);
-				navigate("/");
+				navigate("/login");
 			} else if (response.messages) {
-				response.messages.forEach((message) => {
-					setErrorMsg((prevState) => [...prevState, message.msg]);
-				});
+				setErrorMsg(response.messages)
 			} else {
 				setErrorMsg(response.message);
 			}
@@ -63,7 +63,6 @@ const Register = ({ setUser, user }) => {
 			</div>
 		);
 	}
-	console.log(errorMsg);
 
 	return (
 		<div className="flex flex-col items-center self-center w-full flex-1 gap-3 bg-slate-100 py-10">

@@ -26,6 +26,7 @@ const RegisterForm = ({
 	setShowPassword2,
 	errorMsg,
 }) => {
+	console.log(errorMsg)
 	return (
 		<div className="flex flex-col gap-5 bg-white px-8 py-7 w-[550px] shadow-md shadow-slate-800 rounded-md">
 			<form className="flex flex-col gap-5 w-full" onSubmit={handleSubmit}>
@@ -138,7 +139,7 @@ const RegisterForm = ({
 					{errorMsg.map((item, index) => {
 						return (
 							<li key={index} className=" list-disc list-inside">
-								{item}
+								{item.msg}
 							</li>
 						);
 					})}

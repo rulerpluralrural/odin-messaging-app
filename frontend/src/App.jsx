@@ -12,7 +12,7 @@ function App() {
 	const [user, setUser] = useState(null);
 	return (
 		<div className="flex flex-col">
-			<Navbar></Navbar>
+			<Navbar user={user}></Navbar>
 			<Routes>
 				<Route path="/" element={<Home />}></Route>
 				<Route path="/chats" element={<Chats />}></Route>
@@ -22,7 +22,7 @@ function App() {
 					path="/login"
 					element={<Login setUser={setUser} user={user} />}
 				></Route>
-				<Route path="/register" element={<Register setUser user={user}/>}></Route>
+				<Route path="/register" element={<Register setUser={setUser} user={user}/>}></Route>
 			</Routes>
 		</div>
 	);
