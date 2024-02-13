@@ -9,7 +9,7 @@ import {
 
 const formControl = "flex flex-col gap-1 text-lg relative";
 const inputControl = "px-8 py-2 border-b-2 border-slate-700 w-full text-base";
-const iconStyle = "absolute top-[41px] left-1 text-xl ";
+const iconStyle = "absolute top-[41px] left-1 text-xl opacity-50";
 
 const RegisterForm = ({
 	handleChange,

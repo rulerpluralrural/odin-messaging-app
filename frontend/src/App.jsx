@@ -11,7 +11,7 @@ import { useState } from "react";
 function App() {
 	const [user, setUser] = useState(null);
 	return (
-		<div className="flex flex-col">
+		<div className="flex flex-col bg-slate-100 h-screen">
 			<Navbar user={user}></Navbar>
 			<Routes>
 				<Route path="/" element={<Home />}></Route>

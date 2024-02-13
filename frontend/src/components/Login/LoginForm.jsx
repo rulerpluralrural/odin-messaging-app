@@ -15,7 +15,7 @@ const LoginForm = ({handleChange, handleSubmit, email, password, showPassword, s
 						Email
 					</label>
 					<div className="relative">
-						<FaRegCircleUser className="absolute top-[11px] left-1 text-xl " />
+						<FaRegCircleUser className="absolute top-[11px] left-1 text-xl opacity-50" />
 						<input
 							type="text"
 							name="email"
@@ -32,7 +32,7 @@ const LoginForm = ({handleChange, handleSubmit, email, password, showPassword, s
 						Password
 					</label>
 					<div className="relative">
-						<FaLock className="absolute top-[11px] left-1 text-lg " />
+						<FaLock className="absolute top-[11px] left-1 text-lg opacity-50" />
 						<input
 							type={showPassword ? "text" : "password"}
 							name="password"
