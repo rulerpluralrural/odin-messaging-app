@@ -142,4 +142,14 @@ export default {
 		req.session.token = undefined;
 		res.status(StatusCodes.OK).json({ msg: "User logged out" });
 	}),
+
+	// Check user session
+	check_user_session: asyncHandler(async (req, res) => {
+		res.status(StatusCodes.OK).json({
+			user: {
+				username: req.user.username,
+				_id: req.user._id,
+			},
+		});
+	}),
 };

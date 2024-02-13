@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const circle =
-	"h-[13px] w-[13px] rounded-full bg-transparent border-[1px] border-slate-200";
+	"h-[13px] w-[13px] rounded-full bg-transparent border-2 border-yellow-200";
 
 const Logo = () => {
 	return (

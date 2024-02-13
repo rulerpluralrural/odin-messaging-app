@@ -2,12 +2,16 @@ import express from "express";
 const router = express.Router();
 
 import userController from "../controllers/user.js";
+import authenticateUser from "../middlewares/auth.js";
 
 // GET Route for getting a single user
-router.get("/user/:id", userController.user_get);
+router.get("/user/:id", authenticateUser, userController.user_get);
 
 // GET Route for getting all users
-router.get("/users", userController.users_get);
+router.get("/users", authenticateUser, userController.users_get);
+
+// GET Route for session
+router.get("/session", authenticateUser, userController.check_user_session);
 
 // POST Route for login
 router.post("/login", userController.login);
@@ -16,6 +20,6 @@ router.post("/login", userController.login);
 router.post("/register", userController.register);
 
 // POST Route for logout
-router.post("/logout", userController.logout)
+router.post("/logout", authenticateUser, userController.logout);
 
 export default router;
