@@ -2,7 +2,12 @@
 export default {
   content: ["./src/**/*.{html,js,jsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        "Roboto": ["Roboto", "serif"],
+        "CroissantOne":["Croissant One", "serif"]
+      }
+    },
   },
   plugins: [],
 }

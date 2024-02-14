@@ -13,7 +13,7 @@ const Logo = () => {
 					<div className={circle}></div>
 					<div className={circle}></div>
 				</div>
-				<div className="font-bold text-2xl font-serif text-yellow-200">
+				<div className="font-bold text-3xl font-CroissantOne text-yellow-200">
 					<Link to={"/"}>ChatS</Link>
 				</div>
 			</div>
