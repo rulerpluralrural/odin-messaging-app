@@ -1,7 +1,7 @@
 import { FaRegCircleUser, FaLock, FaEye } from "react-icons/fa6";
 import {Link} from "react-router-dom"
 
-const inputControl = "px-8 py-2 border-b-2 border-slate-700 w-full";
+const inputControl = "px-8 py-2 border-2 rounded-md border-slate-400 w-full";
 
 const LoginForm = ({handleChange, handleSubmit, email, password, showPassword, setShowPassword, errorMsg}) => {
 	return (
@@ -15,7 +15,7 @@ const LoginForm = ({handleChange, handleSubmit, email, password, showPassword, s
 						Email
 					</label>
 					<div className="relative">
-						<FaRegCircleUser className="absolute top-[11px] left-1 text-xl opacity-50" />
+						<FaRegCircleUser className="absolute top-[12px] left-2 text-xl opacity-50" />
 						<input
 							type="text"
 							name="email"
@@ -32,7 +32,7 @@ const LoginForm = ({handleChange, handleSubmit, email, password, showPassword, s
 						Password
 					</label>
 					<div className="relative">
-						<FaLock className="absolute top-[11px] left-1 text-lg opacity-50" />
+						<FaLock className="absolute top-[12px] left-2 text-lg opacity-50" />
 						<input
 							type={showPassword ? "text" : "password"}
 							name="password"

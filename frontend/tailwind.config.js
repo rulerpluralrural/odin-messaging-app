@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        "Roboto": ["Roboto", "serif"],
+        "Roboto": ["Roboto", "sans"],
         "CroissantOne":["Croissant One", "serif"]
       }
     },

@@ -13,7 +13,7 @@ const Home = () => {
 					<p className="font-serif p-3">
 						Discover new friends or catch up with your old ones!
 					</p>
-					<div className="flex flex-col gap-2 items-center justify-center text-center text-yellow-200 font-bold w-full">
+					<div className="flex gap-2 items-center justify-center text-center text-yellow-300 font-bold font-Roboto w-full">
 						<Link to={"/login"} className="bg-purple-800 w-full rounded-md p-2 hover:bg-purple-900 focus:bg-purple-900 transition-colors">LOGIN</Link>
 						<Link to={"/register"} className="bg-purple-800 w-full rounded-md p-2 hover:bg-purple-900 focus:bg-purple-900 transition-colors">REGISTER</Link>
 					</div>

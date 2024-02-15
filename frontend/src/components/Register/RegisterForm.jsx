@@ -8,8 +8,8 @@ import {
 } from "react-icons/fa6";
 
 const formControl = "flex flex-col gap-1 text-lg relative";
-const inputControl = "px-8 py-2 border-b-2 border-slate-700 w-full text-base";
-const iconStyle = "absolute top-[41px] left-1 text-xl opacity-50";
+const inputControl = "px-8 py-2 border-2 border-slate-400 rounded-md w-full text-base";
+const iconStyle = "absolute top-[45px] left-2 text-xl opacity-50";
 
 const RegisterForm = ({
 	handleChange,
@@ -28,11 +28,12 @@ const RegisterForm = ({
 }) => {
 	console.log(errorMsg)
 	return (
-		<div className="flex flex-col gap-5 bg-white px-8 py-7 w-[550px] shadow-md shadow-slate-800 rounded-md">
+		<div className="flex flex-col gap-5 bg-white px-8 py-7 w-[620px] shadow-md shadow-slate-800 rounded-md">
 			<form className="flex flex-col gap-5 w-full" onSubmit={handleSubmit}>
 				<h1 className="pb-5 text-4xl font-bold w-full text-center fons-serif underline">
 					REGISTER
 				</h1>
+				<div className="flex justify-between">
 				<div className={formControl}>
 					<label htmlFor="firstName">First Name</label>
 					<FaRegCircleUser className={iconStyle} />
@@ -59,6 +60,8 @@ const RegisterForm = ({
 						onChange={handleChange}
 					/>
 				</div>
+				</div>
+				
 				<div className={formControl}>
 					<label htmlFor="address">Address</label>
 					<FaAddressCard className={iconStyle} />
@@ -85,7 +88,7 @@ const RegisterForm = ({
 						onChange={handleChange}
 					/>
 				</div>
-				<div className="flex flex-col gap-5">
+				<div className="flex justify-between ">
 					<div className={formControl}>
 						<label htmlFor="password">Password</label>
 						<FaLock className={iconStyle} />
@@ -94,12 +97,12 @@ const RegisterForm = ({
 							name="password"
 							id="password"
 							value={password}
-							placeholder="Enter your password"
+							placeholder="Enter password"
 							className={inputControl}
 							onChange={handleChange}
 						/>
 						<FaEye
-							className="absolute top-10 right-2 text-[1.4rem] cursor-pointer hover:opacity-70 transition-opacity"
+							className="absolute top-11 right-2 text-[1.4rem] cursor-pointer hover:opacity-70 transition-opacity"
 							title="Show Password"
 							onClick={() => {
 								setShowPassword1(!showPassword1);
@@ -114,12 +117,12 @@ const RegisterForm = ({
 							name="password2"
 							id="password2"
 							value={password2}
-							placeholder="Confirm your password"
+							placeholder="Confirm password"
 							className={inputControl}
 							onChange={handleChange}
 						/>
 						<FaEye
-							className="absolute top-10 right-2 text-[1.4rem] cursor-pointer hover:opacity-70 transition-opacity"
+							className="absolute top-11 right-2 text-[1.4rem] cursor-pointer hover:opacity-70 transition-opacity"
 							title="Show Password"
 							onClick={() => {
 								setShowPassword2(!showPassword2);
