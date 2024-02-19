@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { ClipLoader } from "react-spinners";
+import ChatRoom from "../components/ChatRoom";
 
 const Messages = () => {
 	const [messages, setMessages] = useState(null);
@@ -43,6 +44,11 @@ const Messages = () => {
 					<FaSearch className="absolute text-slate-200 top-2 left-2" />
 				</div>
 				<p className="mt-5">Friends List</p>
+				<div>
+					{messages.map((item, index) => {
+						return <ChatRoom key={index} />;
+					})}
+				</div>
 			</div>
 			<div className="bg-slate-100"></div>
 		</div>
