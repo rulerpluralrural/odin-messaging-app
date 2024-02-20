@@ -1,4 +1,5 @@
 import asyncHandler from "express-async-handler";
+import { check, validationResult } from "express-validator";
 import { StatusCodes } from "http-status-codes";
 import Message from "../models/message.js";
 import User from "../models/user.js";
@@ -18,7 +19,11 @@ export default {
 				_id: { $in: room.users.map((user) => user._id) },
 			});
 
-			chatRooms.push({ ...room.toObject(), users });
+			const messages = await Message.find({
+				_id: { $in: room.messages.map((message) => message._id) },
+			});
+
+			chatRooms.push({ ...room.toObject(), users, messages });
 		}
 
 		if (!rooms) {
@@ -38,4 +43,29 @@ export default {
 		await newRoom.save();
 		res.status(StatusCodes.CREATED).json({ newRoom });
 	}),
+
+	post_create_message: [
+		check("message").isLength({ min: 1 }).withMessage("Message is required"),
+		check("id").isLength({ min: 1 }).withMessage("Room ID is required"),
+
+		asyncHandler(async (req, res) => {
+			const errors = validationResult(req);
+
+			if (!errors.isEmpty()) {
+				throw new BadRequestError(errors.array());
+			}
+
+			const sendMessage = await ChatRoom.findByIdAndUpdate(
+				req.params.id,
+				{
+					$push: {
+						messages: { message: req.body.message, sender: req.user._id },
+					},
+				},
+				{ new: true }
+			);
+
+			res.status(StatusCodes.CREATED).json({ sendMessage });
+		}),
+	],
 };

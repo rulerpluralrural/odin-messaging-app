@@ -8,21 +8,24 @@ const Messages = () => {
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		async () => {
+		const getMessages = async () => {
 			try {
 				setLoading(true);
 
 				const response = await fetch("http://localhost:8000/api/v1/messages", {
 					credentials: "include",
 				}).then((res) => res.json());
-				setMessages(response.rooms);
+				console.log(response);
+				setMessages(response.chatRooms);
 				setLoading(false);
 			} catch (error) {
 				console.log(error);
 				setLoading(false);
 			}
 		};
-	});
+
+		getMessages();
+	}, []);
 
 	if (messages === null || loading) {
 		return (
@@ -31,6 +34,7 @@ const Messages = () => {
 			</div>
 		);
 	}
+	
 	return (
 		<div className="grid grid-cols-[300px_1fr] h-screen text-white">
 			<div className="bg-slate-950 p-3 flex flex-col gap-1">
@@ -44,11 +48,6 @@ const Messages = () => {
 					<FaSearch className="absolute text-slate-200 top-2 left-2" />
 				</div>
 				<p className="mt-5">Friends List</p>
-				<div>
-					{messages.map((item, index) => {
-						return <ChatRoom key={index} />;
-					})}
-				</div>
 			</div>
 			<div className="bg-slate-100"></div>
 		</div>

@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
+import { MessageSchema } from "./message.js";
 
 const ChatRoomSchema = new Schema({
 	name: {
 		type: String,
-		required: [true, "Name is required"]
+		required: [true, "Name is required"],
 	},
 	users: [
 		{
@@ -14,14 +15,7 @@ const ChatRoomSchema = new Schema({
 			},
 		},
 	],
-	messages: [
-		{
-			message: {
-				type: mongoose.Schema.Types.ObjectId,
-				ref: "Message",
-			},
-		},
-	],
+	messages: [MessageSchema],
 });
 
 export default mongoose.model("ChatRoom", ChatRoomSchema);
