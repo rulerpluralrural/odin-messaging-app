@@ -19,11 +19,7 @@ export default {
 				_id: { $in: room.users.map((user) => user._id) },
 			});
 
-			const messages = await Message.find({
-				_id: { $in: room.messages.map((message) => message._id) },
-			});
-
-			chatRooms.push({ ...room.toObject(), users, messages });
+			chatRooms.push({ ...room.toObject(), users });
 		}
 
 		if (!rooms) {
