@@ -3,11 +3,13 @@ import { FaSearch } from "react-icons/fa";
 import { ClipLoader } from "react-spinners";
 import ChatRooms from "../components/ChatRooms";
 import ChatBox from "../components/ChatBox";
+import { Link } from "react-router-dom";
 
-const Messages = () => {
+const Messages = ({ user }) => {
 	const [messages, setMessages] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [showRoom, setShowRoom] = useState(false);
+	const selectedRoom = messages?.find((room) => showRoom === room.name);
 
 	useEffect(() => {
 		const getMessages = async () => {
@@ -28,7 +30,22 @@ const Messages = () => {
 		getMessages();
 	}, [showRoom]);
 
-	console.log(showRoom);
+	console.log(selectedRoom)
+	if (!user) {
+		return (
+			<div className="h-screen flex items-center mt-52 flex-col gap-5">
+				<p className="text-4xl font-Roboto font-bold">
+					You need to login to view this page!
+				</p>
+				<Link
+					to={"/login"}
+					className="text-blue-900 underline text-2xl font-bold hover:text-blue-700 focus:text-blue-700"
+				>
+					Login
+				</Link>
+			</div>
+		);
+	}
 
 	return (
 		<div className="grid grid-cols-[300px_1fr] h-screen text-white">
@@ -48,21 +65,18 @@ const Messages = () => {
 						<ClipLoader size={100} color="purple" />
 					</div>
 				) : (
-					messages.map((item, index) => {
+					messages?.map((item, index) => {
 						return (
 							<ChatRooms
 								key={index}
 								roomName={item.name}
-								users={item.users}
-								messages={item.messages}
 								setShowRoom={setShowRoom}
-								showRoom={showRoom}
 							/>
 						);
 					})
 				)}
 			</div>
-			<div className="bg-slate-100">{showRoom && <ChatBox />}</div>
+			<div className="bg-slate-100">{showRoom && <ChatBox selectedRoom={selectedRoom}/>}</div>
 		</div>
 	);
 };

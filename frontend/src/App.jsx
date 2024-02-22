@@ -40,7 +40,7 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Home />}></Route>
 				<Route path="/profile" element={<Profile />}></Route>
-				<Route path="/messages" element={<Messages />}></Route>
+				<Route path="/messages" element={<Messages user={user}/>}></Route>
 				<Route
 					path="/login"
 					element={<Login setUser={setUser} user={user} />}

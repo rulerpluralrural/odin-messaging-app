@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
+import { DateTime } from "luxon";
+
 export const MessageSchema = new Schema(
 	{
 		message: {
@@ -15,5 +17,9 @@ export const MessageSchema = new Schema(
 	},
 	{ timestamps: true }
 );
+
+MessageSchema.virtual("date_formatted").get(function () {
+	return DateTime.fromJSDate(this.createdAt).toLocaleString(DateTime.DATE_MED);
+});
 
 export default mongoose.model("Message", MessageSchema);

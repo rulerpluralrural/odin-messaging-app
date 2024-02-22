@@ -2,20 +2,31 @@ import mongoose from "mongoose";
 import { Schema } from "mongoose";
 import { MessageSchema } from "./message.js";
 
-const ChatRoomSchema = new Schema({
-	name: {
-		type: String,
-		required: [true, "Name is required"],
-	},
-	users: [
-		{
-			user: {
-				type: mongoose.Schema.Types.ObjectId,
-				ref: "User",
-			},
+import { DateTime } from "luxon";
+
+const ChatRoomSchema = new Schema(
+	{
+		name: {
+			type: String,
+			required: [true, "Name is required"],
 		},
-	],
-	messages: [MessageSchema],
+		users: [
+			{
+				user: {
+					type: mongoose.Schema.Types.ObjectId,
+					ref: "User",
+				},
+			},
+		],
+		messages: [MessageSchema],
+	},
+	{
+		timestamps: true,
+	}
+);
+
+ChatRoomSchema.virtual("date_formatted").get(function () {
+	return DateTime.fromJSDate(this.createdAt).toLocaleString(DateTime.DATE_MED);
 });
 
 export default mongoose.model("ChatRoom", ChatRoomSchema);

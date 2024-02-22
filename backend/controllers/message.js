@@ -10,6 +10,7 @@ export default {
 	get_rooms: asyncHandler(async (req, res) => {
 		const rooms = await ChatRoom.find({ users: { $in: [req.user] } })
 			.populate(["users", "messages"])
+			.populate("messages.sender")
 			.exec();
 
 		const chatRooms = [];
