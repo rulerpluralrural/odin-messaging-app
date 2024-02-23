@@ -22,4 +22,6 @@ MessageSchema.virtual("date_formatted").get(function () {
 	return DateTime.fromJSDate(this.createdAt).toLocaleString(DateTime.DATE_MED);
 });
 
+MessageSchema.set("toJSON", { virtuals: true });
+
 export default mongoose.model("Message", MessageSchema);

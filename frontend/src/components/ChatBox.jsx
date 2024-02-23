@@ -16,6 +16,7 @@ const ChatBox = ({ selectedRoom }) => {
 							message={item.message}
 							sender={item.sender.firstName}
 							profileImg={item.sender.profileImg}
+							dateSent={item.createdAt}
 						/>
 					);
 				})}

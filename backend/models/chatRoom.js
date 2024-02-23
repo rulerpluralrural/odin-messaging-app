@@ -29,4 +29,6 @@ ChatRoomSchema.virtual("date_formatted").get(function () {
 	return DateTime.fromJSDate(this.createdAt).toLocaleString(DateTime.DATE_MED);
 });
 
+ChatRoomSchema.set("toJSON", { virtuals: true });
+
 export default mongoose.model("ChatRoom", ChatRoomSchema);
