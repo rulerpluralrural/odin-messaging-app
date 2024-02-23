@@ -3,7 +3,7 @@ import Message from "./Message";
 
 const ChatBox = ({ selectedRoom }) => {
 	return (
-		<div className="flex flex-col h-full text-slate-950">
+		<div className="flex flex-col h-full text-slate-950 bg-white p-10 rounded-sm">
 			<div className="h-10 border-b-[1px] border-slate-900 flex items-center justify-center">
 				<h1>{selectedRoom.name}</h1>
 				<p>{selectedRoom.date_formatted}</p>

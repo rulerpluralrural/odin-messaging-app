@@ -23,7 +23,7 @@ const Tooltip = ({ setUser }) => {
 	};
 
 	return (
-		<div className="flex flex-col gap-2 bg-white w-[125px] text-slate-900 rounded-lg py-3 px-2 font-sans ">
+		<div className="flex flex-col gap-2 bg-white w-[125px] text-slate-900 rounded-lg py-3 px-2 font-sans">
 			<div className={buttonStyle}>
 				<FaUser className="opacity-70" />
 				<Link to={"/profile"}>Profile</Link>

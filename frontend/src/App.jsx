@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 function App() {
 	const [user, setUser] = useState(null);
 	const [loadingSession, setLoadingSession] = useState(false);
+	const [refreshKey, setRefreshKey] = useState(0)
 
 	useEffect(() => {
 		const getSession = async () => {
@@ -28,28 +29,28 @@ function App() {
 			}
 		};
 		getSession();
-	}, []);
-	console.log(user);
+	}, [refreshKey]);
+
 	return (
-		<div className="flex flex-col bg-slate-100 h-screen">
+		<div className="flex flex-col bg-slate-100 h-screen overflow-scroll">
 			<Navbar
 				user={user}
 				setUser={setUser}
 				loadingSession={loadingSession}
 			></Navbar>
-			<Routes>
-				<Route path="/" element={<Home />}></Route>
-				<Route path="/profile" element={<Profile />}></Route>
-				<Route path="/messages" element={<Messages user={user}/>}></Route>
-				<Route
-					path="/login"
-					element={<Login setUser={setUser} user={user} />}
-				></Route>
-				<Route
-					path="/register"
-					element={<Register setUser={setUser} user={user} />}
-				></Route>
-			</Routes>
+				<Routes>
+					<Route path="/" element={<Home />}></Route>
+					<Route path="/profile" element={<Profile />}></Route>
+					<Route path="/messages" element={<Messages user={user} />}></Route>
+					<Route
+						path="/login"
+						element={<Login setUser={setUser} user={user} setRefreshKey={setRefreshKey}/>}
+					></Route>
+					<Route
+						path="/register"
+						element={<Register setUser={setUser} user={user} />}
+					></Route>
+				</Routes>
 		</div>
 	);
 }

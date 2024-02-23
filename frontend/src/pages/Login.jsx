@@ -4,7 +4,7 @@ import LoggedIn from "../components/Login/LoggedIn";
 import { ClipLoader } from "react-spinners";
 import LoginForm from "../components/Login/LoginForm";
 
-const Login = ({ setUser, user }) => {
+const Login = ({ setUser, user, setRefreshKey }) => {
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
@@ -40,6 +40,7 @@ const Login = ({ setUser, user }) => {
 
 			if (response.token) {
 				setUser(response.user);
+				setRefreshKey((prev) => prev + 1);
 				navigate("/");
 			} else {
 				setErrorMsg(response.message);

@@ -14,7 +14,7 @@ export default {
 		});
 
 		if (!user) {
-			throw new NotFoundError(`There is no user with this id: ${userID}`)
+			throw new NotFoundError(`There is no user with this id: ${userID}`);
 		}
 
 		res.status(StatusCodes.OK).json({ user });
@@ -28,7 +28,7 @@ export default {
 			.exec();
 
 		if (!users) {
-			throw NotFoundError("There are no users!")
+			throw NotFoundError("There are no users!");
 		}
 
 		res.status(StatusCodes.OK).json(users);
@@ -39,17 +39,17 @@ export default {
 		const { email, password } = req.body;
 
 		if (!email || !password) {
-			throw new BadRequestError("Please provide your email and password")
+			throw new BadRequestError("Please provide your email and password");
 		}
 
 		const user = await User.findOne({ email });
 		if (!user) {
-			throw new BadRequestError("Invalid email")
+			throw new BadRequestError("Invalid email");
 		}
 
 		const isPasswordCorrect = await user.comparePassword(password);
 		if (!isPasswordCorrect) {
-			throw new BadRequestError("Invalid password")
+			throw new BadRequestError("Invalid password");
 		}
 
 		const token = user.createJWT();
@@ -115,7 +115,7 @@ export default {
 			const errors = validationResult(req);
 
 			if (!errors.isEmpty()) {
-				throw new BadRequestError(errors.array())
+				throw new BadRequestError(errors.array());
 			}
 			const user = await User.create({ ...req.body });
 
@@ -128,7 +128,7 @@ export default {
 					token,
 				});
 			} else {
-				throw new BadRequestError("Invalid user data")
+				throw new BadRequestError("Invalid user data");
 			}
 		}),
 	],
@@ -147,7 +147,8 @@ export default {
 	check_user_session: asyncHandler(async (req, res) => {
 		res.status(StatusCodes.OK).json({
 			user: {
-				username: req.user.username,
+				name: req.user.firstName,
+				profileImg: req.user.profileImg,
 				_id: req.user._id,
 			},
 		});
