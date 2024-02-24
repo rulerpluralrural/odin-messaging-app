@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
-import { Popover } from "react-tiny-popover";
 import Logo from "./Logo";
 import NavButtons from "./NavButtons";
-import Tooltip from "./Tooltip";
+import Popover from "./Popover";
 import { ClipLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 
@@ -22,7 +21,7 @@ const Navbar = ({ user, setUser, loadingSession }) => {
 				<div className="flex items-center justify-between px-4 py-3">
 					{user ? (
 						<div>
-							<div className="flex items-center gap-2 ">
+							<div className="flex items-center gap-2 relative">
 								<div className="font-bold font-serif">Hello {user.name}!</div>
 								<div
 									className="w-[50px] aspect-square rounded-full bg-slate-300 flex items-center justify-center text-sm cursor-pointer"
@@ -30,20 +29,15 @@ const Navbar = ({ user, setUser, loadingSession }) => {
 								>
 									<img
 										src={user.profileImg}
-										alt={`${user.name} image`}
-										className="object-fit"
+										alt={`${user.name} img`}
+										className="object-fit text-xs text-center"
 									/>
 								</div>
-								<Popover
-									isOpen={isPopoverOpen}
-									transform={{ top: 20, right: 20 }}
-									content={<Tooltip setUser={setUser} />}
-								>
-									<FaChevronDown
-										className="cursor-pointer text-sm"
-										onClick={() => setIsPopoverOpen(!isPopoverOpen)}
-									></FaChevronDown>
-								</Popover>
+								<Popover isPopoverOpen={isPopoverOpen} setIsPopoverOpen={setIsPopoverOpen} setUser={setUser}/>
+								<FaChevronDown
+									className="cursor-pointer text-sm"
+									onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+								></FaChevronDown>
 							</div>
 						</div>
 					) : (

@@ -73,6 +73,7 @@ const Login = ({ setUser, user, setRefreshKey }) => {
 				showPassword={showPassword}
 				setShowPassword={setShowPassword}
 				errorMsg={errorMsg}
+				user={user}
 			/>
 		</div>
 	);

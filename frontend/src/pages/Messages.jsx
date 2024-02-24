@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaFrown } from "react-icons/fa";
 import { ClipLoader } from "react-spinners";
 import ChatRooms from "../components/Messages/ChatRooms";
 import ChatBox from "../components/Messages/ChatBox";
@@ -34,16 +34,23 @@ const Messages = ({ user }) => {
 	console.log(selectedRoom);
 	if (!user) {
 		return (
-			<div className="h-screen flex items-center mt-52 flex-col gap-5">
-				<p className="text-4xl font-Roboto font-bold">
-					You need to login to view this page!
-				</p>
-				<Link
-					to={"/login"}
-					className="text-blue-900 underline text-2xl font-bold hover:text-blue-700 focus:text-blue-700"
-				>
-					Login
-				</Link>
+			<div className="h-screen flex items-center  mt-20 flex-col gap-5">
+				<div className=" bg-white p-10 flex flex-col items-center w-[500px] h-[350px] rounded-sm shadow-md shadow-slate-400 justify-around">
+					<FaFrown className="text-6xl text-slate-600" />
+					<div className="text-center">
+						<h1 className="text-2xl font-sans font-bold">Access denied!</h1>
+						<p className="text-slate-500">
+							You need to login to view this page
+						</p>
+					</div>
+
+					<Link
+						to={"/login"}
+						className="bg-blue-600 rounded-sm text-white px-10 py-1 text-center hover:bg-blue-700 focus:bg-blue-700"
+					>
+						Login
+					</Link>
+				</div>
 			</div>
 		);
 	}
@@ -52,7 +59,7 @@ const Messages = ({ user }) => {
 		<div className="grid grid-cols-[300px_1fr] h-screen overflow-scroll">
 			<Sidebar />
 			<div className="flex flex-col p-10">
-			<h1 className="text-2xl text-slate-800 pb-10 font-serif	">Chat</h1>
+				<h1 className="text-2xl text-slate-800 pb-10 font-serif	">Chat</h1>
 				<div className="grid grid-cols-[250px_1fr] gap-5 h-full rounded-md w-full">
 					<div className="h-full bg-white p-10 rounded-sm">
 						<div className="relative">

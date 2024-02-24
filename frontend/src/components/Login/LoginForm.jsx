@@ -1,9 +1,19 @@
 import { FaRegCircleUser, FaLock, FaEye } from "react-icons/fa6";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
 const inputControl = "px-8 py-2 border-2 rounded-md border-slate-400 w-full";
+const errorStyle = "bg-red-300 w-full text-left px-5 py-2 rounded-sm"
 
-const LoginForm = ({handleChange, handleSubmit, email, password, showPassword, setShowPassword, errorMsg}) => {
+const LoginForm = ({
+	handleChange,
+	handleSubmit,
+	email,
+	password,
+	showPassword,
+	setShowPassword,
+	errorMsg,
+	user,
+}) => {
 	return (
 		<div className="w-[500px] bg-white mt-20 px-8 py-10 rounded-md shadow-md shadow-slate-800 flex flex-col gap-5">
 			<form className="flex flex-col gap-5 " onSubmit={handleSubmit}>
@@ -58,7 +68,7 @@ const LoginForm = ({handleChange, handleSubmit, email, password, showPassword, s
 				</button>
 			</form>
 			{errorMsg && (
-				<ul className="bg-red-300 w-full text-left px-5 py-2 rounded-sm">
+				<ul className={errorStyle}>
 					<li className="list-disc list-inside">{errorMsg}</li>
 				</ul>
 			)}

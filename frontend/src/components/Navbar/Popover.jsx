@@ -4,9 +4,9 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
 const buttonStyle =
-	"flex items-center gap-1 hover:opacity-70 focus:opacity-70 transition-opacity cursor-pointer";
+	"flex items-center gap-1 hover:bg-slate-200 focus:bg-slate-200 transition-colors cursor-pointer py-1 px-2";
 
-const Tooltip = ({ setUser }) => {
+const Popover = ({ setUser, isPopoverOpen }) => {
 	const navigate = useNavigate();
 
 	const logout = async () => {
@@ -23,21 +23,25 @@ const Tooltip = ({ setUser }) => {
 	};
 
 	return (
-		<div className="flex flex-col gap-2 bg-white w-[125px] text-slate-900 rounded-lg py-3 px-2 font-sans">
-			<div className={buttonStyle}>
-				<FaUser className="opacity-70" />
+		<div
+			className={`${
+				isPopoverOpen ? "hidden" : "flex flex-col"
+			} bg-white w-[125px] text-slate-700 rounded-lg font-sans absolute top-14 right-5 z-20`}
+		>
+			<div className={`${buttonStyle} rounded-t-lg`}>
+				<FaUser className="opacity-90" />
 				<Link to={"/profile"}>Profile</Link>
 			</div>
 			<div className={buttonStyle}>
-				<FaMessage className="opacity-70" />
+				<FaMessage className="opacity-90" />
 				<Link to={"/messages"}>Messages</Link>
 			</div>
-			<div className={buttonStyle}>
-				<FaSignOutAlt className="opacity-70" />
+			<div className={`${buttonStyle} rounded-b-lg`}>
+				<FaSignOutAlt className="opacity-90" />
 				<a onClick={logout}>Logout</a>
 			</div>
 		</div>
 	);
 };
 
-export default Tooltip;
+export default Popover;
