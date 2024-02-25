@@ -4,7 +4,7 @@ const ChatRooms = ({ roomName, setShowRoom }) => {
 
 	return (
 		<div
-			className=" flex gap-2 items-center cursor-pointer hover:bg-purple-800 p-2 rounded-lg"
+			className=" flex gap-2 items-center cursor-pointer hover:bg-slate-300 transition-colors px-10 py-3"
 			onClick={() => {
 				setShowRoom(roomName);
 			}}

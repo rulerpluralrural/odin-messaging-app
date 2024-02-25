@@ -41,7 +41,7 @@ const Login = ({ setUser, user, setRefreshKey }) => {
 			if (response.token) {
 				setUser(response.user);
 				setRefreshKey((prev) => prev + 1);
-				navigate("/");
+				navigate("/messages");
 			} else {
 				setErrorMsg(response.message);
 			}

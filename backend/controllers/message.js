@@ -20,7 +20,7 @@ export default {
 				_id: { $in: room.users.map((user) => user._id) },
 			});
 
-			chatRooms.push({ ...room.toObject(), users });
+			chatRooms.push({ ...room.toJSON(), users });
 		}
 
 		if (!rooms) {
@@ -47,6 +47,10 @@ export default {
 
 		asyncHandler(async (req, res) => {
 			const errors = validationResult(req);
+			const message = new Message({
+				message: req.body.message,
+				sender: req.user._id,
+			});
 
 			if (!errors.isEmpty()) {
 				throw new BadRequestError(errors.array());
@@ -56,7 +60,7 @@ export default {
 				req.params.id,
 				{
 					$push: {
-						messages: { message: req.body.message, sender: req.user._id },
+						messages: message,
 					},
 				},
 				{ new: true }

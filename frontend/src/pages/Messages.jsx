@@ -61,16 +61,16 @@ const Messages = ({ user }) => {
 			<div className="flex flex-col p-10">
 				<h1 className="text-2xl text-slate-800 pb-10 font-serif	">Chat</h1>
 				<div className="grid grid-cols-[250px_1fr] gap-5 h-full rounded-md w-full">
-					<div className="h-full bg-white p-10 rounded-sm">
-						<div className="relative">
+					<div className="h-full bg-white py-10 rounded-sm">
+						<div className="relative px-3">
 							<input
 								type="search"
 								placeholder="Search here"
-								className="px-8 py-1 bg-transparent border-[1px] border-blue-800 rounded-sm w-full text-slate-800 outline-none placeholder:text-slate-600"
+								className="px-7 py-1 bg-transparent border-2 border-slate-400 rounded-sm w-full text-slate-800 outline-none placeholder:text-slate-600"
 							/>
-							<FaSearch className="absolute text-slate-500 top-2 left-2" />
+							<FaSearch className="absolute text-slate-500 top-[10px] left-5" />
 						</div>
-						<p className="mt-5">Friends List</p>
+						<p className="mt-5 px-3	font-bold font-Roboto tracking-wide text-lg border-b-2 border-slate-300">Friends List</p>
 						{messages === null || loading ? (
 							<div className="flex items-center justify-center h-full">
 								<ClipLoader size={100} color="purple" />
@@ -87,7 +87,7 @@ const Messages = ({ user }) => {
 							})
 						)}
 					</div>
-					<div>{showRoom && <ChatBox selectedRoom={selectedRoom} />}</div>
+					<div>{showRoom && <ChatBox selectedRoom={selectedRoom} user={user}/>}</div>
 				</div>
 			</div>
 		</div>
