@@ -18,6 +18,10 @@ const ChatRoomSchema = new Schema(
 				},
 			},
 		],
+		roomImg: {
+			type: String,
+			default: "",
+		},
 		messages: [MessageSchema],
 	},
 	{
@@ -30,7 +34,9 @@ ChatRoomSchema.virtual("date_formatted").get(function () {
 });
 
 ChatRoomSchema.virtual("time_formatted").get(function () {
-	return DateTime.fromJSDate(this.createdAt).toLocaleString(DateTime.TIME_SIMPLE);
+	return DateTime.fromJSDate(this.createdAt).toLocaleString(
+		DateTime.TIME_SIMPLE
+	);
 });
 
 ChatRoomSchema.set("toJSON", { virtuals: true });

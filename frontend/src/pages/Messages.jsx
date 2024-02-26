@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { FaSearch, FaFrown } from "react-icons/fa";
-import { ClipLoader } from "react-spinners";
+import { FaSearch } from "react-icons/fa";
 import ChatRooms from "../components/Messages/ChatRooms";
 import ChatBox from "../components/Messages/ChatBox";
-import { Link } from "react-router-dom";
 import Sidebar from "../components/Messages/Sidebar";
+import AccessDenied from "./AccessDenied";
 
 const Messages = ({ user }) => {
 	const [messages, setMessages] = useState(null);
@@ -31,65 +30,58 @@ const Messages = ({ user }) => {
 		getMessages();
 	}, [showRoom]);
 
-	console.log(selectedRoom);
 	if (!user) {
-		return (
-			<div className="h-screen flex items-center  mt-20 flex-col gap-5">
-				<div className=" bg-white p-10 flex flex-col items-center w-[500px] h-[350px] rounded-sm shadow-md shadow-slate-400 justify-around">
-					<FaFrown className="text-6xl text-slate-600" />
-					<div className="text-center">
-						<h1 className="text-2xl font-sans font-bold">Access denied!</h1>
-						<p className="text-slate-500">
-							You need to login to view this page
-						</p>
-					</div>
-
-					<Link
-						to={"/login"}
-						className="bg-blue-600 rounded-sm text-white px-10 py-1 text-center hover:bg-blue-700 focus:bg-blue-700"
-					>
-						Login
-					</Link>
-				</div>
-			</div>
-		);
+		return <AccessDenied />;
 	}
 
 	return (
-		<div className="grid grid-cols-[300px_1fr] h-screen overflow-scroll">
+		<div className="grid grid-cols-[300px_1fr] h-full">
 			<Sidebar />
-			<div className="flex flex-col p-10">
-				<h1 className="text-2xl text-slate-800 pb-10 font-serif	">Chat</h1>
-				<div className="grid grid-cols-[250px_1fr] gap-5 h-full rounded-md w-full">
-					<div className="h-full bg-white py-10 rounded-sm">
-						<div className="relative px-3">
-							<input
-								type="search"
-								placeholder="Search here"
-								className="px-7 py-1 bg-transparent border-2 border-slate-400 rounded-sm w-full text-slate-800 outline-none placeholder:text-slate-600"
+			<div className="flex flex-col px-7 py-3 pb-10">
+				<h1 className="text-2xl text-slate-800 font-serif py-3">Chat</h1>
+				<div className="grid grid-cols-[350px_1fr] gap-5 h-full rounded-md w-full">
+					<div className="h-full bg-white py-10 rounded-md">
+						<SearchbarHeader />
+						<p className="mt-3 px-3	font-bold font-Roboto tracking-wide text-lg border-b-[1px] border-slate-300">
+							Friends List
+						</p>
+						{messages?.map((item, index) => {
+							return (
+								<ChatRooms
+									key={index}
+									roomName={item.name}
+									setShowRoom={setShowRoom}
+									roomImg={item.roomImg}
+									time={item.time_formatted}
+									lastMessage={item.messages[item.messages.length - 1]}
+								/>
+							);
+						})}
+					</div>
+					<div>
+						{showRoom && (
+							<ChatBox
+								selectedRoom={selectedRoom}
+								user={user}
+								loading={loading}
 							/>
-							<FaSearch className="absolute text-slate-500 top-[10px] left-5" />
-						</div>
-						<p className="mt-5 px-3	font-bold font-Roboto tracking-wide text-lg border-b-2 border-slate-300">Friends List</p>
-						{messages === null || loading ? (
-							<div className="flex items-center justify-center h-full">
-								<ClipLoader size={100} color="purple" />
-							</div>
-						) : (
-							messages?.map((item, index) => {
-								return (
-									<ChatRooms
-										key={index}
-										roomName={item.name}
-										setShowRoom={setShowRoom}
-									/>
-								);
-							})
 						)}
 					</div>
-					<div>{showRoom && <ChatBox selectedRoom={selectedRoom} user={user}/>}</div>
 				</div>
 			</div>
+		</div>
+	);
+};
+
+const SearchbarHeader = () => {
+	return (
+		<div className="relative text-lg tracking-tighter">
+			<input
+				type="search"
+				placeholder="Search..."
+				className="px-9 py-2 bg-transparent rounded-sm w-full text-slate-800 placeholder:text-slate-400"
+			/>
+			<FaSearch className="absolute text-slate-400 top-[11px] left-2 text-xl" />
 		</div>
 	);
 };

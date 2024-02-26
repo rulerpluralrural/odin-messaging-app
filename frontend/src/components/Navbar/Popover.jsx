@@ -25,7 +25,7 @@ const Popover = ({ setUser, isPopoverOpen }) => {
 	return (
 		<div
 			className={`${
-				isPopoverOpen ? "hidden" : "flex flex-col"
+				!isPopoverOpen ? "hidden" : "flex flex-col"
 			} bg-white w-[125px] text-slate-700 rounded-lg font-sans absolute top-14 right-5 z-20`}
 		>
 			<div className={`${buttonStyle} rounded-t-lg`}>

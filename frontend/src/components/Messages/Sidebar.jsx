@@ -4,13 +4,14 @@ import {
 	FaProjectDiagram,
 	FaUserFriends,
 	FaList,
-  FaBell,
-  FaCalendar,
-  FaCube
+	FaBell,
+	FaCalendar,
+	FaCube,
 } from "react-icons/fa";
 import { FaRegMessage, FaGear } from "react-icons/fa6";
 
-const iconStyle = "flex items-center text-left px-20 gap-3 cursor-pointer hover:bg-slate-200 focus:bg-slate-200 transition-colors py-3";
+const iconStyle =
+	"flex items-center text-left px-20 gap-3 cursor-pointer hover:bg-slate-200 focus:bg-slate-200 transition-colors py-3";
 
 const Sidebar = () => {
 	return (
@@ -30,16 +31,16 @@ const Sidebar = () => {
 			<div className={iconStyle}>
 				<FaRegMessage /> <p>Chat</p>
 			</div>
-      <div className={iconStyle}>
+			<div className={iconStyle}>
 				<FaBell /> <p>Activity</p>
 			</div>
-      <div className={iconStyle}>
+			<div className={iconStyle}>
 				<FaCalendar /> <p>Calendar</p>
 			</div>
-      <div className={iconStyle}>
+			<div className={iconStyle}>
 				<FaGear /> <p>Settings</p>
 			</div>
-      <div className={iconStyle}>
+			<div className={iconStyle}>
 				<FaCube /> <p>Help</p>
 			</div>
 		</div>
