@@ -22,7 +22,11 @@ export default {
 
 	// GET all users
 	users_get: asyncHandler(async (req, res) => {
-		const users = await User.find()
+		const users = await User.find({
+			$text: {
+				$search: req.query.search,
+			},
+		})
 			.sort([["email", "ascending"]])
 			.select("-password")
 			.exec();

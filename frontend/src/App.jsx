@@ -6,11 +6,13 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Messages from "./pages/Messages";
 import { useEffect, useState } from "react";
+import AddUserForm from "./components/AddUserForm";
 
 function App() {
 	const [user, setUser] = useState(null);
 	const [loadingSession, setLoadingSession] = useState(false);
-	const [refreshKey, setRefreshKey] = useState(0)
+	const [refreshKey, setRefreshKey] = useState(0);
+	const [popupAddUser, setPopupAddUser] = useState(false);
 
 	useEffect(() => {
 		const getSession = async () => {
@@ -33,24 +35,45 @@ function App() {
 
 	return (
 		<div className="flex flex-col bg-slate-100 h-screen overflow-scroll">
-			<Navbar
-				user={user}
-				setUser={setUser}
-				loadingSession={loadingSession}
-			></Navbar>
-				<Routes>
-					<Route path="/" element={<Home />}></Route>
-					<Route path="/profile" element={<Profile />}></Route>
-					<Route path="/messages" element={<Messages user={user} />}></Route>
-					<Route
-						path="/login"
-						element={<Login setUser={setUser} user={user} setRefreshKey={setRefreshKey}/>}
-					></Route>
-					<Route
-						path="/register"
-						element={<Register setUser={setUser} user={user} />}
-					></Route>
-				</Routes>
+			{popupAddUser ? (
+				<AddUserForm setPopupAddUser={setPopupAddUser}/>
+			) : (
+				<div>
+					<Navbar
+						user={user}
+						setUser={setUser}
+						loadingSession={loadingSession}
+					></Navbar>
+					<Routes>
+						<Route path="/" element={<Home />}></Route>
+						<Route path="/profile" element={<Profile />}></Route>
+						<Route
+							path="/messages"
+							element={
+								<Messages
+									user={user}
+									popupAddUser={popupAddUser}
+									setPopupAddUser={setPopupAddUser}
+								/>
+							}
+						></Route>
+						<Route
+							path="/login"
+							element={
+								<Login
+									setUser={setUser}
+									user={user}
+									setRefreshKey={setRefreshKey}
+								/>
+							}
+						></Route>
+						<Route
+							path="/register"
+							element={<Register setUser={setUser} user={user} />}
+						></Route>
+					</Routes>
+				</div>
+			)}
 		</div>
 	);
 }

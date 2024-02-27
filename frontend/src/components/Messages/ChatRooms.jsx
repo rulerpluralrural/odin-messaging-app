@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 const ChatRooms = ({ roomName, setShowRoom, roomImg, time, lastMessage }) => {
-	console.log(lastMessage);
 
 	return (
 		<div

@@ -69,6 +69,8 @@ UserSchema.methods.comparePassword = async function (candidatePassword) {
 	return isMatch;
 };
 
+UserSchema.index({ firstName: 1, lastName: 1 }, { name: "text" });
+
 UserSchema.set("toJSON", { virtuals: true });
 
 export default mongoose.model("User", UserSchema);

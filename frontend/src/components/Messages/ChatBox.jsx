@@ -1,37 +1,65 @@
 import React from "react";
 import Message from "./Message";
 
-import { FaPaperclip, FaRegSmile, FaPaperPlane } from "react-icons/fa";
+import {
+	FaPaperclip,
+	FaRegSmile,
+	FaPaperPlane,
+	FaRegPlusSquare,
+} from "react-icons/fa";
 import { PulseLoader } from "react-spinners";
 
-const ChatBox = ({ selectedRoom, user, loading }) => {
+const ChatBox = ({
+	selectedRoom,
+	user,
+	loading,
+	popupAddUser,
+	setPopupAddUser,
+}) => {
 	if (loading) {
-		return <div className="flex justify-center items-center h-full">
-		<PulseLoader size={15} color="#0D98BA" />
-	</div>
+		return (
+			<div className="flex justify-center items-center h-full">
+				<PulseLoader size={15} color="#0D98BA" />
+			</div>
+		);
 	}
 	return (
-		<div className="grid grid-rows-[100px_1fr_100px] h-full text-slate-950 bg-white p-10 rounded-md">
-			<ChatBoxHeader selectedRoom={selectedRoom} />
+		<div className="flex flex-col text-slate-950 bg-white p-10 rounded-md">
+			<ChatBoxHeader
+				selectedRoom={selectedRoom}
+				popupAddUser={popupAddUser}
+				setPopupAddUser={setPopupAddUser}
+			/>
 			<ChatBoxMessages selectedRoom={selectedRoom} user={user} />
 			<ChatBoxInput />
 		</div>
 	);
 };
 
-const ChatBoxHeader = ({ selectedRoom }) => {
+const ChatBoxHeader = ({ selectedRoom, setPopupAddUser, popupAddUser }) => {
 	return (
-		<div className="pb-1 border-b-2 border-slate-200 flex flex-col items-center justify-center">
-			<h1 className="font-bold text-xl text-slate-800 font-Roboto">
-				{selectedRoom.name}
-			</h1>
-			<div className="flex gap-2">
-				<small className="text-sm text-slate-800">
-					{selectedRoom.date_formatted},
-				</small>
-				<small className="text-sm text-slate-800">
-					{selectedRoom.time_formatted}
-				</small>
+		<div className="flex justify-between items-center border-b-2 border-slate-200 pb-3 ">
+			<div className="flex flex-col items-start justify-center">
+				<h1 className="font-bold text-xl text-slate-800 font-Roboto">
+					{selectedRoom.name}
+				</h1>
+				<div className="flex gap-2">
+					<small className="text-sm text-slate-800">
+						{selectedRoom.date_formatted},
+					</small>
+					<small className="text-sm text-slate-800">
+						{selectedRoom.time_formatted}
+					</small>
+				</div>
+			</div>
+			<div
+				className="flex items-end gap-2 bg-blue-500 text-white cursor-pointer p-3 rounded-md focus:bg-blue-600 hover:bg-blue-600 transition-colors"
+				onClick={() => {
+					setPopupAddUser(!popupAddUser);
+				}}
+			>
+				<p className="font-Roboto">Add user</p>
+				<FaRegPlusSquare className="text-2xl " />
 			</div>
 		</div>
 	);
@@ -39,19 +67,27 @@ const ChatBoxHeader = ({ selectedRoom }) => {
 
 const ChatBoxMessages = ({ selectedRoom, user }) => {
 	return (
-		<div className="flex flex-col gap-2 py-3 overflow-scroll">
-			{selectedRoom.messages.map((item, index) => {
-				return (
-					<Message
-						key={index}
-						message={item.message}
-						sender={item.sender.firstName}
-						profileImg={item.sender.profileImg}
-						dateSent={item.time_formatted}
-						user={user}
-					/>
-				);
-			})}
+		<div className="flex flex-col gap-2 py-3 overflow-scroll h-[600px] max-h-[600px] relative">
+			{selectedRoom.messages <= 0 ? (
+				<div className="flex items-center justify-center h-full">
+					<p className="text-slate-700">There are no messages in this room!</p>
+				</div>
+			) : (
+				<div>
+					{selectedRoom.messages.map((item, index) => {
+						return (
+							<Message
+								key={index}
+								message={item.message}
+								sender={item.sender.firstName}
+								profileImg={item.sender.profileImg}
+								dateSent={item.time_formatted}
+								user={user}
+							/>
+						);
+					})}
+				</div>
+			)}
 		</div>
 	);
 };

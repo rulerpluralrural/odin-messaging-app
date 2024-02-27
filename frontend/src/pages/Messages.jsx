@@ -5,7 +5,7 @@ import ChatBox from "../components/Messages/ChatBox";
 import Sidebar from "../components/Messages/Sidebar";
 import AccessDenied from "./AccessDenied";
 
-const Messages = ({ user }) => {
+const Messages = ({ user, popupAddUser, setPopupAddUser }) => {
 	const [messages, setMessages] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [showRoom, setShowRoom] = useState(false);
@@ -42,8 +42,8 @@ const Messages = ({ user }) => {
 				<div className="grid grid-cols-[350px_1fr] gap-5 h-full rounded-md w-full">
 					<div className="h-full bg-white py-10 rounded-md">
 						<SearchbarHeader />
-						<p className="mt-3 px-3	font-bold font-Roboto tracking-wide text-lg border-b-[1px] border-slate-300">
-							Friends List
+						<p className="mt-3 px-5	font-bold font-Roboto tracking-wide text-lg border-b-[1px] border-slate-300">
+							Room List
 						</p>
 						{messages?.map((item, index) => {
 							return (
@@ -64,6 +64,8 @@ const Messages = ({ user }) => {
 								selectedRoom={selectedRoom}
 								user={user}
 								loading={loading}
+								popupAddUser={popupAddUser}
+								setPopupAddUser={setPopupAddUser}
 							/>
 						)}
 					</div>
@@ -79,9 +81,9 @@ const SearchbarHeader = () => {
 			<input
 				type="search"
 				placeholder="Search..."
-				className="px-9 py-2 bg-transparent rounded-sm w-full text-slate-800 placeholder:text-slate-400"
+				className=" px-12 py-2 bg-transparent rounded-sm w-full text-slate-800 placeholder:text-slate-400"
 			/>
-			<FaSearch className="absolute text-slate-400 top-[11px] left-2 text-xl" />
+			<FaSearch className="absolute text-slate-400 top-[11px] left-5 text-xl" />
 		</div>
 	);
 };
