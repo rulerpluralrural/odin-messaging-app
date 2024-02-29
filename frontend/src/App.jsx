@@ -7,10 +7,11 @@ import Register from "./pages/Register";
 import Messages from "./pages/Messages";
 import { useEffect, useState } from "react";
 import AddUserForm from "./components/AddUserForm";
+import ChatBox from "./components/Messages/ChatBox";
 
 function App() {
 	const [user, setUser] = useState(null);
-	const [loadingSession, setLoadingSession] = useState(false);
+	const [loadingSession, setLoadingSession] = useState(true);
 	const [refreshKey, setRefreshKey] = useState(0);
 	const [popupAddUser, setPopupAddUser] = useState(false);
 
@@ -36,7 +37,7 @@ function App() {
 	return (
 		<div className="flex flex-col bg-slate-100 h-screen overflow-scroll">
 			{popupAddUser ? (
-				<AddUserForm setPopupAddUser={setPopupAddUser}/>
+				<AddUserForm setPopupAddUser={setPopupAddUser} />
 			) : (
 				<div>
 					<Navbar
@@ -52,11 +53,23 @@ function App() {
 							element={
 								<Messages
 									user={user}
-									popupAddUser={popupAddUser}
-									setPopupAddUser={setPopupAddUser}
 								/>
 							}
-						></Route>
+						>
+							<Route index element={<div></div>}></Route>
+							<Route
+								path=":id"
+								element={
+									<div>
+										<ChatBox
+											user={user}
+											popupAddUser={popupAddUser}
+											setPopupAddUser={setPopupAddUser}
+										/>
+									</div>
+								}
+							></Route>
+						</Route>
 						<Route
 							path="/login"
 							element={

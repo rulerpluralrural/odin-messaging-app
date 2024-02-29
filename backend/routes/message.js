@@ -14,7 +14,10 @@ router.post("/messages", authenticateUser, messageController.post_create_room);
 router.post(
 	"/message/:id",
 	authenticateUser,
-	messageController.post_create_message
+	messageController.post_send_message
 );
+
+// GET route for messages
+router.get("/message/:id", authenticateUser, messageController.get_messages);
 
 export default router;

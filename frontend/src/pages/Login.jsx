@@ -11,7 +11,7 @@ const Login = ({ setUser, user, setRefreshKey }) => {
 	});
 	const { email, password } = formData;
 	const [errorMsg, setErrorMsg] = useState("");
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [showPassword, setShowPassword] = useState(false);
 	const navigate = useNavigate();
 
@@ -51,16 +51,16 @@ const Login = ({ setUser, user, setRefreshKey }) => {
 		}
 	};
 
-	if (user) {
-		return <LoggedIn />;
-	}
-
 	if (loading) {
 		return (
 			<div className="flex items-center justify-center h-screen bg-slate-100">
 				<ClipLoader size={100} color="purple" />
 			</div>
 		);
+	}
+
+	if (user) {
+		return <LoggedIn />;
 	}
 
 	return (

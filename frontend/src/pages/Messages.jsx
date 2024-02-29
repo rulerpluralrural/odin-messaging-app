@@ -4,12 +4,12 @@ import ChatRooms from "../components/Messages/ChatRooms";
 import ChatBox from "../components/Messages/ChatBox";
 import Sidebar from "../components/Messages/Sidebar";
 import AccessDenied from "./AccessDenied";
+import { Outlet } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
-const Messages = ({ user, popupAddUser, setPopupAddUser }) => {
+const Messages = ({ user }) => {
 	const [messages, setMessages] = useState(null);
-	const [loading, setLoading] = useState(false);
-	const [showRoom, setShowRoom] = useState(false);
-	const selectedRoom = messages?.find((room) => showRoom === room.name);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const getMessages = async () => {
@@ -28,7 +28,15 @@ const Messages = ({ user, popupAddUser, setPopupAddUser }) => {
 		};
 
 		getMessages();
-	}, [showRoom]);
+	}, []);
+
+	if (loading) {
+		return (
+			<div className="flex items-center justify-center h-screen bg-slate-100">
+				<ClipLoader size={100} color="purple" />
+			</div>
+		);
+	}
 
 	if (!user) {
 		return <AccessDenied />;
@@ -50,25 +58,15 @@ const Messages = ({ user, popupAddUser, setPopupAddUser }) => {
 								<ChatRooms
 									key={index}
 									roomName={item.name}
-									setShowRoom={setShowRoom}
 									roomImg={item.roomImg}
 									time={item.time_formatted}
-									lastMessage={item.messages[item.messages.length - 1]}
+									lastMessage={item.last_message}
+									roomID={item._id}
 								/>
 							);
 						})}
 					</div>
-					<div>
-						{showRoom && (
-							<ChatBox
-								selectedRoom={selectedRoom}
-								user={user}
-								loading={loading}
-								popupAddUser={popupAddUser}
-								setPopupAddUser={setPopupAddUser}
-							/>
-						)}
-					</div>
+					<Outlet />
 				</div>
 			</div>
 		</div>

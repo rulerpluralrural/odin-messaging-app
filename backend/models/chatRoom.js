@@ -39,6 +39,12 @@ ChatRoomSchema.virtual("time_formatted").get(function () {
 	);
 });
 
+ChatRoomSchema.virtual("last_message").get(function () {
+	return this.messages?.length
+		? this.messages[this.messages.length - 1].message
+		: "...";
+});
+
 ChatRoomSchema.set("toJSON", { virtuals: true });
 
 export default mongoose.model("ChatRoom", ChatRoomSchema);

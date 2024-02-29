@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Message from "./Message";
 
 import {
@@ -8,14 +8,56 @@ import {
 	FaRegPlusSquare,
 } from "react-icons/fa";
 import { PulseLoader } from "react-spinners";
+import { useParams } from "react-router-dom";
 
-const ChatBox = ({
-	selectedRoom,
-	user,
-	loading,
-	popupAddUser,
-	setPopupAddUser,
-}) => {
+const ChatBox = ({  user, popupAddUser, setPopupAddUser }) => {
+	const [message, editMessage] = useState("");
+	const [loading, setLoading] = useState(true);
+	const [room, setRoom] = useState(null);
+	const [refreshKey, setRefreshKey] = useState(0);
+	const { id } = useParams();
+
+	const getMessages = async () => {
+		try {
+			setLoading(true);
+
+			const response = await fetch(
+				`http://localhost:8000/api/v1/message/${id}`,
+				{
+					credentials: "include",
+				}
+			).then((res) => res.json());
+
+			setRoom(response.room);
+			setLoading(false);
+		} catch (error) {
+			console.log(error);
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		getMessages();
+	}, [refreshKey, id]);
+
+	const sendMessage = async (e) => {
+		e.preventDefault();
+
+		try {
+			await fetch(`http://localhost:8000/api/v1/message/${id}`, {
+				credentials: "include",
+				method: "POST",
+				body: JSON.stringify({ message }),
+				headers: {
+					["Content-Type"]: "application/json; charset=utf-8",
+				},
+			}).then((res) => res.JSON);
+			setRefreshKey((prev) => prev + 1);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	if (loading) {
 		return (
 			<div className="flex justify-center items-center h-full">
@@ -26,12 +68,16 @@ const ChatBox = ({
 	return (
 		<div className="flex flex-col text-slate-950 bg-white p-10 rounded-md">
 			<ChatBoxHeader
-				selectedRoom={selectedRoom}
+				selectedRoom={room}
 				popupAddUser={popupAddUser}
 				setPopupAddUser={setPopupAddUser}
 			/>
-			<ChatBoxMessages selectedRoom={selectedRoom} user={user} />
-			<ChatBoxInput />
+			<ChatBoxMessages selectedRoom={room} user={user} />
+			<ChatBoxInput
+				sendMessage={sendMessage}
+				message={message}
+				editMessage={editMessage}
+			/>
 		</div>
 	);
 };
@@ -53,7 +99,7 @@ const ChatBoxHeader = ({ selectedRoom, setPopupAddUser, popupAddUser }) => {
 				</div>
 			</div>
 			<div
-				className="flex items-end gap-2 bg-blue-500 text-white cursor-pointer p-3 rounded-md focus:bg-blue-600 hover:bg-blue-600 transition-colors"
+				className="flex items-end gap-2 bg-blue-500 text-white cursor-pointer p-3 rounded-md hover:bg-blue-600 transition-colors"
 				onClick={() => {
 					setPopupAddUser(!popupAddUser);
 				}}
@@ -92,14 +138,21 @@ const ChatBoxMessages = ({ selectedRoom, user }) => {
 	);
 };
 
-const ChatBoxInput = () => {
+const ChatBoxInput = ({ sendMessage, message, editMessage }) => {
 	return (
 		<div>
-			<form className="grid grid-cols-[1fr_200px] py-3 border-t-2 gap-2 border-slate-300">
+			<form
+				className="grid grid-cols-[1fr_200px] py-3 border-t-2 gap-2 border-slate-300"
+				onSubmit={sendMessage}
+			>
 				<input
 					type="text"
 					placeholder="Type a message"
 					className="w-full h-full rounded-sm border-[1px] border-slate-400 px-3 py-1 font-sans"
+					onChange={(e) => {
+						editMessage(e.target.value);
+					}}
+					value={message}
 				/>
 				<div className=" flex items-center justify-around gap-3 text-2xl text-slate-700">
 					<div className="flex items-end justify-between gap-2">
@@ -108,7 +161,7 @@ const ChatBoxInput = () => {
 					</div>
 					<button
 						type="submit"
-						className="text-base bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 transition-colors text-white rounded-md p-3 w-full self-end flex items-center gap-3 justify-center"
+						className="text-base bg-blue-600 hover:bg-blue-700 transition-colors text-white rounded-md p-3 w-full self-end flex items-center gap-3 justify-center"
 					>
 						Send
 						<FaPaperPlane />
