@@ -65,6 +65,8 @@ const ChatBox = ({  user, popupAddUser, setPopupAddUser }) => {
 			</div>
 		);
 	}
+
+	
 	return (
 		<div className="flex flex-col text-slate-950 bg-white p-10 rounded-md">
 			<ChatBoxHeader

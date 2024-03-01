@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import ChatRooms from "../components/Messages/ChatRooms";
-import ChatBox from "../components/Messages/ChatBox";
 import Sidebar from "../components/Messages/Sidebar";
 import AccessDenied from "./AccessDenied";
 import { Outlet } from "react-router-dom";
-import { ClipLoader } from "react-spinners";
+import { PulseLoader } from "react-spinners";
 
 const Messages = ({ user }) => {
 	const [messages, setMessages] = useState(null);
@@ -33,7 +32,7 @@ const Messages = ({ user }) => {
 	if (loading) {
 		return (
 			<div className="flex items-center justify-center h-screen bg-slate-100">
-				<ClipLoader size={100} color="purple" />
+				<PulseLoader size={15} color="#0D98BA" />
 			</div>
 		);
 	}

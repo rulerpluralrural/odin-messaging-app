@@ -28,37 +28,36 @@ const Popover = ({ setUser, isPopoverOpen, setIsPopoverOpen }) => {
 				!isPopoverOpen ? "hidden" : "flex flex-col"
 			} bg-white w-[125px] text-slate-700 rounded-lg font-sans absolute top-14 right-5 z-20`}
 		>
-			<div className={`${buttonStyle} rounded-t-lg`}>
+			<Link
+				className={`${buttonStyle} rounded-t-lg`}
+				to={"/profile"}
+				onClick={() => {
+					setIsPopoverOpen(false);
+				}}
+			>
+				Profile
 				<FaUser className="opacity-90" />
-				<Link
-					to={"/profile"}
-					onClick={() => {
-						setIsPopoverOpen(false);
-					}}
-				>
-					Profile
-				</Link>
-			</div>
-			<div className={buttonStyle}>
+			</Link>
+			<Link
+				className={buttonStyle}
+				to={"/messages"}
+				onClick={() => {
+					setIsPopoverOpen(false);
+				}}
+			>
 				<FaMessage className="opacity-90" />
-				<Link
-					to={"/messages"}
-					onClick={() => {
-						setIsPopoverOpen(false);
-					}}
-				>
-					Messages
-				</Link>
-			</div>
-			<div className={`${buttonStyle} rounded-b-lg`}>
-				<FaSignOutAlt
-					className="opacity-90"
-					onClick={() => {
-						setIsPopoverOpen(false);
-					}}
-				/>
-				<p>Logout</p>
-			</div>
+				Messages
+			</Link>
+			<Link
+				className={`${buttonStyle} rounded-b-lg`}
+				onClick={() => {
+					setIsPopoverOpen(false);
+					logout();
+				}}
+			>
+				<FaSignOutAlt className="opacity-90" />
+				Logout
+			</Link>
 		</div>
 	);
 };
