@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Message from "./Message";
+import AddUserForm from "../AddUserForm";
 
 import {
 	FaPaperclip,
@@ -60,8 +61,14 @@ const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
 		}
 	};
 
+	if (!room) {
+		return <div className="flex justify-center items-center h-full">
+		<PulseLoader size={15} color="#0D98BA" />
+	</div>
+	}
+
 	return (
-		<div className="flex flex-col text-slate-950 bg-white p-10 rounded-md relative">
+		<div className="flex flex-col text-slate-950 bg-white p-10 rounded-md">
 			{loading ? (
 				<>
 					<ChatBoxHeader

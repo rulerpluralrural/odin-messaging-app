@@ -4,15 +4,18 @@ import { FaMagnifyingGlass, FaXmark } from "react-icons/fa6";
 
 const AddUserForm = ({ setPopupAddUser }) => {
 	return (
-		<div className="absolute inset-0 h-screen bg-slate-700 bg-opacity-20 flex items-center justify-center">
+		<div className="fixed inset-0 h-screen bg-slate-700 bg-opacity-80 flex items-center justify-center z">
 			<form className="flex flex-col gap-3 bg-white p-10 w-[400px] aspect-square relative shadow-sm shadow-slate-700 rounded-md">
 				<FaXmark
 					onClick={() => {
 						setPopupAddUser(false);
 					}}
-                    className="absolute top-2 right-3 text-red-600 cursor-pointer text-xl font-bold hover:text-red-700"
+                    className="absolute top-3 right-4 text-red-600 cursor-pointer text-xl font-bold hover:text-red-700"
 				/>
-				<div className="relative w-full">
+				<div className="text-center ">
+					<h1 className="font-bold text-lg">Add a user to the chat room</h1>
+				</div>
+				<div className="relative w-full mt-2">
 					<FaMagnifyingGlass className="absolute top-3 left-3 text-slate-600 text-lg" />
 					<input
 						type="text"
