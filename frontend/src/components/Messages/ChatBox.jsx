@@ -29,7 +29,7 @@ const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
 			).then((res) => res.json());
 
 			setRoom(response.room);
-			editMessage("")
+			editMessage("");
 			setLoading(false);
 		} catch (error) {
 			console.log(error);
@@ -54,26 +54,34 @@ const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
 				},
 			}).then((res) => res.JSON);
 			setRefreshKey((prev) => prev + 1);
-			editMessage("")
+			editMessage("");
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
 	return (
-		<div className="flex flex-col text-slate-950 bg-white p-10 rounded-md">
-			<ChatBoxHeader
-				selectedRoom={room}
-				popupAddUser={popupAddUser}
-				setPopupAddUser={setPopupAddUser}
-			/>
-
+		<div className="flex flex-col text-slate-950 bg-white p-10 rounded-md relative">
 			{loading ? (
-				<div className="flex justify-center items-center h-[600px] max-h-[600px]">
-					<PulseLoader size={15} color="#0D98BA" />
-				</div>
+				<>
+					<ChatBoxHeader
+						selectedRoom={room}
+						popupAddUser={popupAddUser}
+						setPopupAddUser={setPopupAddUser}
+					/>
+					<div className="flex justify-center items-center h-[600px] max-h-[600px]">
+						<PulseLoader size={15} color="#0D98BA" />
+					</div>
+				</>
 			) : (
-				<ChatBoxMessages selectedRoom={room} user={user} />
+				<>
+					<ChatBoxHeader
+						selectedRoom={room}
+						popupAddUser={popupAddUser}
+						setPopupAddUser={setPopupAddUser}
+					/>
+					<ChatBoxMessages selectedRoom={room} user={user} />
+				</>
 			)}
 
 			<ChatBoxInput
@@ -81,6 +89,8 @@ const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
 				message={message}
 				editMessage={editMessage}
 			/>
+
+			{popupAddUser && <AddUserForm setPopupAddUser={setPopupAddUser} />}
 		</div>
 	);
 };

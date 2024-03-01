@@ -6,7 +6,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Messages from "./pages/Messages";
 import { useEffect, useState } from "react";
-import AddUserForm from "./components/AddUserForm";
 import ChatBox from "./components/Messages/ChatBox";
 
 function App() {
@@ -36,57 +35,46 @@ function App() {
 
 	return (
 		<div className="flex flex-col bg-slate-100 h-screen overflow-scroll">
-			{popupAddUser ? (
-				<AddUserForm setPopupAddUser={setPopupAddUser} />
-			) : (
-				<div>
-					<Navbar
-						user={user}
-						setUser={setUser}
-						loadingSession={loadingSession}
-					></Navbar>
-					<Routes>
-						<Route path="/" element={<Home />}></Route>
-						<Route path="/profile" element={<Profile />}></Route>
+			<div>
+				<Navbar
+					user={user}
+					setUser={setUser}
+					loadingSession={loadingSession}
+				></Navbar>
+				<Routes>
+					<Route path="/" element={<Home />}></Route>
+					<Route path="/profile" element={<Profile />}></Route>
+					<Route path="/messages" element={<Messages user={user} />}>
+						<Route index element={<div></div>}></Route>
 						<Route
-							path="/messages"
+							path=":id"
 							element={
-								<Messages
-									user={user}
-								/>
-							}
-						>
-							<Route index element={<div></div>}></Route>
-							<Route
-								path=":id"
-								element={
-									<div>
-										<ChatBox
-											user={user}
-											popupAddUser={popupAddUser}
-											setPopupAddUser={setPopupAddUser}
-										/>
-									</div>
-								}
-							></Route>
-						</Route>
-						<Route
-							path="/login"
-							element={
-								<Login
-									setUser={setUser}
-									user={user}
-									setRefreshKey={setRefreshKey}
-								/>
+								<div>
+									<ChatBox
+										user={user}
+										popupAddUser={popupAddUser}
+										setPopupAddUser={setPopupAddUser}
+									/>
+								</div>
 							}
 						></Route>
-						<Route
-							path="/register"
-							element={<Register setUser={setUser} user={user} />}
-						></Route>
-					</Routes>
-				</div>
-			)}
+					</Route>
+					<Route
+						path="/login"
+						element={
+							<Login
+								setUser={setUser}
+								user={user}
+								setRefreshKey={setRefreshKey}
+							/>
+						}
+					></Route>
+					<Route
+						path="/register"
+						element={<Register setUser={setUser} user={user} />}
+					></Route>
+				</Routes>
+			</div>
 		</div>
 	);
 }
