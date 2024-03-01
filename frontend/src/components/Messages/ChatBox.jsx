@@ -10,7 +10,7 @@ import {
 import { PulseLoader } from "react-spinners";
 import { useParams } from "react-router-dom";
 
-const ChatBox = ({  user, popupAddUser, setPopupAddUser }) => {
+const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
 	const [message, editMessage] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [room, setRoom] = useState(null);
@@ -29,6 +29,7 @@ const ChatBox = ({  user, popupAddUser, setPopupAddUser }) => {
 			).then((res) => res.json());
 
 			setRoom(response.room);
+			editMessage("")
 			setLoading(false);
 		} catch (error) {
 			console.log(error);
@@ -53,20 +54,12 @@ const ChatBox = ({  user, popupAddUser, setPopupAddUser }) => {
 				},
 			}).then((res) => res.JSON);
 			setRefreshKey((prev) => prev + 1);
+			editMessage("")
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
-	if (loading) {
-		return (
-			<div className="flex justify-center items-center h-full">
-				<PulseLoader size={15} color="#0D98BA" />
-			</div>
-		);
-	}
-
-	
 	return (
 		<div className="flex flex-col text-slate-950 bg-white p-10 rounded-md">
 			<ChatBoxHeader
@@ -74,7 +67,15 @@ const ChatBox = ({  user, popupAddUser, setPopupAddUser }) => {
 				popupAddUser={popupAddUser}
 				setPopupAddUser={setPopupAddUser}
 			/>
-			<ChatBoxMessages selectedRoom={room} user={user} />
+
+			{loading ? (
+				<div className="flex justify-center items-center h-[600px] max-h-[600px]">
+					<PulseLoader size={15} color="#0D98BA" />
+				</div>
+			) : (
+				<ChatBoxMessages selectedRoom={room} user={user} />
+			)}
+
 			<ChatBoxInput
 				sendMessage={sendMessage}
 				message={message}
