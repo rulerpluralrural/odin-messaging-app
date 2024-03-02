@@ -25,6 +25,8 @@ export default {
 		const users = await User.find({
 			$text: {
 				$search: req.query.search,
+				$caseSensitive: false,
+				$diacriticSensitive: false,
 			},
 		})
 			.sort([["email", "ascending"]])

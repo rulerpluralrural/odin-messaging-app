@@ -35,8 +35,8 @@ const Popover = ({ setUser, isPopoverOpen, setIsPopoverOpen }) => {
 					setIsPopoverOpen(false);
 				}}
 			>
-				Profile
 				<FaUser className="opacity-90" />
+				Profile
 			</Link>
 			<Link
 				className={buttonStyle}

@@ -71,7 +71,7 @@ function App() {
 					></Route>
 					<Route
 						path="/register"
-						element={<Register setUser={setUser} user={user} />}
+						element={<Register />}
 					></Route>
 				</Routes>
 			</div>

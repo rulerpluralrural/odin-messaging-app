@@ -43,6 +43,22 @@ const UserSchema = new Schema(
 			type: String,
 			default: "",
 		},
+		work: {
+			type: String,
+			default: "",
+		},
+		handle: {
+			type: String,
+			default: function () {
+				if (this.firstName) {
+					return `@${this.firstName}${Math.floor(
+						Math.random() * (100 - 1 + 1) + 1
+					)}`;
+				}
+				return null;
+			},
+			unique: true,
+		},
 	},
 	{ timestamps: true }
 );
@@ -69,7 +85,10 @@ UserSchema.methods.comparePassword = async function (candidatePassword) {
 	return isMatch;
 };
 
-UserSchema.index({ firstName: 1, lastName: 1 }, { name: "text" });
+UserSchema.index(
+	{ firstName: "text", lastName: "text" },
+	{ textIndexVersion: 1, name: "$text" }
+);
 
 UserSchema.set("toJSON", { virtuals: true });
 

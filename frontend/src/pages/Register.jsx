@@ -3,7 +3,7 @@ import { ClipLoader } from "react-spinners";
 import RegisterForm from "../components/Register/RegisterForm";
 import { useNavigate } from "react-router-dom";
 
-const Register = ({ setUser, user }) => {
+const Register = () => {
 	const [loading, setLoading] = useState(false);
 	const [errorMsg, setErrorMsg] = useState({});
 	const [formData, setFormData] = useState({
@@ -43,7 +43,6 @@ const Register = ({ setUser, user }) => {
 			setLoading(false);
 
 			if (response.token) {
-				setUser(response.user);
 				navigate("/login");
 			} else if (response.messages) {
 				setErrorMsg(response.messages)

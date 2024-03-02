@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Message from "./Message";
-import AddUserForm from "../AddUserForm";
+import AddUserForm from "../AddUsers/AddUserForm";
 
 import {
 	FaPaperclip,
