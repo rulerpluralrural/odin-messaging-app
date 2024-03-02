@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoggedIn from "../components/Login/LoggedIn";
-import { ClipLoader } from "react-spinners";
+import {  PulseLoader } from "react-spinners";
 import LoginForm from "../components/Login/LoginForm";
 
 const Login = ({ setUser, user, setRefreshKey }) => {
@@ -54,7 +54,7 @@ const Login = ({ setUser, user, setRefreshKey }) => {
 	if (loading) {
 		return (
 			<div className="flex items-center justify-center h-screen bg-slate-100">
-				<ClipLoader size={100} color="#0D98BA" />
+				<PulseLoader size={15} color="#0D98BA" />
 			</div>
 		);
 	}
