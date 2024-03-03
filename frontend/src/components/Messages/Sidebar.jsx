@@ -1,48 +1,59 @@
-import React from "react";
-import {
-	FaHome,
-	FaProjectDiagram,
-	FaUserFriends,
-	FaList,
-	FaBell,
-	FaCalendar,
-	FaCube,
-} from "react-icons/fa";
-import { FaRegMessage, FaGear } from "react-icons/fa6";
-
-const iconStyle =
-	"flex items-center text-left px-20 gap-3 cursor-pointer hover:bg-slate-200 focus:bg-slate-200 transition-colors py-3";
+import React, { useState } from "react";
+import SidebarButton from "./SidebarButton";
 
 const Sidebar = () => {
+	const [activeButton, setActiveButton] = useState(5);
+	const buttons = [
+		{
+			id: 1,
+			name: "Dashboard",
+		},
+		{
+			id: 2,
+			name: "Projects",
+		},
+		{
+			id: 3,
+			name: "Tasks",
+		},
+		{
+			id: 4,
+			name: "Clients",
+		},
+		{
+			id: 5,
+			name: "Chat",
+		},
+		{
+			id: 6,
+			name: "Activity",
+		},
+		{
+			id: 7,
+			name: "Calendar",
+		},
+		{
+			id: 8,
+			name: "Settings",
+		},
+		{
+			id: 9,
+			name: "Help",
+		},
+	];
+
 	return (
 		<div className="h-full flex flex-col py-10 pt-24 text-lg font-Roboto text-slate-600 bg-white border-r-2 border-slate-300 shadow-lg shadow-slate-400">
-			<div className={iconStyle}>
-				<FaHome /> <p>Dashboard</p>
-			</div>
-			<div className={iconStyle}>
-				<FaProjectDiagram /> <p>Projects</p>
-			</div>
-			<div className={iconStyle}>
-				<FaList /> <p>Tasks</p>
-			</div>
-			<div className={iconStyle}>
-				<FaUserFriends /> <p>Clients</p>
-			</div>
-			<div className={iconStyle}>
-				<FaRegMessage /> <p>Chat</p>
-			</div>
-			<div className={iconStyle}>
-				<FaBell /> <p>Activity</p>
-			</div>
-			<div className={iconStyle}>
-				<FaCalendar /> <p>Calendar</p>
-			</div>
-			<div className={iconStyle}>
-				<FaGear /> <p>Settings</p>
-			</div>
-			<div className={iconStyle}>
-				<FaCube /> <p>Help</p>
-			</div>
+			{buttons.map((button, index) => {
+				return (
+					<SidebarButton
+						key={index}
+						button={button}
+						setActiveButton={setActiveButton}
+						activeButton={activeButton}
+					/>
+				);
+			})}
 		</div>
 	);
 };
