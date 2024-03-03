@@ -3,6 +3,7 @@ import { check, validationResult } from "express-validator";
 import { StatusCodes } from "http-status-codes";
 import { NotFoundError, BadRequestError } from "../errors/index.js";
 import User from "../models/user.js";
+import ChatRoom from "../models/chatRoom.js";
 
 export default {
 	// GET a single user
@@ -38,6 +39,27 @@ export default {
 		}
 
 		res.status(StatusCodes.OK).json(users);
+	}),
+
+	// Handle add user to a room on POST
+	add_user_put: asyncHandler(async (req, res) => {
+		const room = await ChatRoom.findByIdAndUpdate(req.params.id, {
+			$push: {
+				users: [
+					{
+						user: req.body.user,
+					},
+				],
+			},
+		});
+
+		if (!room) {
+			throw new NotFoundError(
+				`Cannot find the room with this id: ${req.params.id}`
+			);
+		}
+
+		res.status(StatusCodes.OK).json({ room });
 	}),
 
 	// Handle login on POST

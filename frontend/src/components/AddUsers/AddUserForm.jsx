@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaRegPlusSquare } from "react-icons/fa";
 import { FaMagnifyingGlass, FaXmark } from "react-icons/fa6";
 import UsersCard from "./UsersCard";
 
-const AddUserForm = ({ setPopupAddUser }) => {
+const AddUserForm = ({ setPopupAddUser, id }) => {
 	const [loading, setLoading] = useState(false);
 	const [usersFound, setUsersFound] = useState([]);
 	const [selectedUser, setSelectedUser] = useState(null);
 
 	const searchUser = async (value) => {
 		try {
-			setLoading(true);
-
 			const response = await fetch(
 				`http://localhost:8000/api/v1/users?search=${value}`,
 				{
@@ -20,10 +18,24 @@ const AddUserForm = ({ setPopupAddUser }) => {
 			).then((res) => res.json());
 
 			setUsersFound(response);
-			setLoading(false);
 		} catch (error) {
 			console.log(error);
-			setLoading(false);
+		}
+	};
+
+	const addUser = async () => {
+		try {
+			setLoading(true);
+
+			await fetch(`http://localhost:8000/api/v1/user/${id}`, {
+				method: "POST",
+				credentials: "include",
+				headers: {
+					["Content-Type"]: "application/json; charset=utf-8",
+				},
+			});
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
@@ -48,6 +60,7 @@ const AddUserForm = ({ setPopupAddUser }) => {
 				<button
 					type="button"
 					className="w-full self-center flex items-end justify-center gap-2 bg-blue-500 text-white cursor-pointer p-3 rounded-md focus:bg-blue-600 hover:bg-blue-600 transition-colors"
+					onClick={addUser}
 				>
 					Add <FaRegPlusSquare className="text-2xl" />
 				</button>

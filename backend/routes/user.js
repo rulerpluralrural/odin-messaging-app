@@ -10,6 +10,9 @@ router.get("/user/:id", authenticateUser, userController.user_get);
 // GET Route for getting all users
 router.get("/users", authenticateUser, userController.users_get);
 
+// PUT Route for adding user to a room
+router.put("/user/:id", authenticateUser, userController.add_user_put);
+
 // GET Route for session
 router.get("/session", authenticateUser, userController.check_user_session);
 

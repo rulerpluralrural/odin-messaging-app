@@ -30,8 +30,7 @@ export default {
 	}),
 
 	get_messages: asyncHandler(async (req, res) => {
-		const room = await ChatRoom.findById(req.params.id,
-		)
+		const room = await ChatRoom.findById(req.params.id)
 			.populate("messages")
 			.populate("messages.sender")
 			.exec();

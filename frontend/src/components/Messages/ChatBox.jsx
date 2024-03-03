@@ -97,7 +97,7 @@ const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
 				editMessage={editMessage}
 			/>
 
-			{popupAddUser && <AddUserForm setPopupAddUser={setPopupAddUser} />}
+			{popupAddUser && <AddUserForm setPopupAddUser={setPopupAddUser} id={id}/>}
 		</div>
 	);
 };
