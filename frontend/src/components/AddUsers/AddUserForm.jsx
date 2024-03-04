@@ -28,14 +28,20 @@ const AddUserForm = ({ setPopupAddUser, id }) => {
 			setLoading(true);
 
 			await fetch(`http://localhost:8000/api/v1/user/${id}`, {
-				method: "POST",
+				method: "PUT",
 				credentials: "include",
+				body: JSON.stringify({ id: selectedUser }),
 				headers: {
 					["Content-Type"]: "application/json; charset=utf-8",
 				},
 			});
+
+			setSelectedUser([]);
+			setPopupAddUser(false);
+			setLoading(false);
 		} catch (error) {
 			console.log(error);
+			setLoading(false);
 		}
 	};
 
@@ -49,7 +55,7 @@ const AddUserForm = ({ setPopupAddUser, id }) => {
 					className="absolute top-3 right-4 text-red-600 cursor-pointer text-xl font-bold hover:text-red-700"
 				/>
 				<div className="text-center ">
-					<h1 className="font-bold text-xl font-serif">Add a User</h1>
+					<h1 className="text-2xl font-Roboto">Add User</h1>
 				</div>
 				<Searchbar searchUser={searchUser} />
 				<SearchResult
@@ -87,7 +93,11 @@ const Searchbar = ({ searchUser }) => {
 
 const SearchResult = ({ usersFound, selectedUser, setSelectedUser }) => {
 	return (
-		<div className="flex flex-col items-center justify-center gap-2 h-[300px] pt-7 px-4 aspect-square overflow-scroll w-full">
+		<div
+			className={`flex flex-col gap-2 px-4  ${
+				usersFound.length > 0 ? "py-2 h-[300px] max-h-[300px]" : "justify-center h-[150px] max-h-[150px]"
+			} overflow-scroll w-full`}
+		>
 			{usersFound.length > 0 ? (
 				usersFound.map((user, index) => {
 					return (
@@ -100,11 +110,9 @@ const SearchResult = ({ usersFound, selectedUser, setSelectedUser }) => {
 					);
 				})
 			) : (
-				<div className="flex flex-col gap-2 aspect-square overflow-scroll w-full">
-					<p className="text-center text-slate-600 py-7 rounded-md text-xl font-Roboto border-2 border-slate-400 w-full">
-						No users found!
-					</p>
-				</div>
+				<p className="text-center text-slate-600 self-center text-xl font-Roboto w-full">
+					No users found!
+				</p>
 			)}
 		</div>
 	);

@@ -17,20 +17,32 @@ const UsersCard = ({ user, selectedUser, setSelectedUser }) => {
 			/>
 			<div
 				className={`${
-					selectedUser === user._id ? "text-white font-bold" : "text-black font-normal"
-				} flex flex-col gap-1 font-Roboto group-hover:text-white group-hover:font-bold`}
+					selectedUser === user._id
+						? "text-white font-bold"
+						: "text-black font-normal"
+				} flex flex-col font-Roboto group-hover:text-white group-hover:font-bold`}
 			>
 				<p>
 					{user.firstName} {user.lastName}
 				</p>
 				<p
 					className={`${
-						selectedUser === user._id ? "text-white font-normal" : "text-slate-600"
-					} group-hover:text-white group-hover:font-normal`}
+						selectedUser === user._id
+							? "text-white font-normal"
+							: "text-slate-600"
+					} group-hover:text-white group-hover:font-normal text-sm`}
 				>
 					{user.handle}
 				</p>
-				<p className="font-bold">{user.work}</p>
+				<p
+					className={`${
+						selectedUser === user._id
+							? "text-white"
+							: "text-slate-600"
+					} font-bold text-sm text-slate-600 group-hover:text-white`}
+				>
+					{user.work}
+				</p>
 			</div>
 		</div>
 	);

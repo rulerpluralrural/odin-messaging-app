@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { NotFoundError, BadRequestError } from "../errors/index.js";
 import User from "../models/user.js";
 import ChatRoom from "../models/chatRoom.js";
+import { Types } from "mongoose";
 
 export default {
 	// GET a single user
@@ -41,26 +42,46 @@ export default {
 		res.status(StatusCodes.OK).json(users);
 	}),
 
-	// Handle add user to a room on POST
-	add_user_put: asyncHandler(async (req, res) => {
-		const room = await ChatRoom.findByIdAndUpdate(req.params.id, {
-			$push: {
-				users: [
-					{
-						user: req.body.user,
-					},
-				],
-			},
-		});
+	// Handle add user to a room on PUT
+	add_user_put: [
+		check("id")
+			.trim()
+			.isLength({ min: 1 })
+			.withMessage("User ID is required")
+			.custom(async (value, { req }) => {
+				const room = await ChatRoom.findById(req.params.id);
+				const existingUser = room.users.find((user) => {
+					return user.id === value;
+				});
 
-		if (!room) {
-			throw new NotFoundError(
-				`Cannot find the room with this id: ${req.params.id}`
-			);
-		}
+				if (existingUser) {
+					throw new BadRequestError("User is already in the Chatroom");
+				}
+			}),
 
-		res.status(StatusCodes.OK).json({ room });
-	}),
+		asyncHandler(async (req, res) => {
+			const errors = validationResult(req);
+
+			if (!errors.isEmpty()) {
+				throw new BadRequestError(errors.array());
+			}
+
+			const room = await ChatRoom.findById(req.params.id);
+			const id = new Types.ObjectId(req.body.id);
+
+			if (!room) {
+				throw new NotFoundError(
+					`Cannot find the room with this id: ${req.params.id}`
+				);
+			}
+
+			room.users.push({ _id: id });
+
+			await room.save();
+
+			res.status(StatusCodes.OK).json({ room });
+		}),
+	],
 
 	// Handle login on POST
 	login: asyncHandler(async (req, res) => {
@@ -112,7 +133,7 @@ export default {
 			.isLength({ min: 1 })
 			.withMessage("Email is required")
 			.custom(async (value) => {
-				const existingEmail = await User.findOne({ existingEmail: value });
+				const existingEmail = await User.findOne({ email: value });
 				if (existingEmail) {
 					throw new BadRequestError(
 						"E-mail is not available, Please choose a different one."
