@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { FaRegPlusSquare } from "react-icons/fa";
 import { FaMagnifyingGlass, FaXmark } from "react-icons/fa6";
 import UsersCard from "./UsersCard";
+import { BarLoader, PulseLoader } from "react-spinners";
 
 const AddUserForm = ({ setPopupAddUser, id }) => {
 	const [loading, setLoading] = useState(false);
 	const [usersFound, setUsersFound] = useState([]);
 	const [selectedUser, setSelectedUser] = useState(null);
+	const [notif, setNotif] = useState({});
 
 	const searchUser = async (value) => {
 		try {
@@ -24,21 +26,33 @@ const AddUserForm = ({ setPopupAddUser, id }) => {
 	};
 
 	const addUser = async () => {
+		if (!selectedUser) {
+			return;
+		}
+
 		try {
 			setLoading(true);
 
-			await fetch(`http://localhost:8000/api/v1/user/${id}`, {
+			const response = await fetch(`http://localhost:8000/api/v1/user/${id}`, {
 				method: "PUT",
 				credentials: "include",
 				body: JSON.stringify({ id: selectedUser }),
 				headers: {
 					["Content-Type"]: "application/json; charset=utf-8",
 				},
-			});
-
-			setSelectedUser([]);
-			setPopupAddUser(false);
+			}).then((res) => res.json());
 			setLoading(false);
+
+			if (response.room) {
+				setSelectedUser([]);
+				setPopupAddUser(false);
+			} else if (response.messages) {
+				setSelectedUser([]);
+				setNotif(response.messages);
+			} else {
+				setSelectedUser([]);
+				setNotif(response.message);
+			}
 		} catch (error) {
 			console.log(error);
 			setLoading(false);
@@ -58,11 +72,24 @@ const AddUserForm = ({ setPopupAddUser, id }) => {
 					<h1 className="text-2xl font-Roboto">Add User</h1>
 				</div>
 				<Searchbar searchUser={searchUser} />
-				<SearchResult
-					usersFound={usersFound}
-					selectedUser={selectedUser}
-					setSelectedUser={setSelectedUser}
-				/>
+				{loading ? (
+					<div className="h-[150px] max-h-[150px] flex items-center justify-center">
+						<PulseLoader size={15} color="#0D98BA" />
+					</div>
+				) : (
+					<SearchResult
+						usersFound={usersFound}
+						selectedUser={selectedUser}
+						setSelectedUser={setSelectedUser}
+					/>
+				)}
+				{notif.length > 0 && (
+					<ul className="bg-red-200 text-slate-800 font-sans rounded-sm p-2">
+						{notif.map((item, index) => {
+							return <li key={index} className=" list-inside list-disc">{item.msg}</li>;
+						})}
+					</ul>
+				)}
 				<button
 					type="button"
 					className="w-full self-center flex items-end justify-center gap-2 bg-blue-500 text-white cursor-pointer p-3 rounded-md focus:bg-blue-600 hover:bg-blue-600 transition-colors"
@@ -95,8 +122,10 @@ const SearchResult = ({ usersFound, selectedUser, setSelectedUser }) => {
 	return (
 		<div
 			className={`flex flex-col gap-2 px-4  ${
-				usersFound.length > 0 ? "py-2 h-[300px] max-h-[300px]" : "justify-center h-[150px] max-h-[150px]"
-			} overflow-scroll w-full`}
+				usersFound.length > 0
+					? "py-2 h-[300px] max-h-[300px]"
+					: "justify-center h-[150px] max-h-[150px]"
+			} overflow-scroll w-full transition-all`}
 		>
 			{usersFound.length > 0 ? (
 				usersFound.map((user, index) => {

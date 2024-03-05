@@ -26,7 +26,7 @@ const RegisterForm = ({
 	setShowPassword2,
 	errorMsg,
 }) => {
-	console.log(errorMsg)
+	
 	return (
 		<div className="flex flex-col gap-5 bg-white px-8 py-7 w-[620px] shadow-md shadow-slate-800 rounded-md">
 			<form className="flex flex-col gap-5 w-full" onSubmit={handleSubmit}>

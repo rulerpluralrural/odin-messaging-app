@@ -76,7 +76,7 @@ const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
 						popupAddUser={popupAddUser}
 						setPopupAddUser={setPopupAddUser}
 					/>
-					<div className="flex justify-center items-center h-[600px] max-h-[600px]">
+					<div className="flex justify-center items-center h-[550px] max-h-[550px]">
 						<PulseLoader size={15} color="#0D98BA" />
 					</div>
 				</>
@@ -133,7 +133,7 @@ const ChatBoxHeader = ({ selectedRoom, setPopupAddUser, popupAddUser }) => {
 
 const ChatBoxMessages = ({ selectedRoom, user }) => {
 	return (
-		<div className="flex flex-col gap-2 py-3 overflow-scroll h-[600px] max-h-[600px] relative">
+		<div className="flex flex-col gap-2 py-3 overflow-scroll h-[550px] max-h-[550px] relative">
 			{selectedRoom.messages <= 0 ? (
 				<div className="flex items-center justify-center h-full">
 					<p className="text-slate-700">There are no messages in this room!</p>
