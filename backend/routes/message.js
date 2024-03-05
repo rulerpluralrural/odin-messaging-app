@@ -17,7 +17,7 @@ router.post(
 	messageController.post_send_message
 );
 
-// GET route for messages
+// GET route for messages in a chatroom
 router.get("/message/:id", authenticateUser, messageController.get_messages);
 
 export default router;

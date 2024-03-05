@@ -60,11 +60,13 @@ const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
 			console.log(error);
 		}
 	};
-
+	console.log(room);
 	if (!room) {
-		return <div className="flex justify-center items-center h-full">
-		<PulseLoader size={15} color="#0D98BA" />
-	</div>
+		return (
+			<div className="flex justify-center items-center h-full">
+				<PulseLoader size={15} color="#0D98BA" />
+			</div>
+		);
 	}
 
 	return (
@@ -97,7 +99,9 @@ const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
 				editMessage={editMessage}
 			/>
 
-			{popupAddUser && <AddUserForm setPopupAddUser={setPopupAddUser} id={id}/>}
+			{popupAddUser && (
+				<AddUserForm setPopupAddUser={setPopupAddUser} id={id} />
+			)}
 		</div>
 	);
 };
@@ -117,6 +121,10 @@ const ChatBoxHeader = ({ selectedRoom, setPopupAddUser, popupAddUser }) => {
 						{selectedRoom.time_formatted}
 					</small>
 				</div>
+			</div>
+			<div className="text-slate-700 self-end">
+				<small>No. of users: </small>
+				<small className="text-green-400 font-bold tracking-wide">({selectedRoom.users.length})</small>
 			</div>
 			<div
 				className="flex items-end gap-2 bg-blue-500 text-white cursor-pointer p-3 rounded-md hover:bg-blue-600 transition-colors"
