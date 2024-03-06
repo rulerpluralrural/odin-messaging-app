@@ -53,7 +53,7 @@ const UserMessage = ({ dateSent, message, profileImg, senderName }) => {
 const OtherMessage = ({ dateSent, message, senderName, profileImg }) => {
 	return (
 		<div className=" flex flex-row-reverse gap-2 self-start w-full py-5">
-			<div className="rounded-full border-[1px] border-slate-800 aspect-square w-[50px] flex items-center self-start">
+			<div className="rounded-full border-[1px] border-slate-800 aspect-square w-[50px] flex items-center self-end">
 				<img
 					src={profileImg}
 					alt={`${senderName} .jpeg`}
@@ -61,12 +61,12 @@ const OtherMessage = ({ dateSent, message, senderName, profileImg }) => {
 				/>
 			</div>
 			<div className="flex flex-col justify-between gap-1">
-					<p className="font-bold font-Roboto self-end">{senderName}</p>
-				<div className="bg-slate-100 text-slate-900 font-sans tracking-wide px-5 py-3 rounded-md rounded-tr-none">
+				<div className="bg-slate-100 text-slate-900 font-sans tracking-wide px-5 py-3 rounded-md rounded-br-none">
 					<p>{message}</p>
 				</div>
+				<p className="font-bold font-Roboto self-end">{senderName}</p>
 			</div>
-			<small className="text-sm text-slate-500 self-end">{dateSent}</small>
+			<small className="text-sm text-slate-500 self-start">{dateSent}</small>
 		</div>
 	);
 };

@@ -42,12 +42,12 @@ const Messages = ({ user }) => {
 	}
 
 	return (
-		<div className="grid grid-cols-[300px_1fr] h-full">
+		<div className="grid grid-cols-[300px_1fr] bg-slate-100">
 			<Sidebar />
-			<div className="flex flex-col px-7 py-3 pb-10">
+			<div className="flex flex-col px-7 py-2">
 				<h1 className="text-2xl text-slate-800 font-serif py-3">Chat</h1>
-				<div className="grid grid-cols-[350px_1fr] gap-5 h-full rounded-md w-full">
-					<div className="h-full bg-white py-10 rounded-md">
+				<div className="grid grid-cols-[350px_1fr] gap-5  rounded-md">
+					<div className="h-[775px] max-h-[775px] bg-white py-10 rounded-md overflow-x-hidden overflow-y-scroll">
 						<SearchbarHeader />
 						<p className="mt-3 px-5	font-bold font-Roboto tracking-wide text-lg border-b-[1px] border-slate-300">
 							Room List

@@ -60,7 +60,7 @@ const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
 			console.log(error);
 		}
 	};
-	console.log(room);
+
 	if (!room) {
 		return (
 			<div className="flex justify-center items-center h-full">
@@ -70,7 +70,7 @@ const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
 	}
 
 	return (
-		<div className="flex flex-col text-slate-950 bg-white p-10 rounded-md">
+		<div className="flex flex-col text-slate-950 bg-white p-5 rounded-md">
 			{loading ? (
 				<>
 					<ChatBoxHeader
@@ -78,7 +78,7 @@ const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
 						popupAddUser={popupAddUser}
 						setPopupAddUser={setPopupAddUser}
 					/>
-					<div className="flex justify-center items-center h-[550px] max-h-[550px]">
+					<div className="flex justify-center items-center h-[600px] max-h-[600px]">
 						<PulseLoader size={15} color="#0D98BA" />
 					</div>
 				</>
@@ -100,7 +100,11 @@ const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
 			/>
 
 			{popupAddUser && (
-				<AddUserForm setPopupAddUser={setPopupAddUser} id={id} />
+				<AddUserForm
+					setPopupAddUser={setPopupAddUser}
+					id={id}
+					setRefreshKey={setRefreshKey}
+				/>
 			)}
 		</div>
 	);
@@ -122,9 +126,12 @@ const ChatBoxHeader = ({ selectedRoom, setPopupAddUser, popupAddUser }) => {
 					</small>
 				</div>
 			</div>
-			<div className="text-slate-700 self-end">
-				<small>No. of users: </small>
-				<small className="text-green-400 font-bold tracking-wide">({selectedRoom.users.length})</small>
+			<div className="text-slate-700 self-end text-sm flex gap-1">
+				<p>No. of users: </p>
+				<p className="font-bold">
+					( <span className="text-green-400">{selectedRoom.users.length}</span>{" "}
+					)
+				</p>
 			</div>
 			<div
 				className="flex items-end gap-2 bg-blue-500 text-white cursor-pointer p-3 rounded-md hover:bg-blue-600 transition-colors"
@@ -141,7 +148,7 @@ const ChatBoxHeader = ({ selectedRoom, setPopupAddUser, popupAddUser }) => {
 
 const ChatBoxMessages = ({ selectedRoom, user }) => {
 	return (
-		<div className="flex flex-col gap-2 py-3 overflow-scroll h-[550px] max-h-[550px] relative">
+		<div className="flex flex-col gap-2 py-3 overflow-scroll h-[600px] max-h-[600px] relative">
 			{selectedRoom.messages <= 0 ? (
 				<div className="flex items-center justify-center h-full">
 					<p className="text-slate-700">There are no messages in this room!</p>

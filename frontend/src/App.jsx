@@ -34,7 +34,7 @@ function App() {
 	}, [refreshKey]);
 
 	return (
-		<div className="flex flex-col bg-slate-100 h-screen overflow-scroll">
+		<div className="flex flex-col bg-slate-100 h-screen">
 			<div>
 				<Navbar
 					user={user}

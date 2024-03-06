@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { FaRegPlusSquare } from "react-icons/fa";
 import { FaMagnifyingGlass, FaXmark } from "react-icons/fa6";
 import UsersCard from "./UsersCard";
-import { BarLoader, PulseLoader } from "react-spinners";
+import { PulseLoader } from "react-spinners";
 
-const AddUserForm = ({ setPopupAddUser, id }) => {
+const AddUserForm = ({ setPopupAddUser, id, setRefreshKey }) => {
 	const [loading, setLoading] = useState(false);
 	const [usersFound, setUsersFound] = useState([]);
 	const [selectedUser, setSelectedUser] = useState(null);
@@ -12,16 +12,19 @@ const AddUserForm = ({ setPopupAddUser, id }) => {
 
 	const searchUser = async (value) => {
 		try {
+			setLoading(true);
 			const response = await fetch(
 				`http://localhost:8000/api/v1/users?search=${value}`,
 				{
 					credentials: "include",
 				}
 			).then((res) => res.json());
-
+			setLoading(false);
 			setUsersFound(response);
+			setNotif({})
 		} catch (error) {
 			console.log(error);
+			setLoading(false);
 		}
 	};
 
@@ -45,6 +48,7 @@ const AddUserForm = ({ setPopupAddUser, id }) => {
 
 			if (response.room) {
 				setSelectedUser([]);
+				setRefreshKey((prev) => prev + 1);
 				setPopupAddUser(false);
 			} else if (response.messages) {
 				setSelectedUser([]);
@@ -86,7 +90,11 @@ const AddUserForm = ({ setPopupAddUser, id }) => {
 				{notif.length > 0 && (
 					<ul className="bg-red-200 text-slate-800 font-sans rounded-sm p-2">
 						{notif.map((item, index) => {
-							return <li key={index} className=" list-inside list-disc">{item.msg}</li>;
+							return (
+								<li key={index} className=" list-inside list-disc">
+									{item.msg}
+								</li>
+							);
 						})}
 					</ul>
 				)}
