@@ -2,13 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ChatRooms = ({ roomName, roomImg, time, lastMessage, roomID }) => {
+	console.log(roomImg)
 	return (
 		<Link
 			className="flex gap-2 items-start justify-between cursor-pointer hover:bg-slate-100 hover:scale-105 group transition-all p-5 border-b-[1px] border-slate-300"
 			to={`/messages/${roomID}`}
 		>
 			<div className="flex items-center gap-3">
-				<div className="rounded-full border-2 border-slate-400 w-[60px]  aspect-square flex items-center justify-center text-center text-slate-600 text-xs relative">
+				<div className="rounded-full border-[1px] border-slate-50 w-[60px]  aspect-square flex items-center justify-center text-center text-slate-600 text-xs relative">
 					<img
 						src={roomImg}
 						alt={`${
@@ -16,6 +17,7 @@ const ChatRooms = ({ roomName, roomImg, time, lastMessage, roomID }) => {
 								? roomName.substring(0, 10) + "..."
 								: roomName
 						} Img`}
+						className="rounded-full  aspect-square"
 					/>
 					<div className="absolute top-[2px] right-0 rounded-full bg-green-600 w-[12px] aspect-square border-2 border-white"></div>
 				</div>

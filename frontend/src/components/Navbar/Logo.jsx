@@ -6,7 +6,7 @@ const circle =
 
 const Logo = () => {
 	return (
-		<div className="flex items-center justify-center gap-3 border-r-2 border-slate-100 h-full w-[300px]">
+		<div className="flex items-center justify-center gap-3 w-[300px] border-r-[1px] border-slate-300 h-[75px] overflow-hidden">
 			<div className="flex items-center gap-2">
 				<div className={`${circle} border-blue-600`} ></div>
 				<div className={`${circle} border-red-800`}></div>
