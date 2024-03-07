@@ -14,3 +14,6 @@ Creating a messaging app for The Odin Project backend course
 - https://unsplash.com/photos/green-pineapple-with-white-shield-sunglasses-RLlcbkemwnw
 - https://unsplash.com/photos/stormtrooper-minifigure-walking-on-the-sand-cPF2nlWcMY4
 - https://unsplash.com/photos/just-for-fun-led-sign-STV98EbRy7w
+
+# Icon
+- https://www.flaticon.com/free-icons/comment = Comment icons created by Good Ware - Flaticon

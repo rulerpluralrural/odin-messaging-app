@@ -7,7 +7,7 @@ import { Outlet } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
 
 const Messages = ({ user }) => {
-	const [messages, setMessages] = useState(null);
+	const [chatRooms, setChatRooms] = useState(null);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -18,7 +18,7 @@ const Messages = ({ user }) => {
 				const response = await fetch("http://localhost:8000/api/v1/messages", {
 					credentials: "include",
 				}).then((res) => res.json());
-				setMessages(response.chatRooms);
+				setChatRooms(response.chatRooms);
 				setLoading(false);
 			} catch (error) {
 				console.log(error);
@@ -43,7 +43,7 @@ const Messages = ({ user }) => {
 
 	return (
 		<div className="grid grid-cols-[300px_1fr] bg-slate-100">
-			<Sidebar />
+			<Sidebar chatRooms={chatRooms}/>
 			<div className="flex flex-col px-7 pt-1 pb-8">
 				<h1 className="text-2xl text-slate-800 font-serif py-3">Chat</h1>
 				<div className="grid grid-cols-[350px_1fr] gap-5  rounded-md">
@@ -52,7 +52,7 @@ const Messages = ({ user }) => {
 						<p className="mt-3 px-5	font-bold font-Roboto tracking-wide text-lg border-b-[1px] border-slate-300">
 							Room List
 						</p>
-						{messages?.map((item, index) => {
+						{chatRooms?.map((item, index) => {
 							return (
 								<ChatRooms
 									key={index}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SidebarButton from "./SidebarButton";
 
-const Sidebar = () => {
+const Sidebar = ({ chatRooms }) => {
 	const [activeButton, setActiveButton] = useState(5);
 	const buttons = [
 		{
@@ -51,6 +51,7 @@ const Sidebar = () => {
 						button={button}
 						setActiveButton={setActiveButton}
 						activeButton={activeButton}
+						chatRooms={chatRooms}
 					/>
 				);
 			})}

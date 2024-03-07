@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ChatRooms = ({ roomName, roomImg, time, lastMessage, roomID }) => {
-	console.log(roomImg)
+
 	return (
 		<Link
-			className="flex gap-2 items-start justify-between cursor-pointer hover:bg-slate-100 hover:scale-105 group transition-all p-5 border-b-[1px] border-slate-300"
+			className="flex gap-2 items-start justify-between cursor-pointer hover:bg-slate-100 hover:scale-105 group transition-all px-5 py-4 border-b-[1px] border-slate-300"
 			to={`/messages/${roomID}`}
 		>
 			<div className="flex items-center gap-3">
