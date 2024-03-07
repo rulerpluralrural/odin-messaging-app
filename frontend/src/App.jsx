@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Messages from "./pages/Messages";
 import { useEffect, useState } from "react";
 import ChatBox from "./components/Messages/ChatBox";
+import { PulseLoader } from "react-spinners";
 
 function App() {
 	const [userSession, setUserSession] = useState(null);
@@ -52,6 +53,14 @@ function App() {
 		getSession();
 		getUserInfo();
 	}, [refreshKey]);
+
+	if (loadingSession) {
+		return (
+			<div className="flex items-center justify-center h-screen bg-slate-100">
+				<PulseLoader size={15} color="#0D98BA" />
+			</div>
+		);
+	}
 
 	return (
 		<div className="flex flex-col bg-slate-100 h-screen">
