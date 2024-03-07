@@ -9,11 +9,11 @@ import { Types } from "mongoose";
 export default {
 	// GET a single user
 	user_get: asyncHandler(async (req, res) => {
-		const userID = req.params.id;
+		const userID = req.user._id;
 
 		const user = await User.findOne({
 			_id: userID,
-		});
+		}).select("-password");
 
 		if (!user) {
 			throw new NotFoundError(`There is no user with this id: ${userID}`);
@@ -196,8 +196,6 @@ export default {
 	check_user_session: asyncHandler(async (req, res) => {
 		res.status(StatusCodes.OK).json({
 			user: {
-				name: req.user.firstName,
-				profileImg: req.user.profileImg,
 				_id: req.user._id,
 			},
 		});

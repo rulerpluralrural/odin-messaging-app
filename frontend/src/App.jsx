@@ -9,8 +9,10 @@ import { useEffect, useState } from "react";
 import ChatBox from "./components/Messages/ChatBox";
 
 function App() {
-	const [user, setUser] = useState(null);
+	const [userSession, setUserSession] = useState(null);
+	const [userInfo, setUserInfo] = useState(null);
 	const [loadingSession, setLoadingSession] = useState(true);
+	const [loadingInfo, setLoadingInfo] = useState(true);
 	const [refreshKey, setRefreshKey] = useState(0);
 	const [popupAddUser, setPopupAddUser] = useState(false);
 
@@ -23,35 +25,53 @@ function App() {
 					credentials: "include",
 				}).then((res) => res.json());
 
-				setUser(response.user);
+				setUserSession(response.user);
 				setLoadingSession(false);
 			} catch (error) {
 				console.log(error);
 				setLoadingSession(false);
 			}
 		};
+
+		const getUserInfo = async () => {
+			try {
+				setLoadingInfo(true);
+
+				const response = await fetch("http://localhost:8000/api/v1/user", {
+					credentials: "include",
+				}).then((res) => res.json());
+
+				setUserInfo(response.user);
+				setLoadingInfo(false);
+			} catch (error) {
+				console.log(error);
+				setLoadingInfo(false);
+			}
+		};
+
 		getSession();
+		getUserInfo();
 	}, [refreshKey]);
 
 	return (
 		<div className="flex flex-col bg-slate-100 h-screen">
 			<div>
 				<Navbar
-					user={user}
-					setUser={setUser}
-					loadingSession={loadingSession}
+					user={userInfo}
+					setUser={setUserSession}
+					loadingInfo={loadingInfo}
 				></Navbar>
 				<Routes>
 					<Route path="/" element={<Home />}></Route>
-					<Route path="/profile" element={<Profile />}></Route>
-					<Route path="/messages" element={<Messages user={user} />}>
+					<Route path="/profile" element={<Profile user={userInfo} />}></Route>
+					<Route path="/messages" element={<Messages user={userSession} />}>
 						<Route index element={<div></div>}></Route>
 						<Route
 							path=":id"
 							element={
 								<div>
 									<ChatBox
-										user={user}
+										user={userSession}
 										popupAddUser={popupAddUser}
 										setPopupAddUser={setPopupAddUser}
 									/>
@@ -63,16 +83,13 @@ function App() {
 						path="/login"
 						element={
 							<Login
-								setUser={setUser}
-								user={user}
+								setUser={setUserSession}
+								user={userSession}
 								setRefreshKey={setRefreshKey}
 							/>
 						}
 					></Route>
-					<Route
-						path="/register"
-						element={<Register />}
-					></Route>
+					<Route path="/register" element={<Register />}></Route>
 				</Routes>
 			</div>
 		</div>

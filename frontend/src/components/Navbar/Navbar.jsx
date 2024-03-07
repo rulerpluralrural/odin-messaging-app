@@ -5,13 +5,13 @@ import NavButtons from "./NavButtons";
 import Popover from "./Popover";
 import { ClipLoader } from "react-spinners";
 
-const Navbar = ({ user, setUser, loadingSession }) => {
+const Navbar = ({ user, setUser, loadingInfo }) => {
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
 	return (
 		<div className="grid grid-cols-[300px_1fr] items-center justify-between text-slate-900 bg-white w-full shadow-slate-400 shadow-md  relative">
 			<Logo />
-			{loadingSession ? (
+			{loadingInfo ? (
 				<div className="flex items-center justify-end py-3 px-4 mr-10 w-full">
 					<ClipLoader color="blue" className="self-center" size={50} />
 				</div>
@@ -20,11 +20,11 @@ const Navbar = ({ user, setUser, loadingSession }) => {
 					{user ? (
 						<div>
 							<div className="flex items-center gap-2 relative px-10 text-blue-700">
-								<div className="font-bold font-serif">Hello, {user.name}!</div>
+								<div className="font-bold font-serif">Hello, {user.firstName}!</div>
 								<div className="w-[50px] aspect-square rounded-full bg-slate-300 border-slate-50 border-[1px] flex items-center text-sm">
 									<img
 										src={user.profileImg}
-										alt={`${user.name}.jpg`}
+										alt={`${user.firstName}.jpg`}
 										className="object-cover text-xs rounded-full aspect-square"
 									/>
 								</div>
