@@ -41,7 +41,7 @@ const UserMessage = ({ dateSent, message, profileImg, senderName }) => {
 			</div>
 			<div className="flex flex-col justify-between gap-1">
 				<p className="font-bold font-Roboto">You</p>
-				<div className="bg-blue-500 text-white font-sans tracking-wide px-5 py-3 rounded-md rounded-tl-none">
+				<div className="bg-blue-500 text-white font-sans tracking-wide px-5 py-3 rounded-xl rounded-tl-none">
 					<p>{message}</p>
 				</div>
 			</div>
@@ -62,7 +62,7 @@ const OtherMessage = ({ dateSent, message, senderName, profileImg }) => {
 			</div>
 			<div className="flex flex-col justify-between gap-1">
 				<p className="font-bold font-Roboto self-end">{senderName}</p>
-				<div className="bg-slate-100 text-slate-900 font-sans tracking-wide px-5 py-3 rounded-md rounded-tr-none">
+				<div className="bg-slate-100 text-slate-900 font-sans tracking-wide px-5 py-3 rounded-xl rounded-tr-none">
 					<p>{message}</p>
 				</div>
 			</div>

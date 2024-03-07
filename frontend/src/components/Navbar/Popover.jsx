@@ -4,7 +4,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
 const buttonStyle =
-	"flex items-center gap-1 hover:bg-slate-200 focus:bg-slate-200 transition-colors cursor-pointer py-1 px-2";
+	"flex items-center gap-1 hover:bg-slate-200 focus:bg-slate-200 transition-colors cursor-pointer py-2 px-3";
 
 const Popover = ({ setUser, isPopoverOpen, setIsPopoverOpen }) => {
 	const navigate = useNavigate();
@@ -26,7 +26,7 @@ const Popover = ({ setUser, isPopoverOpen, setIsPopoverOpen }) => {
 		<div
 			className={`${
 				!isPopoverOpen ? "hidden" : "flex flex-col"
-			} bg-white w-[125px] text-slate-700 rounded-lg font-sans absolute top-14 right-5 z-20`}
+			} bg-white w-[140px] text-slate-700 rounded-lg font-sans absolute top-14 right-10 shadow-sm shadow-slate-600`}
 		>
 			<Link
 				className={`${buttonStyle} rounded-t-lg`}

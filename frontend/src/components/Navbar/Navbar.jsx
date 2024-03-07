@@ -4,36 +4,37 @@ import Logo from "./Logo";
 import NavButtons from "./NavButtons";
 import Popover from "./Popover";
 import { ClipLoader } from "react-spinners";
-import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ user, setUser, loadingSession }) => {
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
 	return (
-		<nav className="flex items-center justify-between text-slate-900 border-b-[1px] border-slate-300 shadow-md shadow-slate-300 z-10 bg-white">
+		<div className="grid grid-cols-[300px_1fr] items-center justify-between text-slate-900 bg-white w-full shadow-slate-400 shadow-md  relative">
 			<Logo />
 			{loadingSession ? (
-				<div className="flex items-center py-3 px-4 mr-10">
+				<div className="flex items-center justify-end py-3 px-4 mr-10 w-full">
 					<ClipLoader color="blue" className="self-center" size={50} />
 				</div>
 			) : (
-				<div className="flex items-center justify-between px-4 py-3">
+				<div className="flex items-center justify-end px-4 py-3 w-full">
 					{user ? (
 						<div>
-							<div className="flex items-center gap-2 relative">
-								<div className="font-bold font-serif">Hello {user.name}!</div>
-								<div
-									className="w-[50px] aspect-square rounded-full bg-slate-300 border-slate-50 border-[1px] flex items-center text-sm"
-								>
+							<div className="flex items-center gap-2 relative px-10 text-blue-700">
+								<div className="font-bold font-serif">Hello, {user.name}!</div>
+								<div className="w-[50px] aspect-square rounded-full bg-slate-300 border-slate-50 border-[1px] flex items-center text-sm">
 									<img
 										src={user.profileImg}
 										alt={`${user.name}.jpg`}
 										className="object-cover text-xs rounded-full aspect-square"
 									/>
 								</div>
-								<Popover isPopoverOpen={isPopoverOpen} setIsPopoverOpen={setIsPopoverOpen} setUser={setUser}/>
+								<Popover
+									isPopoverOpen={isPopoverOpen}
+									setIsPopoverOpen={setIsPopoverOpen}
+									setUser={setUser}
+								/>
 								<FaChevronDown
-									className="cursor-pointer text-sm"
+									className="cursor-pointer text-xs font-bold"
 									onClick={() => setIsPopoverOpen(!isPopoverOpen)}
 								></FaChevronDown>
 							</div>
@@ -43,7 +44,7 @@ const Navbar = ({ user, setUser, loadingSession }) => {
 					)}
 				</div>
 			)}
-		</nav>
+		</div>
 	);
 };
 

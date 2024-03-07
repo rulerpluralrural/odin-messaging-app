@@ -43,7 +43,7 @@ const Sidebar = () => {
 	];
 
 	return (
-		<div className="flex flex-col pt-28 text-lg font-Roboto text-slate-600 bg-white border-r-[1px]  border-slate-300">
+		<div className="flex flex-col pt-28 text-lg font-Roboto text-slate-600 bg-white border-r-2  border-slate-200">
 			{buttons.map((button, index) => {
 				return (
 					<SidebarButton
