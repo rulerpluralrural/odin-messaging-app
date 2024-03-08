@@ -7,7 +7,7 @@ const ProfileHeader = ({ user }) => {
 				<img
 					src={user.profileImg}
 					alt={`${user.name}.jpg`}
-					className="rounded-full h-[200px] w-[200px] object-cover  border-4 border-white shadow-md shadow-slate-400 self-center"
+					className="rounded-full h-[200px] w-[200px] object-cover  border-4 border-white shadow-md shadow-slate-400 self-center "
 				/>
 				<div className="w-[500px] ">
 					<div className="flex gap-2 items-center justify-center">

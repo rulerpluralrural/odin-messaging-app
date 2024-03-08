@@ -29,7 +29,21 @@ const Contact = ({ user }) => {
 			</div>
 			<div className="flex justify-between">
 				<div className="w-[250px]">
-					<p>Socials:</p>
+					<p>Facebook: </p>
+				</div>
+				<div className="w-full text-blue-800">
+					<a
+						className="text-blue-800 cursor-pointer hover:text-blue-950 hover:underline"
+						href="https://fb.com/"
+						target="_blank"
+					>
+						Fakebook
+					</a>
+				</div>
+			</div>
+			<div className="flex justify-between">
+				<div className="w-[250px]">
+					<p>Twitter:</p>
 				</div>
 				<div className="w-full text-blue-800">
 					<a

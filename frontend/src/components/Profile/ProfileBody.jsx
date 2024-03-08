@@ -5,7 +5,7 @@ import About from "./About";
 import FriendsList from "./FriendsList";
 
 const ProfileBody = ({ user }) => {
-	const [activeButton, setActiveButton] = useState("");
+	const [activeButton, setActiveButton] = useState("About");
 	const buttons = ["Contact", "About", "Friends"];
 
 	return (
