@@ -47,6 +47,24 @@ const UserSchema = new Schema(
 			type: String,
 			default: "",
 		},
+		gender: {
+			type: String,
+			default: "",
+		},
+		phoneNumber: {
+			type: String,
+			unique:[true, "Phone number is already in use."],
+			match: [/^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/, "Please provide a valid phone number."],
+			default: ""
+		},
+		education: {
+			type: String,
+			default: "",
+		},
+		birthday: {
+			type: Date,
+			default: "",
+		},
 		handle: {
 			type: String,
 			default: function () {
@@ -65,6 +83,10 @@ const UserSchema = new Schema(
 
 UserSchema.virtual("date_formatted").get(function () {
 	return DateTime.fromJSDate(this.createdAt).toLocaleString(DateTime.DATE_MED);
+});
+
+UserSchema.virtual("birthday_formatted").get(function () {
+	return DateTime.fromJSDate(this.birthday).toLocaleString(DateTime.DATE_MED);
 });
 
 UserSchema.pre("save", async function () {

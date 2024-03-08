@@ -63,7 +63,7 @@ function App() {
 	}
 
 	return (
-		<div className="flex flex-col bg-slate-100 h-screen">
+		<div className="flex flex-col h-screen">
 			<div>
 				<Navbar
 					user={userInfo}
