@@ -72,7 +72,7 @@ function App() {
 				></Navbar>
 				<Routes>
 					<Route path="/" element={<Home />}></Route>
-					<Route path="/profile" element={<Profile user={userInfo} />}></Route>
+					<Route path="/profile" element={<Profile user={userInfo} loadingInfo={loadingInfo}/>}></Route>
 					<Route path="/messages" element={<Messages user={userSession} />}>
 						<Route index element={<div></div>}></Route>
 						<Route

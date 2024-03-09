@@ -3,9 +3,11 @@ import NavButtons from "./NavButtons";
 import Contact from "./Contact";
 import About from "./About";
 import FriendsList from "./FriendsList";
+import EditProfile from "./EditProfile";
 
 const ProfileBody = ({ user }) => {
 	const [activeButton, setActiveButton] = useState("About");
+	const [editProfile, setEditProfile] = useState(false);
 	const buttons = ["Contact", "About", "Friends"];
 
 	return (
@@ -21,14 +23,28 @@ const ProfileBody = ({ user }) => {
 						/>
 					);
 				})}
-			</div>
+			</div>{" "}
 			<div className="flex flex-col w-[500px] py-5 gap-2 font-Roboto">
-				{activeButton === "Contact" ? (
-					<Contact user={user}/>
-				) : activeButton === "About" ? (
-					<About user={user}/>
+				{editProfile ? (
+					<EditProfile user={user} setEditProfile={setEditProfile}/>
 				) : (
-					<FriendsList />
+					<div>
+						{activeButton === "Contact" ? (
+							<Contact user={user} />
+						) : activeButton === "About" ? (
+							<About user={user} />
+						) : (
+							<FriendsList />
+						)}
+						{activeButton !== "Friends" && (
+							<button
+								className="py-1 mt-2 w-full bg-blue-600 text-white text-lg font-Roboto rounded-sm hover:bg-blue-700 transition-colors"
+								onClick={() => setEditProfile(true)}
+							>
+								Edit Profile
+							</button>
+						)}
+					</div>
 				)}
 			</div>
 		</div>

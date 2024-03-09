@@ -2,9 +2,12 @@ import React from "react";
 import AccessDenied from "./AccessDenied";
 import ProfileHeader from "../components/Profile/ProfileHeader";
 import ProfileBody from "../components/Profile/ProfileBody";
+import { PulseLoader } from "react-spinners";
 
-const Profile = ({ user }) => {
-	console.log(user);
+const Profile = ({ user, loadingInfo }) => {
+	if (loadingInfo) {
+		return <PulseLoader size={15} color="#0D98BA" />;
+	}
 	if (!user) {
 		return <AccessDenied />;
 	}
