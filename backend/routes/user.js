@@ -13,6 +13,11 @@ router.get("/users", authenticateUser, userController.users_get);
 // PUT Route for adding user to a room
 router.put("/user/:id", authenticateUser, userController.add_user_put);
 
+// PUT Route for editing user profile
+router.put("/user/profile/:id", authenticateUser, userController.edit_user_put);
+
+// AUTHENTICATION
+
 // GET Route for session
 router.get("/session", authenticateUser, userController.check_user_session);
 

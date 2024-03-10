@@ -83,6 +83,60 @@ export default {
 		}),
 	],
 
+	edit_user_put: [
+		check("firstName")
+			.trim()
+			.isLength({ min: 3 })
+			.withMessage("First name must be at least 3 letters.")
+			.isAlpha()
+			.withMessage("First name must be letters only."),
+		check("lastName")
+			.trim()
+			.isLength({ min: 3 })
+			.withMessage("First name must be at least 3 letters.")
+			.isAlpha()
+			.withMessage("First name must be letters only."),
+		check("age")
+			.trim()
+			.isAlphanumeric()
+			.withMessage("Age must be number only."),
+		check("email").trim().isEmail().withMessage("Email must be valid."),
+
+		asyncHandler(async (req, res) => {
+			const errors = validationResult(req);
+
+			if (!errors.isEmpty()) {
+				throw new BadRequestError(errors.array());
+			}
+
+			const user = new User({
+				firstName: req.body.firstName,
+				lastName: req.body.lastName,
+				age: req.body.age,
+				email: req.body.email,
+				gender: req.body.gender,
+				birthday: req.body.birthday,
+				address: req.body.address,
+				education: req.body.education,
+				work: req.body.work,
+				about: req.body.about,
+				phoneNumber: req.body.phoneNumber,
+				handle: req.body.handle,
+				_id: req.params.id,
+			});
+
+			if (!user) {
+				throw new NotFoundError(`No user with this id: ${req.params.id}`);
+			}
+
+			await User.findByIdAndUpdate({ _id: req.params.id }, user, { new: true });
+
+			res.status(StatusCodes.CREATED).json(user);
+		}),
+	],
+
+	// AUTHENTICATION
+
 	// Handle login on POST
 	login: asyncHandler(async (req, res) => {
 		const { email, password } = req.body;

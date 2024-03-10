@@ -11,7 +11,7 @@ const ProfileBody = ({ user }) => {
 	const buttons = ["Contact", "About", "Friends"];
 
 	return (
-		<div className="bg-white flex flex-col items-center justify-center">
+		<div className="bg-white flex flex-col items-center justify-center pb-5">
 			<div className="flex items-center justify-between w-[500px] font-sans">
 				{buttons.map((button, index) => {
 					return (

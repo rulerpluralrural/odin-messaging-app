@@ -65,7 +65,7 @@ const EditProfile = ({ user, setEditProfile }) => {
 					<label htmlFor="email" className="block">
 						Email:
 					</label>
-					<input type="text" className={inputControl} value={user.email}/>
+					<input type="text" className={inputControl} value={user.email} />
 				</div>
 				<div>
 					<label htmlFor="address" className="block">
@@ -97,12 +97,21 @@ const EditProfile = ({ user, setEditProfile }) => {
 						value={user.about}
 					></textarea>
 				</div>
-				<button
-					type="submit"
-					className="py-1 mt-2 w-full bg-blue-600 text-white text-lg font-Roboto rounded-sm hover:bg-blue-700 transition-colors"
-				>
-					Confirm
-				</button>
+				<div className="flex flex-col gap-2">
+					<button
+						type="submit"
+						className="py-1 mt-2 w-full bg-blue-600 text-white text-lg font-Roboto rounded-sm hover:bg-blue-700 transition-colors"
+					>
+						Confirm
+					</button>
+					<button
+						type="button"
+						className="py-1 w-full bg-red-600 text-white text-lg font-Roboto rounded-sm hover:bg-red-700 transition-colors"
+						onClick={() => setEditProfile(false)}
+					>
+						Cancel
+					</button>
+				</div>
 			</form>
 		</>
 	);
