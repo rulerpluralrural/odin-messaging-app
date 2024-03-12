@@ -99,8 +99,40 @@ export default {
 		check("age")
 			.trim()
 			.isAlphanumeric()
-			.withMessage("Age must be number only."),
-		check("email").trim().isEmail().withMessage("Email must be valid."),
+			.withMessage("Age must be number only.")
+			.isFloat({ min: 18 })
+			.withMessage("Age must be 18 and over."),
+		check("email")
+			.trim()
+			.isEmail()
+			.withMessage("Email must be valid.")
+			.custom(async (value, { req }) => {
+				const existingEmail = await User.findOne({ email: value });
+				if (existingEmail) {
+					throw new BadRequestError(
+						"E-mail is not available, Please choose a different one."
+					);
+				}
+			}),
+		check("phoneNumber")
+			.trim()
+			.custom(async (value, { req }) => {
+				const existingPhoneNumber = await User.findOne({ phoneNumber: value });
+				const regex =
+					/^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+
+				if (existingPhoneNumber) {
+					throw new BadRequestError(
+						"Phone number is already in use, Please choose a different one."
+					);
+				}
+
+				if (!value.test(regex)) {
+					throw new BadRequestError(
+						"Phone number is invalid, Please enter a valid phone number."
+					);
+				}
+			}),
 
 		asyncHandler(async (req, res) => {
 			const errors = validationResult(req);
