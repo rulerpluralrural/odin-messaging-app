@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import NameInput from "./EditProfile/NameInput";
 import AgeInput from "./EditProfile/AgeInput";
 import BirthdayInput from "./EditProfile/BirthdayInput";
@@ -7,9 +7,36 @@ import OtherInputs from "./EditProfile/OtherInputs";
 import AboutInput from "./EditProfile/AboutInput";
 import Buttons from "./EditProfile/Buttons";
 
-const inputControl = "w-full border-2 border-slate-300 rounded-sm p-2";
-
 const EditProfile = ({ user, setEditProfile }) => {
+	const [message, setMessage] = useState([]);
+	const [formData, setFormData] = useState({
+		firstName: "",
+		lastName: "",
+		age: "",
+		email: "",
+		birthday: "",
+		gender: "",
+		address: "",
+		education: "",
+		work: "",
+		about: "",
+		phoneNumber: "",
+	});
+
+	const {
+		firstName,
+		lastName,
+		age,
+		email,
+		birthday,
+		gender,
+		address,
+		education,
+		work,
+		about,
+		phoneNumber,
+	} = formData;
+
 	const handleForm = (e) => {
 		return async () => {
 			e.preventDefault();
@@ -18,9 +45,14 @@ const EditProfile = ({ user, setEditProfile }) => {
 					`http://localhost:8000/api/v1/user/profile/${user._id}`,
 					{
 						method: "PUT",
+						body: JSON.stringify(formData),
 						credentials: "include",
+						headers: {
+							["Content-Type"]: "application/json; charset=utf-8",
+						},
 					}
 				).then((res) => res.json());
+				setMessage(response.user);
 			} catch (error) {
 				console.log(error);
 			}
@@ -28,19 +60,29 @@ const EditProfile = ({ user, setEditProfile }) => {
 		};
 	};
 
+	const handleChange = (e) => {
+		setFormData((prevState) => ({
+			...prevState,
+			[e.target.name]: e.target.value,
+		}));
+	};
+
 	return (
 		<>
 			<form className="flex flex-col w-full gap-3" onSubmit={handleForm}>
 				<div className="flex justify-between">
-					<NameInput user={user} />
+					<NameInput user={user} handleChange={handleChange}/>
 				</div>
 				<div className="flex justify-between">
-					<AgeInput user={user} />
-					<BirthdayInput user={user} />
-					<GenderInput user={user} />
+					<AgeInput user={user} handleChange={handleChange}/>
+					<BirthdayInput user={user} handleChange={handleChange}/>
+					<GenderInput/>
 				</div>
-				<OtherInputs user={user} />
-				<AboutInput user={user} />
+				<OtherInputs
+					user={user}
+					handleChange={handleChange}
+				/>
+				<AboutInput user={user} about={about} handleChange={handleChange} />
 				<Buttons setEditProfile={setEditProfile} />
 			</form>
 		</>

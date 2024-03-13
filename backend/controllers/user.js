@@ -153,7 +153,6 @@ export default {
 				work: req.body.work,
 				about: req.body.about,
 				phoneNumber: req.body.phoneNumber,
-				handle: req.body.handle,
 				_id: req.params.id,
 			});
 
