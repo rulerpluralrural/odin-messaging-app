@@ -13,6 +13,7 @@ const NameInput = ({ user, handleChange }) => {
 					className={inputControl}
 					defaultValue={user.firstName}
 					onChange={handleChange}
+					required
 				/>
 			</div>
 			<div>
@@ -24,6 +25,7 @@ const NameInput = ({ user, handleChange }) => {
 					className={inputControl}
 					defaultValue={user.lastName}
 					onChange={handleChange}
+					required
 				/>
 			</div>
 		</>

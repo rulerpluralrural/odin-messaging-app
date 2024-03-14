@@ -45,6 +45,7 @@ const RegisterForm = ({
 						placeholder="Enter your first name"
 						className={inputControl}
 						onChange={handleChange}
+						required
 					/>
 				</div>
 				<div className={formControl}>
@@ -58,11 +59,12 @@ const RegisterForm = ({
 						placeholder="Enter your last name"
 						className={inputControl}
 						onChange={handleChange}
+						required
 					/>
 				</div>
 				</div>
 				
-				<div className={formControl}>
+				<div className={`${formControl} relative`}>
 					<label htmlFor="address">Address</label>
 					<FaAddressCard className={iconStyle} />
 					<input
@@ -74,6 +76,7 @@ const RegisterForm = ({
 						className={inputControl}
 						onChange={handleChange}
 					/>
+					<small className=" text-[.6rem] absolute bottom-[-25px] right-1 italic font-Roboto">(OPTIONAL)</small>
 				</div>
 				<div className={formControl}>
 					<label htmlFor="email">Email</label>
@@ -86,6 +89,7 @@ const RegisterForm = ({
 						placeholder="Enter your email address"
 						className={inputControl}
 						onChange={handleChange}
+						required
 					/>
 				</div>
 				<div className="flex justify-between ">
@@ -100,6 +104,7 @@ const RegisterForm = ({
 							placeholder="Enter password"
 							className={inputControl}
 							onChange={handleChange}
+							required
 						/>
 						<FaEye
 							className="absolute top-11 right-2 text-[1.4rem] cursor-pointer hover:opacity-70 transition-opacity"
@@ -120,6 +125,7 @@ const RegisterForm = ({
 							placeholder="Confirm password"
 							className={inputControl}
 							onChange={handleChange}
+							required
 						/>
 						<FaEye
 							className="absolute top-11 right-2 text-[1.4rem] cursor-pointer hover:opacity-70 transition-opacity"

@@ -6,6 +6,8 @@ import GenderInput from "./EditProfile/GenderInput";
 import OtherInputs from "./EditProfile/OtherInputs";
 import AboutInput from "./EditProfile/AboutInput";
 import Buttons from "./EditProfile/Buttons";
+import AddressInput from "./EditProfile/AddressInput";
+import PhoneNumber from "./EditProfile/PhoneNumber";
 
 const EditProfile = ({ user, setEditProfile }) => {
 	const [message, setMessage] = useState([]);
@@ -71,17 +73,16 @@ const EditProfile = ({ user, setEditProfile }) => {
 		<>
 			<form className="flex flex-col w-full gap-3" onSubmit={handleForm}>
 				<div className="flex justify-between">
-					<NameInput user={user} handleChange={handleChange}/>
+					<NameInput user={user} handleChange={handleChange} />
 				</div>
 				<div className="flex justify-between">
-					<AgeInput user={user} handleChange={handleChange}/>
-					<BirthdayInput user={user} handleChange={handleChange}/>
-					<GenderInput/>
+					<AgeInput user={user} handleChange={handleChange} />
+					<BirthdayInput user={user} handleChange={handleChange} />
+					<GenderInput />
 				</div>
-				<OtherInputs
-					user={user}
-					handleChange={handleChange}
-				/>
+				<PhoneNumber user={user} handleChange={handleChange} />
+				<AddressInput user={user} handleChange={handleChange} />
+				<OtherInputs user={user} handleChange={handleChange} />
 				<AboutInput user={user} about={about} handleChange={handleChange} />
 				<Buttons setEditProfile={setEditProfile} />
 			</form>

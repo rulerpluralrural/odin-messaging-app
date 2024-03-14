@@ -66,13 +66,19 @@ function App() {
 		<div className="flex flex-col h-screen">
 			<div>
 				<Navbar
-					user={userInfo}
-					setUser={setUserSession}
+					userInfo={userInfo}
+					userSession={userSession}
+					setUserSession={setUserSession}
+					setUserInfo={setUserInfo}
 					loadingInfo={loadingInfo}
+					setLoadingInfo={setLoadingInfo}
 				></Navbar>
 				<Routes>
 					<Route path="/" element={<Home />}></Route>
-					<Route path="/profile" element={<Profile user={userInfo} loadingInfo={loadingInfo}/>}></Route>
+					<Route
+						path="/profile"
+						element={<Profile user={userInfo} loadingInfo={loadingInfo} />}
+					></Route>
 					<Route path="/messages" element={<Messages user={userSession} />}>
 						<Route index element={<div></div>}></Route>
 						<Route

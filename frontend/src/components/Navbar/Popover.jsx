@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 const buttonStyle =
 	"flex items-center gap-1 hover:bg-slate-200 focus:bg-slate-200 transition-colors cursor-pointer py-2 px-3";
 
-const Popover = ({ setUser, isPopoverOpen, setIsPopoverOpen }) => {
+const Popover = ({ setUserInfo, setUserSession, isPopoverOpen, setIsPopoverOpen }) => {
 	const navigate = useNavigate();
 
 	const logout = async () => {
@@ -15,7 +15,8 @@ const Popover = ({ setUser, isPopoverOpen, setIsPopoverOpen }) => {
 				method: "POST",
 				credentials: "include",
 			});
-			setUser(null);
+			setUserInfo(null);
+			setUserSession(null)
 			navigate("/login");
 		} catch (error) {
 			console.log(error);

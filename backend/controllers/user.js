@@ -104,6 +104,8 @@ export default {
 			.withMessage("Age must be 18 and over."),
 		check("email")
 			.trim()
+			.isLength({ min: 1 })
+			.withMessage("Email is required")
 			.isEmail()
 			.withMessage("Email must be valid.")
 			.custom(async (value, { req }) => {
@@ -227,10 +229,6 @@ export default {
 			})
 			.isEmail()
 			.withMessage("Email is not valid"),
-		check("address")
-			.trim(0)
-			.isLength({ min: 1 })
-			.withMessage("Please provide your address"),
 		check("password")
 			.trim()
 			.isLength({ min: 6 })
