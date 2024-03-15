@@ -1,7 +1,6 @@
 import React from "react";
-const inputControl = "w-full border-2 border-slate-300 rounded-sm p-2";
 
-const GenderInput = () => {
+const GenderInput = ({ user, handleChange }) => {
 	return (
 		<>
 			<div>
@@ -12,10 +11,9 @@ const GenderInput = () => {
 					name="gender"
 					id="gender"
 					className="p-[10px] bg-transparent border-slate-300 border-2 rounded-sm"
+					defaultValue={user.gender}
+					onChange={handleChange}
 				>
-					<option selected disabled>
-						Select
-					</option>
 					<option value="Male">Male</option>
 					<option value="Female">Female</option>
 					<option value="LGBTQ">LGBTQ</option>

@@ -12,17 +12,17 @@ import PhoneNumber from "./EditProfile/PhoneNumber";
 const EditProfile = ({ user, setEditProfile }) => {
 	const [message, setMessage] = useState([]);
 	const [formData, setFormData] = useState({
-		firstName: "",
-		lastName: "",
-		age: "",
-		email: "",
-		birthday: "",
-		gender: "",
-		address: "",
-		education: "",
-		work: "",
-		about: "",
-		phoneNumber: "",
+		firstName: user.firstName,
+		lastName: user.lastName,
+		age: user.age,
+		email: user.email,
+		birthday: user.birthday,
+		gender: user.gender,
+		address: user.address,
+		education: user.education,
+		work: user.work,
+		about: user.about,
+		phoneNumber: user.phoneNumber,
 	});
 
 	const {
@@ -39,27 +39,25 @@ const EditProfile = ({ user, setEditProfile }) => {
 		phoneNumber,
 	} = formData;
 
-	const handleForm = (e) => {
-		return async () => {
-			e.preventDefault();
-			try {
-				const response = await fetch(
-					`http://localhost:8000/api/v1/user/profile/${user._id}`,
-					{
-						method: "PUT",
-						body: JSON.stringify(formData),
-						credentials: "include",
-						headers: {
-							["Content-Type"]: "application/json; charset=utf-8",
-						},
-					}
-				).then((res) => res.json());
-				setMessage(response.user);
-			} catch (error) {
-				console.log(error);
-			}
-			setEditProfile(false);
-		};
+	const handleForm = async (e) => {
+		e.preventDefault();
+		try {
+			const response = await fetch(
+				`http://localhost:8000/api/v1/user/profile/${user._id}`,
+				{
+					method: "PUT",
+					body: JSON.stringify(formData),
+					credentials: "include",
+					headers: {
+						["Content-Type"]: "application/json; charset=utf-8",
+					},
+				}
+			).then((res) => res.json());
+			setMessage(response.user);
+		} catch (error) {
+			console.log(error);
+		}
+		setEditProfile(false);
 	};
 
 	const handleChange = (e) => {
@@ -78,12 +76,12 @@ const EditProfile = ({ user, setEditProfile }) => {
 				<div className="flex justify-between">
 					<AgeInput user={user} handleChange={handleChange} />
 					<BirthdayInput user={user} handleChange={handleChange} />
-					<GenderInput />
+					<GenderInput user={user} handleChange={handleChange} />
 				</div>
 				<PhoneNumber user={user} handleChange={handleChange} />
 				<AddressInput user={user} handleChange={handleChange} />
 				<OtherInputs user={user} handleChange={handleChange} />
-				<AboutInput user={user} about={about} handleChange={handleChange} />
+				<AboutInput user={user} handleChange={handleChange} />
 				<Buttons setEditProfile={setEditProfile} />
 			</form>
 		</>
