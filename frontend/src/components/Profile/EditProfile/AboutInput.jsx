@@ -1,7 +1,7 @@
 import React from "react";
 const inputControl = "w-full border-2 border-slate-300 rounded-sm p-2";
 
-const AboutInput = ({ user, handleChange }) => {
+const AboutInput = ({ handleChange, about }) => {
 	return (
 		<>
 			<div>
@@ -12,7 +12,7 @@ const AboutInput = ({ user, handleChange }) => {
 					name="about"
 					id="about"
 					className="w-full h-28 border-2 border-slate-300 rounded-sm px-2 py-1"
-					defaultValue={user.about}
+					defaultValue={about}
 					onChange={handleChange}
 				></textarea>
 			</div>

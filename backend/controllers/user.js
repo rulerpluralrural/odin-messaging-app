@@ -107,34 +107,11 @@ export default {
 			.isLength({ min: 1 })
 			.withMessage("Email is required")
 			.isEmail()
-			.withMessage("Email must be valid.")
-			.custom(async (value, { req }) => {
-				const existingEmail = await User.findOne({ email: value });
-				if (existingEmail) {
-					throw new BadRequestError(
-						"E-mail is not available, Please choose a different one."
-					);
-				}
-			}),
+			.withMessage("Email must be valid."),
 		check("phoneNumber")
 			.trim()
-			.custom(async (value, { req }) => {
-				const existingPhoneNumber = await User.findOne({ phoneNumber: value });
-				const regex =
-					/^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
-
-				if (existingPhoneNumber) {
-					throw new BadRequestError(
-						"Phone number is already in use, Please choose a different one."
-					);
-				}
-
-				if (!value.test(regex)) {
-					throw new BadRequestError(
-						"Phone number is invalid, Please enter a valid phone number."
-					);
-				}
-			}),
+			.isMobilePhone("any")
+			.withMessage("Mobile phone number is not valid."),
 
 		asyncHandler(async (req, res) => {
 			const errors = validationResult(req);
@@ -143,7 +120,7 @@ export default {
 				throw new BadRequestError(errors.array());
 			}
 
-			const user = new User({
+			const user = {
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
 				age: req.body.age,
@@ -156,15 +133,18 @@ export default {
 				about: req.body.about,
 				phoneNumber: req.body.phoneNumber,
 				_id: req.params.id,
-			});
+			};
 
 			if (!user) {
 				throw new NotFoundError(`No user with this id: ${req.params.id}`);
 			}
 
-			await User.findByIdAndUpdate({ _id: req.params.id }, user, { new: true });
+			const updatedUser = await User.findByIdAndUpdate(
+				{ _id: req.params.id },
+				user
+			);
 
-			res.status(StatusCodes.CREATED).json(user);
+			res.status(StatusCodes.CREATED).json({ user: updatedUser });
 		}),
 	],
 

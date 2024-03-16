@@ -1,15 +1,16 @@
 import React from "react";
 const inputControl = "w-full border-2 border-slate-300 rounded-sm p-2";
 
-const PhoneNumber = ({ user, handleChange }) => {
+const PhoneNumber = ({ phoneNumber, handleChange }) => {
 	return (
 		<>
 			<div>
 				<label htmlFor="phoneNumber">Phone Number:</label>
 				<input
-					type="text"
+					type="tel"
+					name="phoneNumber"
 					className={inputControl}
-					defaultValue={user.phoneNumber}
+					defaultValue={phoneNumber}
 					onChange={handleChange}
 				/>
 			</div>

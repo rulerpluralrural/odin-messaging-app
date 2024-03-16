@@ -16,4 +16,4 @@ Creating a messaging app for The Odin Project backend course
 - https://unsplash.com/photos/just-for-fun-led-sign-STV98EbRy7w
 
 # Icon
-- https://www.flaticon.com/free-icons/comment = Comment icons created by Good Ware - Flaticon
+- https://www.flaticon.com/free-icons/message Message icons created by FACH - Flaticon

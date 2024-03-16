@@ -1,6 +1,6 @@
 import React from "react";
 
-const GenderInput = ({ user, handleChange }) => {
+const GenderInput = ({ handleChange, gender }) => {
 	return (
 		<>
 			<div>
@@ -11,7 +11,7 @@ const GenderInput = ({ user, handleChange }) => {
 					name="gender"
 					id="gender"
 					className="p-[10px] bg-transparent border-slate-300 border-2 rounded-sm"
-					defaultValue={user.gender}
+					defaultValue={gender}
 					onChange={handleChange}
 				>
 					<option value="Male">Male</option>

@@ -1,7 +1,7 @@
 import React from "react";
 const inputControl = "w-full border-2 border-slate-300 rounded-sm p-2";
 
-const OtherInputs = ({ user, handleChange }) => {
+const OtherInputs = ({ handleChange, education, work }) => {
 	return (
 		<>
 			<div>
@@ -10,8 +10,9 @@ const OtherInputs = ({ user, handleChange }) => {
 				</label>
 				<input
 					type="text"
+					name="education"
 					className={inputControl}
-					defaultValue={user.education}
+					defaultValue={education}
 					onChange={handleChange}
 				/>
 			</div>
@@ -21,8 +22,9 @@ const OtherInputs = ({ user, handleChange }) => {
 				</label>
 				<input
 					type="text"
+					name="work"
 					className={inputControl}
-					defaultValue={user.work}
+					defaultValue={work}
 					onChange={handleChange}
 				/>
 			</div>

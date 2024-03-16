@@ -9,7 +9,7 @@ const NavButtons = () => {
 					to={"/login"}
 					className="group relative inline-block overflow-hidden rounded-sm border tracking-wider
 					border-none bg-transparent px-5 py-2 hover:text-slate-700 focus:outline-none focus:ring
-					active:bg-green-200 active:text-slate-700"
+					active:bg-slate-100 active:text-slate-700"
 				>
 					<span className="ease absolute left-0 top-0 h-0 w-0 border-t-2 border-slate-800 transition-all duration-200 group-hover:w-full"></span>
 					<span className="ease absolute right-0 top-0 h-0 w-0 border-r-2 border-slate-800 transition-all duration-200 group-hover:h-full"></span>
@@ -21,7 +21,7 @@ const NavButtons = () => {
 					to={"/register"}
 					className="group relative inline-block overflow-hidden rounded-sm border tracking-wider
 					border-none bg-transparent px-5 py-2 hover:text-slate-700 focus:outline-none focus:ring
-					active:bg-green-200 active:text-slate-700"
+					active:bg-slate-100 active:text-slate-700"
 				>
 					<span className="ease absolute left-0 top-0 h-0 w-0 border-t-2 border-slate-800 transition-all duration-200 group-hover:w-full"></span>
 					<span className="ease absolute right-0 top-0 h-0 w-0 border-r-2 border-slate-800 transition-all duration-200 group-hover:h-full"></span>

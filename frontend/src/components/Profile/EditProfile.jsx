@@ -8,9 +8,10 @@ import AboutInput from "./EditProfile/AboutInput";
 import Buttons from "./EditProfile/Buttons";
 import AddressInput from "./EditProfile/AddressInput";
 import PhoneNumber from "./EditProfile/PhoneNumber";
+import Popup from "./EditProfile/Popup";
 
 const EditProfile = ({ user, setEditProfile }) => {
-	const [message, setMessage] = useState([]);
+	const [message, setMessage] = useState({});
 	const [formData, setFormData] = useState({
 		firstName: user.firstName,
 		lastName: user.lastName,
@@ -53,11 +54,18 @@ const EditProfile = ({ user, setEditProfile }) => {
 					},
 				}
 			).then((res) => res.json());
-			setMessage(response.user);
+
+			if (response.user) {
+				setMessage("You have successfully edit your profile!");
+				setEditProfile(false);
+			} else if (response.messages) {
+				setMessage(response.messages);
+			} else {
+				setMessage(response.message);
+			}
 		} catch (error) {
 			console.log(error);
 		}
-		setEditProfile(false);
 	};
 
 	const handleChange = (e) => {
@@ -69,20 +77,38 @@ const EditProfile = ({ user, setEditProfile }) => {
 
 	return (
 		<>
-			<form className="flex flex-col w-full gap-3" onSubmit={handleForm}>
+			<form
+				className="flex flex-col w-full gap-3 relative"
+				onSubmit={handleForm}
+			>
 				<div className="flex justify-between">
-					<NameInput user={user} handleChange={handleChange} />
+					<NameInput
+						handleChange={handleChange}
+						firstName={firstName}
+						lastName={lastName}
+					/>
 				</div>
 				<div className="flex justify-between">
-					<AgeInput user={user} handleChange={handleChange} />
-					<BirthdayInput user={user} handleChange={handleChange} />
-					<GenderInput user={user} handleChange={handleChange} />
+					<AgeInput handleChange={handleChange} age={age} />
+					<BirthdayInput handleChange={handleChange} birthday={birthday} />
+					<GenderInput handleChange={handleChange} gender={gender} />
 				</div>
-				<PhoneNumber user={user} handleChange={handleChange} />
-				<AddressInput user={user} handleChange={handleChange} />
-				<OtherInputs user={user} handleChange={handleChange} />
-				<AboutInput user={user} handleChange={handleChange} />
+				<PhoneNumber handleChange={handleChange} phoneNumber={phoneNumber} />
+				<AddressInput
+					handleChange={handleChange}
+					address={address}
+					email={email}
+				/>
+				<OtherInputs
+					handleChange={handleChange}
+					education={education}
+					work={work}
+				/>
+				<AboutInput handleChange={handleChange} about={about} />
 				<Buttons setEditProfile={setEditProfile} />
+				{message && message.length > 0 && (
+					<Popup setMessage={setMessage} message={message} />
+				)}
 			</form>
 		</>
 	);

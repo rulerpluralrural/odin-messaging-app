@@ -1,7 +1,7 @@
 import React from "react";
 const inputControl = "w-full border-2 border-slate-300 rounded-sm p-2";
 
-const NameInput = ({ user, handleChange }) => {
+const NameInput = ({ handleChange, firstName, lastName }) => {
 	return (
 		<>
 			<div>
@@ -10,8 +10,9 @@ const NameInput = ({ user, handleChange }) => {
 				</label>
 				<input
 					type="text"
+					name="firstName"
 					className={inputControl}
-					defaultValue={user.firstName}
+					defaultValue={firstName}
 					onChange={handleChange}
 					required
 				/>
@@ -22,8 +23,9 @@ const NameInput = ({ user, handleChange }) => {
 				</label>
 				<input
 					type="text"
+					name="lastName"
 					className={inputControl}
-					defaultValue={user.lastName}
+					defaultValue={lastName}
 					onChange={handleChange}
 					required
 				/>
