@@ -16,6 +16,9 @@ router.put("/user/:id", authenticateUser, userController.add_user_put);
 // PUT Route for editing user profile
 router.put("/user/profile/:id", authenticateUser, userController.edit_user_put);
 
+// PUT Route for editing profile picture
+router.put("/user/photo/:id/", authenticateUser, userController.edit_photo_put);
+
 // AUTHENTICATION
 
 // GET Route for session

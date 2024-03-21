@@ -9,8 +9,9 @@ const ProfileHeader = ({ user }) => {
 	const uploadImg = async () => {
 		try {
 			setLoading(true);
-			const response = await fetch("http:localhost:8000/upload", {
-				method: "POST",
+			const response = await fetch(`http:localhost:8000/api/v1/user/photo/${user._id}`, {
+				method: "PUT",
+				body: JSON.stringify(),
 				credentials: "include",
 			}).then((res) => res.json());
 			setLoading(false);
@@ -22,7 +23,7 @@ const ProfileHeader = ({ user }) => {
 	};
 
 	return (
-		<div className="flex items-center justify-center py-10 bg-slate-100 relative">
+		<div className="flex items-center justify-center py-10 bg-slate-100">
 			<div className="flex flex-col text-center items-center justify-center gap-1">
 				<img
 					src={user.profileImg}
@@ -44,7 +45,7 @@ const ProfileHeader = ({ user }) => {
 					<p>{user.about}</p>
 				</div>
 			</div>
-			{editPhoto && <EditPhoto />}
+			{editPhoto && <EditPhoto setEditPhoto={setEditPhoto} />}
 		</div>
 	);
 };
