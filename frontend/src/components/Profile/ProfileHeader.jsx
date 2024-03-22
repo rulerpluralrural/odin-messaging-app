@@ -3,17 +3,29 @@ import EditPhoto from "./EditPhoto";
 
 const ProfileHeader = ({ user }) => {
 	const [editPhoto, setEditPhoto] = useState(false);
-	const [imgFile, setImgFile] = useState("");
+	const [imgFile, setImgFile] = useState(null);
 	const [loading, setLoading] = useState(false);
 
-	const uploadImg = async () => {
+	const handleFileChange = (e) => {
+		const formData = new FormData()
+		formData.append('image',  e.target.files[0])
+		setImgFile(formData);
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
 		try {
 			setLoading(true);
-			const response = await fetch(`http:localhost:8000/api/v1/user/photo/${user._id}`, {
-				method: "PUT",
-				body: JSON.stringify(),
-				credentials: "include",
-			}).then((res) => res.json());
+
+			const response = await fetch(
+				`http:localhost:8000/api/v1/user/photo/${user._id}`,
+				{
+					method: "PUT",
+					body: JSON.stringify({ profileImg: imgFile }),
+					credentials: "include",
+				}
+			).then((res) => res.json());
 			setLoading(false);
 			setImgFile(response);
 		} catch (error) {
@@ -45,7 +57,14 @@ const ProfileHeader = ({ user }) => {
 					<p>{user.about}</p>
 				</div>
 			</div>
-			{editPhoto && <EditPhoto setEditPhoto={setEditPhoto} />}
+			{editPhoto && (
+				<EditPhoto
+					setEditPhoto={setEditPhoto}
+					handleFileChange={handleFileChange}
+					handleSubmit={handleSubmit}
+					imgFile={imgFile}
+				/>
+			)}
 		</div>
 	);
 };
