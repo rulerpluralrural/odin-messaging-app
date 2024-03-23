@@ -36,6 +36,7 @@ app.use(
 		allowedHeaders: ["Content-Type"],
 	})
 );
+app.use(express.static("./public"));
 
 // Routes
 app.get("/", (req, res) => {

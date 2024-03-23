@@ -148,36 +148,26 @@ export default {
 		}),
 	],
 
-	edit_photo_put: [
-		check("profileImg")
-			.isLength({ min: 1 })
-			.withMessage("Profile image URL is required."),
-		asyncHandler(async (req, res) => {
-			const errors = validationResult(req);
+	edit_photo_put: asyncHandler(async (req, res) => {
+	
+		const user = {
+			profileImg: `/images/profile-images/${req.file.filename}`,
+			_id: req.params.id,
+		};
 
-			if (!errors.isEmpty()) {
-				throw new BadRequestError(errors.array());
-			}
+		if (!user) {
+			throw new NotFoundError(`No user found with this id: ${req.params.id}`);
+		}
 
-			const user = {
-				profileImg: req.body.profileImg,
+		const updatedUser = await User.findByIdAndUpdate(
+			{
 				_id: req.params.id,
-			};
-
-			if (!user) {
-				throw new NotFoundError(`No user found with this id: ${req.params.id}`);
-			}
-
-			const updatedUser = await User.findByIdAndUpdate(
-				{
-					_id: req.params.id,
-				},
-				user
-			);
-
-			res.status(StatusCodes.OK).json({ user: updatedUser });
-		}),
-	],
+			},
+			user
+		);
+	
+		res.status(StatusCodes.OK).json({ msg: "Uploaded Successfully!" });
+	}),
 
 	// AUTHENTICATION
 
