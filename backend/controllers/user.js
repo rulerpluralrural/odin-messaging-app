@@ -149,7 +149,7 @@ export default {
 	],
 
 	edit_photo_put: asyncHandler(async (req, res) => {
-	
+		console.log(req.file)
 		const user = {
 			profileImg: `/images/profile-images/${req.file.filename}`,
 			_id: req.params.id,
@@ -159,13 +159,13 @@ export default {
 			throw new NotFoundError(`No user found with this id: ${req.params.id}`);
 		}
 
-		const updatedUser = await User.findByIdAndUpdate(
+		await User.findByIdAndUpdate(
 			{
 				_id: req.params.id,
 			},
 			user
 		);
-	
+
 		res.status(StatusCodes.OK).json({ msg: "Uploaded Successfully!" });
 	}),
 

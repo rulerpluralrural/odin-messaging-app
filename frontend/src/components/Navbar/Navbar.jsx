@@ -31,9 +31,9 @@ const Navbar = ({
 								</div>
 								<div className="w-[50px] aspect-square rounded-full bg-slate-300 border-slate-50 border-[1px] flex items-center text-sm">
 									<img
-										src={userInfo.profileImg}
+										src={`${import.meta.env.VITE_BACKEND_URL}${userInfo.profileImg}`}
 										alt={`${userInfo.firstName}.jpg`}
-										className="object-cover text-xs rounded-full aspect-square"
+										className="object-cover text-xs rounded-full aspect-square flex items-center justify-center"
 									/>
 								</div>
 								<Popover

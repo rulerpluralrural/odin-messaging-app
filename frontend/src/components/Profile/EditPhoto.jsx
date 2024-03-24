@@ -25,8 +25,8 @@ const EditPhoto = ({
 					<div className="flex flex-col">
 						<img
 							src={imgURL || userImg}
-							alt="Profile picture"
-							className="w-[200px] aspect-square rounded-full object-cover border-[2px] border-slate-50 mb-3 self-center"
+							alt="Profile Picture"
+							className="w-[200px] aspect-square rounded-full object-cover border-[2px] border-slate-50 mb-3 self-center flex items-center justify-center"
 						/>
 						<label
 							htmlFor="profileImg"

@@ -7,6 +7,8 @@ import errorHandler from "./middlewares/error-handler.js";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const app = express();
 
@@ -36,13 +38,15 @@ app.use(
 		allowedHeaders: ["Content-Type"],
 	})
 );
-app.use(express.static("./public"));
 
 // Routes
 app.get("/", (req, res) => {
 	res.redirect("/api/v1/users");
 });
 app.use("/api/v1", indexRouter);
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+app.use("/", express.static(resolve(__dirname, "./public")));
 
 // Error Handler
 app.use(errorHandler);

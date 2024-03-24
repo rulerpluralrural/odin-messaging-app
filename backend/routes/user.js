@@ -8,7 +8,7 @@ import authenticateUser from "../middlewares/auth.js";
 const storage = multer.diskStorage({
 	destination: "./public/images/profile-images",
 	filename: function (req, file, cb) {
-		cb(null, Date.now() + "-" + file.originalname);
+		cb(null, Date.now() + "_" + file.originalname.replace("-", "_"));
 	},
 });
 
@@ -30,7 +30,7 @@ router.put("/user/profile/:id", authenticateUser, userController.edit_user_put);
 router.put(
 	"/user/upload/:id",
 	authenticateUser,
-	upload.single('profileImg'),
+	upload.single("profileImg"),
 	userController.edit_photo_put
 );
 

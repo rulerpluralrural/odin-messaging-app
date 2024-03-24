@@ -15,7 +15,7 @@ const ProfileHeader = ({ user }) => {
 	};
 
 	const handleFileChange = (e) => {
-		setFile(e.target.files)
+		setFile(e.target.files);
 		fr.readAsDataURL(e.target.files[0]);
 	};
 
@@ -54,9 +54,9 @@ const ProfileHeader = ({ user }) => {
 					<PulseLoader />
 				) : (
 					<img
-						src={user.profileImg}
+						src={`${import.meta.env.VITE_BACKEND_URL}${user.profileImg}`}
 						alt={`${user.name}.jpg`}
-						className="rounded-full h-[200px] w-[200px] object-cover  border-4 border-white shadow-md shadow-slate-400 self-center cursor-pointer hover:opacity-90 transition-opacity"
+						className="rounded-full h-[200px] w-[200px] object-cover  border-4 border-white shadow-md shadow-slate-400 self-center cursor-pointer hover:opacity-90 transition-opacity flex items-center justify-center"
 						title="Edit profile picture"
 						onClick={() => {
 							setEditPhoto(true);
@@ -81,7 +81,7 @@ const ProfileHeader = ({ user }) => {
 					handleFileChange={handleFileChange}
 					handleSubmit={handleSubmit}
 					imgURL={imgURL}
-					userImg={user.profileImg}
+					userImg={`${import.meta.env.VITE_BACKEND_URL}${user.profileImg}`}
 				/>
 			)}
 		</div>
