@@ -149,7 +149,6 @@ export default {
 	],
 
 	edit_photo_put: asyncHandler(async (req, res) => {
-		console.log(req.file)
 		const user = {
 			profileImg: `/images/profile-images/${req.file.filename}`,
 			_id: req.params.id,

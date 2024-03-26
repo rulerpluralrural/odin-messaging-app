@@ -34,7 +34,7 @@ const UserMessage = ({ dateSent, message, profileImg, senderName }) => {
 		<div className="flex gap-2 py-5">
 			<div className="rounded-full aspect-square w-[50px] flex items-center self-start">
 				<img
-					src={profileImg}
+					src={`${import.meta.env.VITE_BACKEND_URL}${profileImg}`}
 					alt={`${senderName} .jpeg`}
 					className="object-cover rounded-full aspect-square text-xs text-center"
 				/>
@@ -55,7 +55,7 @@ const OtherMessage = ({ dateSent, message, senderName, profileImg }) => {
 		<div className=" flex flex-row-reverse gap-2 self-start w-full py-5">
 			<div className="rounded-full aspect-square w-[50px] border-[1px] border-slate-50 flex items-center self-start">
 				<img
-					src={profileImg}
+					src={`${import.meta.env.VITE_BACKEND_URL}${profileImg}`}
 					alt={`${senderName} .jpeg`}
 					className="object-cover rounded-full aspect-square text-xs text-center"
 				/>

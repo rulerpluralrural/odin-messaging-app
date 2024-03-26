@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import EditPhoto from "./EditPhoto";
 import { PulseLoader } from "react-spinners";
+import Alert from "./Alert";
 
 const ProfileHeader = ({ user }) => {
 	const [editPhoto, setEditPhoto] = useState(false);
@@ -37,10 +38,18 @@ const ProfileHeader = ({ user }) => {
 				}
 			).then((res) => res.json());
 			setLoading(false);
+
 			if (response.msg) {
 				setMessage(response.msg);
 				setEditPhoto(false);
+			} else {
+				setMessage("There was an error, Please try again.");
 			}
+
+			setTimeout(() => {
+				setMessage("")
+			}, 1500)
+
 		} catch (error) {
 			console.log(error);
 			setLoading(false);
@@ -49,6 +58,7 @@ const ProfileHeader = ({ user }) => {
 
 	return (
 		<div className="flex items-center justify-center py-10 bg-slate-100">
+			{message && <Alert message={message} />}
 			<div className="flex flex-col text-center items-center justify-center gap-1">
 				{loading ? (
 					<PulseLoader />
