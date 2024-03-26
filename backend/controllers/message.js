@@ -83,4 +83,24 @@ export default {
 			res.status(StatusCodes.CREATED).json({ sendMessage });
 		}),
 	],
+
+	edit_room: asyncHandler(async (req, res) => {
+		const room = {
+			roomImg: `/images/room-images/${req.file.filename}`,
+			_id: req.params.id,
+		};
+
+		if (!room) {
+			throw new NotFoundError(`No user found with this id: ${req.params.id}`);
+		}
+
+		await ChatRoom.findByIdAndUpdate(
+			{
+				_id: req.params.id,
+			},
+			room
+		);
+
+		res.status(StatusCodes.OK).json({ msg: "Uploaded Successfully!" });
+	})
 };
