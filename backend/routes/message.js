@@ -1,5 +1,6 @@
 import express from "express";
 const router = express.Router();
+import multer from "multer";
 
 import messageController from "../controllers/message.js";
 import authenticateUser from "../middlewares/auth.js";
@@ -20,7 +21,7 @@ router.post("/messages", authenticateUser, messageController.post_create_room);
 
 // PUT route for updating chat room
 router.put(
-	"/messages/:id",
+	"/messages/:id/upload",
 	authenticateUser,
 	upload.single("roomImg"),
 	messageController.edit_room

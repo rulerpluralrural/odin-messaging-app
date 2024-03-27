@@ -35,6 +35,9 @@ const ProfileHeader = ({ user }) => {
 					method: "PUT",
 					body: formData,
 					credentials: "include",
+					headers: {
+						["Content-Type"]: "application/json; charset=utf-8",
+					},
 				}
 			).then((res) => res.json());
 			setLoading(false);
@@ -47,9 +50,8 @@ const ProfileHeader = ({ user }) => {
 			}
 
 			setTimeout(() => {
-				setMessage("")
-			}, 1500)
-
+				setMessage("");
+			}, 1500);
 		} catch (error) {
 			console.log(error);
 			setLoading(false);

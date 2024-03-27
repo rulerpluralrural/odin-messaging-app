@@ -4,10 +4,16 @@ import ChatRooms from "../components/Messages/ChatRooms";
 import Sidebar from "../components/Messages/Sidebar";
 import AccessDenied from "./AccessDenied";
 import { Outlet } from "react-router-dom";
+import Popup from "../components/Messages/Popup";
 
 const Messages = ({ user }) => {
 	const [chatRooms, setChatRooms] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [editRoom, setEditRoom] = useState({});
+	const [file, setFile] = useState(null);
+	const [imgURL, setImgURL] = useState(null);
+	const [uploading, setUploading] = useState(false);
+	const [message, setMessage] = useState("");
 
 	useEffect(() => {
 		const getMessages = async () => {
@@ -28,17 +34,76 @@ const Messages = ({ user }) => {
 		getMessages();
 	}, []);
 
+	const fr = new FileReader();
+	fr.onload = function (e) {
+		setImgURL(e.target.result);
+	};
+
+	const handleFileChange = (e) => {
+		setFile(e.target.files);
+		fr.readAsDataURL(e.target.files[0]);
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		const formData = new FormData();
+		formData.append("roomImg", file[0]);
+
+		try {
+			setUploading(true);
+
+			const response = await fetch(
+				`${import.meta.env.VITE_SERVER_URL}/messages/${editRoom.roomID}/upload`,
+				{
+					method: "PUT",
+					body: formData,
+					credentials: "include",
+					headers: {
+						["Content-Type"]: "application/json; charset=utf-8",
+					},
+				}
+			).then((res) => res.json());
+			setUploading(false);
+
+			if (response.msg) {
+				setMessage(response.msg);
+				setEditPhoto(false);
+			} else {
+				setMessage("There was an error, Please try again.");
+			}
+
+			setTimeout(() => {
+				setMessage("");
+			}, 1500);
+		} catch (error) {
+			console.log(error);
+			setUploading(false);
+		}
+	};
+console.log(editRoom)
 	if (!user) {
 		return <AccessDenied />;
 	}
 
 	return (
 		<div className="grid grid-cols-[300px_1fr] bg-slate-100">
+			{editRoom && (
+				<Popup
+					setEditRoom={setEditRoom}
+					handleFileChange={handleFileChange}
+					handleSubmit={handleSubmit}
+					editRoom={editRoom}
+					imgURL={imgURL}
+				/>
+			)}
 			{chatRooms ? (
 				<Sidebar chatRooms={chatRooms} />
 			) : (
 				<div className="flex items-center justify-center   bg-white border-r-2  border-slate-200">
-					<p className=" animate-bounce text-lg text-slate-600 font-Roboto">Loading...</p>
+					<p className=" animate-bounce text-lg text-slate-600 font-Roboto">
+						Loading...
+					</p>
 				</div>
 			)}
 			<div className="flex flex-col px-7 pt-1 pb-8">
@@ -64,10 +129,13 @@ const Messages = ({ user }) => {
 										<ChatRooms
 											key={index}
 											roomName={item.name}
-											roomImg={item.roomImg}
+											roomImg={`${import.meta.env.VITE_BACKEND_URL}${
+												item.roomImg
+											}`}
 											time={item.time_formatted}
 											lastMessage={item.last_message}
 											roomID={item._id}
+											setEditRoom={setEditRoom}
 										/>
 									);
 								})}
