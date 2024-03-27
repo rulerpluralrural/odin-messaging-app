@@ -35,9 +35,6 @@ const ProfileHeader = ({ user }) => {
 					method: "PUT",
 					body: formData,
 					credentials: "include",
-					headers: {
-						["Content-Type"]: "application/json; charset=utf-8",
-					},
 				}
 			).then((res) => res.json());
 			setLoading(false);

@@ -9,7 +9,7 @@ import Popup from "../components/Messages/Popup";
 const Messages = ({ user }) => {
 	const [chatRooms, setChatRooms] = useState(null);
 	const [loading, setLoading] = useState(true);
-	const [editRoom, setEditRoom] = useState({});
+	const [editRoom, setEditRoom] = useState(null);
 	const [file, setFile] = useState(null);
 	const [imgURL, setImgURL] = useState(null);
 	const [uploading, setUploading] = useState(false);
@@ -59,16 +59,13 @@ const Messages = ({ user }) => {
 					method: "PUT",
 					body: formData,
 					credentials: "include",
-					headers: {
-						["Content-Type"]: "application/json; charset=utf-8",
-					},
 				}
 			).then((res) => res.json());
 			setUploading(false);
 
 			if (response.msg) {
 				setMessage(response.msg);
-				setEditPhoto(false);
+				setEditRoom(false);
 			} else {
 				setMessage("There was an error, Please try again.");
 			}
@@ -76,6 +73,7 @@ const Messages = ({ user }) => {
 			setTimeout(() => {
 				setMessage("");
 			}, 1500);
+
 		} catch (error) {
 			console.log(error);
 			setUploading(false);
@@ -95,6 +93,7 @@ console.log(editRoom)
 					handleSubmit={handleSubmit}
 					editRoom={editRoom}
 					imgURL={imgURL}
+					userImg={editRoom.roomImg}
 				/>
 			)}
 			{chatRooms ? (
