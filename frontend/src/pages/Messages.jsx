@@ -4,16 +4,10 @@ import ChatRooms from "../components/Messages/ChatRooms";
 import Sidebar from "../components/Messages/Sidebar";
 import AccessDenied from "./AccessDenied";
 import { Outlet } from "react-router-dom";
-import Popup from "../components/Messages/Popup";
 
 const Messages = ({ user }) => {
 	const [chatRooms, setChatRooms] = useState(null);
 	const [loading, setLoading] = useState(true);
-	const [editRoom, setEditRoom] = useState(null);
-	const [file, setFile] = useState(null);
-	const [imgURL, setImgURL] = useState(null);
-	const [uploading, setUploading] = useState(false);
-	const [message, setMessage] = useState("");
 
 	useEffect(() => {
 		const getMessages = async () => {
@@ -34,68 +28,13 @@ const Messages = ({ user }) => {
 		getMessages();
 	}, []);
 
-	const fr = new FileReader();
-	fr.onload = function (e) {
-		setImgURL(e.target.result);
-	};
-
-	const handleFileChange = (e) => {
-		setFile(e.target.files);
-		fr.readAsDataURL(e.target.files[0]);
-	};
-
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-
-		const formData = new FormData();
-		formData.append("roomImg", file[0]);
-
-		try {
-			setUploading(true);
-
-			const response = await fetch(
-				`${import.meta.env.VITE_SERVER_URL}/messages/${editRoom.roomID}/upload`,
-				{
-					method: "PUT",
-					body: formData,
-					credentials: "include",
-				}
-			).then((res) => res.json());
-			setUploading(false);
-
-			if (response.msg) {
-				setMessage(response.msg);
-				setEditRoom(false);
-			} else {
-				setMessage("There was an error, Please try again.");
-			}
-
-			setTimeout(() => {
-				setMessage("");
-			}, 1500);
-
-		} catch (error) {
-			console.log(error);
-			setUploading(false);
-		}
-	};
-console.log(editRoom)
+	
 	if (!user) {
 		return <AccessDenied />;
 	}
 
 	return (
 		<div className="grid grid-cols-[300px_1fr] bg-slate-100">
-			{editRoom && (
-				<Popup
-					setEditRoom={setEditRoom}
-					handleFileChange={handleFileChange}
-					handleSubmit={handleSubmit}
-					editRoom={editRoom}
-					imgURL={imgURL}
-					userImg={editRoom.roomImg}
-				/>
-			)}
 			{chatRooms ? (
 				<Sidebar chatRooms={chatRooms} />
 			) : (
@@ -134,7 +73,6 @@ console.log(editRoom)
 											time={item.time_formatted}
 											lastMessage={item.last_message}
 											roomID={item._id}
-											setEditRoom={setEditRoom}
 										/>
 									);
 								})}

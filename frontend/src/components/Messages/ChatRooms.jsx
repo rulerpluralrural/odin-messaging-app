@@ -7,7 +7,6 @@ const ChatRooms = ({
 	time,
 	lastMessage,
 	roomID,
-	setEditRoom,
 }) => {
 	return (
 		<Link
@@ -25,9 +24,6 @@ const ChatRooms = ({
 						} Img`}
 						className="rounded-full  aspect-square hover:opacity-90 transition-opacity"
 						title="Change Image"
-						onClick={() => {
-							setEditRoom({ roomImg, roomID });
-						}}
 					/>
 					<div className="absolute top-[2px] right-0 rounded-full bg-green-600 w-[12px] aspect-square border-2 border-white"></div>
 				</div>
