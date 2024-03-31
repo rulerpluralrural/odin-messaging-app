@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaRegPlusSquare } from "react-icons/fa";
-import  Popup  from "./Popup";
+import Popup from "./Popup";
 
 const ChatboxHeader = ({ selectedRoom, setPopupAddUser, popupAddUser }) => {
 	const [editRoom, setEditRoom] = useState(null);
@@ -29,7 +29,7 @@ const ChatboxHeader = ({ selectedRoom, setPopupAddUser, popupAddUser }) => {
 			setUploading(true);
 
 			const response = await fetch(
-				`${import.meta.env.VITE_SERVER_URL}/messages/${editRoom.roomID}/upload`,
+				`${import.meta.env.VITE_SERVER_URL}/messages/${editRoom._id}/upload`,
 				{
 					method: "PUT",
 					body: formData,
@@ -70,9 +70,11 @@ const ChatboxHeader = ({ selectedRoom, setPopupAddUser, popupAddUser }) => {
 				<img
 					src={`${import.meta.env.VITE_BACKEND_URL}${selectedRoom.roomImg}`}
 					alt={`${selectedRoom.name}.jpg`}
-					className="w-[50px] aspect-square rounded-sm border-[1px] border-slate-50 cursor-pointer hover:opacity-80 transition-opacity"
+					className="w-[50px] aspect-square rounded-md border-[1px] object-cover border-slate-50 cursor-pointer hover:opacity-80 transition-opacity flex items-center text-xs justify-center text-center"
 					title="Change Image"
-					onClick={setEditRoom}
+					onClick={() => {
+						setEditRoom(selectedRoom);
+					}}
 				/>
 				<div className="flex flex-col items-start justify-center">
 					<h1 className="font-bold text-xl text-slate-800 font-Roboto">

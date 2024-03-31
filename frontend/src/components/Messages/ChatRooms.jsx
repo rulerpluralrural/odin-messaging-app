@@ -22,7 +22,7 @@ const ChatRooms = ({
 								? roomName.substring(0, 10) + "..."
 								: roomName
 						} Img`}
-						className="rounded-full  aspect-square hover:opacity-90 transition-opacity"
+						className="rounded-full  aspect-square hover:opacity-90 transition-opacity object-cover"
 						title="Change Image"
 					/>
 					<div className="absolute top-[2px] right-0 rounded-full bg-green-600 w-[12px] aspect-square border-2 border-white"></div>

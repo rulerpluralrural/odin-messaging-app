@@ -28,7 +28,6 @@ const Messages = ({ user }) => {
 		getMessages();
 	}, []);
 
-	
 	if (!user) {
 		return <AccessDenied />;
 	}

@@ -6,10 +6,10 @@ const Popup = ({
 	setEditRoom,
 	handleFileChange,
 	handleSubmit,
-	userImg,
+	imgURL,
 	roomImg,
 }) => {
-console.log(roomImg)
+
 	return (
 		<div className="fixed w-full h-full inset-0 bg-black bg-opacity-90 flex items-center justify-center z-10">
 			<div className="bg-white pb-8 pt-5 px-5 rounded-md shadow-sm shadow-slate-500 flex flex-col gap-3 w-[350px] relative">
@@ -25,7 +25,7 @@ console.log(roomImg)
 				<form className="flex flex-col gap-2" onSubmit={handleSubmit}>
 					<div className="flex flex-col">
 						<img
-							src={ userImg || roomImg}
+							src={ imgURL || roomImg}
 							alt="Chatroom Image"
 							className="w-[200px] aspect-square rounded-full object-cover border-[2px] border-slate-50 mb-3 self-center flex items-center justify-center"
 						/>
