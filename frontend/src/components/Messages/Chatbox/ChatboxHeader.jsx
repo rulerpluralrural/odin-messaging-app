@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { FaRegPlusSquare } from "react-icons/fa";
-import Popup from "./Popup";
+import PopupEditRoom from "../Popups/PopupEditRoom";
+import PopupMessage from "../Popups/PopupMessage";
 
-const ChatboxHeader = ({ selectedRoom, setPopupAddUser, popupAddUser }) => {
+const ChatboxHeader = ({
+	selectedRoom,
+	setPopupAddUser,
+	popupAddUser,
+	setRefreshKey,
+}) => {
 	const [editRoom, setEditRoom] = useState(null);
 	const [file, setFile] = useState(null);
 	const [imgURL, setImgURL] = useState(null);
-	const [uploading, setUploading] = useState(false);
 	const [message, setMessage] = useState("");
 
 	const fr = new FileReader();
@@ -26,8 +31,6 @@ const ChatboxHeader = ({ selectedRoom, setPopupAddUser, popupAddUser }) => {
 		formData.append("roomImg", file[0]);
 
 		try {
-			setUploading(true);
-
 			const response = await fetch(
 				`${import.meta.env.VITE_SERVER_URL}/messages/${editRoom._id}/upload`,
 				{
@@ -36,28 +39,24 @@ const ChatboxHeader = ({ selectedRoom, setPopupAddUser, popupAddUser }) => {
 					credentials: "include",
 				}
 			).then((res) => res.json());
-			setUploading(false);
 
 			if (response.msg) {
 				setMessage(response.msg);
 				setEditRoom(false);
+				setRefreshKey((prev) => prev + 1);
 			} else {
 				setMessage("There was an error, Please try again.");
 			}
 
-			setTimeout(() => {
-				setMessage("");
-			}, 1500);
 		} catch (error) {
 			console.log(error);
-			setUploading(false);
 		}
 	};
 
 	return (
 		<div className="flex justify-between items-center border-b-2 border-slate-200 pb-3 ">
 			{editRoom && (
-				<Popup
+				<PopupEditRoom
 					setEditRoom={setEditRoom}
 					handleFileChange={handleFileChange}
 					handleSubmit={handleSubmit}
@@ -66,6 +65,7 @@ const ChatboxHeader = ({ selectedRoom, setPopupAddUser, popupAddUser }) => {
 					roomImg={`${import.meta.env.VITE_BACKEND_URL}${selectedRoom.roomImg}`}
 				/>
 			)}
+			{message && <PopupMessage message={message} setMessage={setMessage} />}
 			<div className="flex gap-2">
 				<img
 					src={`${import.meta.env.VITE_BACKEND_URL}${selectedRoom.roomImg}`}

@@ -3,15 +3,20 @@ import Message from "./Message";
 import AddUserForm from "../AddUsers/AddUserForm";
 import { PulseLoader } from "react-spinners";
 import { useParams } from "react-router-dom";
-import ChatboxHeader from "./ChatboxHeader";
-import ChatboxInput from "./ChatboxInput";
-import ChatboxMessages from "./ChatboxMessages";
+import ChatboxHeader from "./Chatbox/ChatboxHeader";
+import ChatboxInput from "./Chatbox/ChatboxInput";
+import ChatboxMessages from "./Chatbox/ChatboxMessages";
 
-const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
+const ChatBox = ({
+	user,
+	popupAddUser,
+	setPopupAddUser,
+	refreshKey,
+	setRefreshKey,
+}) => {
 	const [message, editMessage] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [room, setRoom] = useState(null);
-	const [refreshKey, setRefreshKey] = useState(0);
 	const { id } = useParams();
 
 	const getMessages = async () => {
@@ -73,6 +78,7 @@ const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
 						selectedRoom={room}
 						popupAddUser={popupAddUser}
 						setPopupAddUser={setPopupAddUser}
+						setRefreshKey={setRefreshKey}
 					/>
 					<div className="flex justify-center items-center h-[600px] max-h-[600px]">
 						<PulseLoader size={15} color="#0D98BA" />
@@ -84,6 +90,7 @@ const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
 						selectedRoom={room}
 						popupAddUser={popupAddUser}
 						setPopupAddUser={setPopupAddUser}
+						setRefreshKey={setRefreshKey}
 					/>
 					<ChatboxMessages selectedRoom={room} user={user} />
 				</>
@@ -105,6 +112,5 @@ const ChatBox = ({ user, popupAddUser, setPopupAddUser }) => {
 		</div>
 	);
 };
-
 
 export default ChatBox;

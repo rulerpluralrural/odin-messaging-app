@@ -2,12 +2,13 @@ import React from "react";
 import { FaUpload } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 
-const Popup = ({
+const PopupEditRoom = ({
 	setEditRoom,
 	handleFileChange,
 	handleSubmit,
 	imgURL,
 	roomImg,
+
 }) => {
 
 	return (
@@ -55,4 +56,4 @@ const Popup = ({
 	);
 };
 
-export default Popup;
+export default PopupEditRoom;
