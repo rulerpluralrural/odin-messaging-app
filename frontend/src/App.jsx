@@ -16,6 +16,7 @@ function App() {
 	const [loadingInfo, setLoadingInfo] = useState(true);
 	const [refreshKey, setRefreshKey] = useState(0);
 	const [popupAddUser, setPopupAddUser] = useState(false);
+	const [popupDeleteRoom, setPopupDeleteRoom] = useState(false);
 
 	useEffect(() => {
 		const getSession = async () => {
@@ -91,6 +92,8 @@ function App() {
 										setPopupAddUser={setPopupAddUser}
 										refreshKey={refreshKey}
 										setRefreshKey={setRefreshKey}
+										popupDeleteRoom={popupDeleteRoom}
+										setPopupDeleteRoom={setPopupDeleteRoom}
 									/>
 								</div>
 							}

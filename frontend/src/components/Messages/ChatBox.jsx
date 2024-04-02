@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Message from "./Message";
-import AddUserForm from "../AddUsers/AddUserForm";
+import AddUserForm from "./Popups/AddUsers/AddUserForm";
 import { PulseLoader } from "react-spinners";
 import { useParams } from "react-router-dom";
 import ChatboxHeader from "./Chatbox/ChatboxHeader";
 import ChatboxInput from "./Chatbox/ChatboxInput";
 import ChatboxMessages from "./Chatbox/ChatboxMessages";
+import DeleteRoom from "./Popups/DeleteRoom/DeleteRoom";
 
 const ChatBox = ({
 	user,
@@ -13,6 +14,8 @@ const ChatBox = ({
 	setPopupAddUser,
 	refreshKey,
 	setRefreshKey,
+	popupDeleteRoom,
+	setPopupDeleteRoom,
 }) => {
 	const [message, editMessage] = useState("");
 	const [loading, setLoading] = useState(true);
@@ -79,6 +82,8 @@ const ChatBox = ({
 						popupAddUser={popupAddUser}
 						setPopupAddUser={setPopupAddUser}
 						setRefreshKey={setRefreshKey}
+						popupDeleteRoom={popupDeleteRoom}
+						setPopupDeleteRoom={setPopupDeleteRoom}
 					/>
 					<div className="flex justify-center items-center h-[600px] max-h-[600px]">
 						<PulseLoader size={15} color="#0D98BA" />
@@ -91,6 +96,8 @@ const ChatBox = ({
 						popupAddUser={popupAddUser}
 						setPopupAddUser={setPopupAddUser}
 						setRefreshKey={setRefreshKey}
+						popupDeleteRoom={popupDeleteRoom}
+						setPopupDeleteRoom={setPopupDeleteRoom}
 					/>
 					<ChatboxMessages selectedRoom={room} user={user} />
 				</>
@@ -108,6 +115,9 @@ const ChatBox = ({
 					id={id}
 					setRefreshKey={setRefreshKey}
 				/>
+			)}
+			{popupDeleteRoom && (
+				<DeleteRoom setPopupDeleteRoom={setPopupDeleteRoom} selectedRoom={room}/>
 			)}
 		</div>
 	);

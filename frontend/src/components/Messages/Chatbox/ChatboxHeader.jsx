@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaRegPlusSquare } from "react-icons/fa";
+import { FaTrash, FaUser } from "react-icons/fa";
 import PopupEditRoom from "../Popups/PopupEditRoom";
 import PopupMessage from "../Popups/PopupMessage";
 
@@ -8,6 +8,8 @@ const ChatboxHeader = ({
 	setPopupAddUser,
 	popupAddUser,
 	setRefreshKey,
+	setPopupDeleteRoom,
+	popupDeleteRoom,
 }) => {
 	const [editRoom, setEditRoom] = useState(null);
 	const [file, setFile] = useState(null);
@@ -47,7 +49,6 @@ const ChatboxHeader = ({
 			} else {
 				setMessage("There was an error, Please try again.");
 			}
-
 		} catch (error) {
 			console.log(error);
 		}
@@ -98,14 +99,23 @@ const ChatboxHeader = ({
 					)
 				</p>
 			</div>
-			<div
-				className="flex items-end gap-2 bg-blue-500 text-white cursor-pointer p-3 rounded-md hover:bg-blue-600 transition-colors"
-				onClick={() => {
-					setPopupAddUser(!popupAddUser);
-				}}
-			>
-				<p className="font-Roboto">Add user</p>
-				<FaRegPlusSquare className="text-2xl " />
+			<div className="flex gap-1">
+				<div
+					className="flex items-end gap-2 bg-blue-500 text-white cursor-pointer p-4 rounded-full hover:bg-blue-600 transition-colors"
+					onClick={() => {
+						setPopupAddUser(!popupAddUser);
+					}}
+				>
+					<FaUser className="text-lg" />
+				</div>
+				<div
+					className="flex items-center gap-2 bg-red-500 text-white cursor-pointer p-4 rounded-full aspect-square hover:bg-red-600 transition-colors"
+					onClick={() => {
+						setPopupDeleteRoom(!popupDeleteRoom);
+					}}
+				>
+					<FaTrash className="font-lg" />
+				</div>
 			</div>
 		</div>
 	);

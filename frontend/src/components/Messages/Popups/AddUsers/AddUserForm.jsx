@@ -64,7 +64,7 @@ const AddUserForm = ({ setPopupAddUser, id, setRefreshKey }) => {
 	};
 
 	return (
-		<div className="fixed inset-0 h-screen bg-slate-700 bg-opacity-80 flex items-center justify-center z">
+		<div className="fixed inset-0 h-screen bg-slate-700 bg-opacity-80 flex items-center justify-center z-10">
 			<div className="flex flex-col gap-3 bg-white p-10 relative shadow-sm shadow-slate-700 rounded-md overflow-scroll w-[500px]">
 				<FaXmark
 					onClick={() => {
