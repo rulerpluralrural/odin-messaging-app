@@ -14,7 +14,7 @@ const Messages = ({ user }) => {
 			try {
 				setLoading(true);
 
-				const response = await fetch("http://localhost:8000/api/v1/messages", {
+				const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/messages`,{
 					credentials: "include",
 				}).then((res) => res.json());
 				setChatRooms(response.chatRooms);

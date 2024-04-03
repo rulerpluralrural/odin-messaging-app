@@ -14,7 +14,7 @@ const AddUserForm = ({ setPopupAddUser, id, setRefreshKey }) => {
 		try {
 			setLoading(true);
 			const response = await fetch(
-				`http://localhost:8000/api/v1/users?search=${value}`,
+				`${import.meta.env.VITE_BACKEND_URL}/api/v1/users?search=${value}`,
 				{
 					credentials: "include",
 				}
@@ -36,7 +36,7 @@ const AddUserForm = ({ setPopupAddUser, id, setRefreshKey }) => {
 		try {
 			setLoading(true);
 
-			const response = await fetch(`http://localhost:8000/api/v1/user/${id}`, {
+			const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/${id}`, {
 				method: "PUT",
 				credentials: "include",
 				body: JSON.stringify({ id: selectedUser }),

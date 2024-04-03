@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import PopupDeleteMessage from "../Popups/ChatboxMessage/PopupDeleteMessage";
 
 const Message = ({
 	message,
@@ -8,6 +9,8 @@ const Message = ({
 	dateSent,
 	user,
 }) => {
+	const [popup, togglePopup] = useState(false);
+
 	return (
 		<div className="flex items-center">
 			{user._id === senderID ? (
@@ -16,6 +19,8 @@ const Message = ({
 					message={message}
 					profileImg={profileImg}
 					senderName={senderName}
+					popup={popup}
+					togglePopup={togglePopup}
 				/>
 			) : (
 				<OtherMessage
@@ -29,9 +34,18 @@ const Message = ({
 	);
 };
 
-const UserMessage = ({ dateSent, message, profileImg, senderName }) => {
+const UserMessage = ({
+	dateSent,
+	message,
+	profileImg,
+	senderName,
+	popup,
+	togglePopup,
+}) => {
+	console.log(popup);
 	return (
-		<div className="flex gap-2 py-5">
+		<div className="flex gap-2 py-5 relative">
+			{popup && <PopupDeleteMessage />}
 			<div className="rounded-full aspect-square w-[50px] flex items-center self-start">
 				<img
 					src={`${import.meta.env.VITE_BACKEND_URL}${profileImg}`}
@@ -41,7 +55,12 @@ const UserMessage = ({ dateSent, message, profileImg, senderName }) => {
 			</div>
 			<div className="flex flex-col justify-between gap-1">
 				<p className="font-bold font-Roboto">You</p>
-				<div className="bg-blue-500 text-white font-sans tracking-wide px-5 py-3 rounded-xl rounded-tl-none">
+				<div
+					className="bg-blue-600 text-white font-sans tracking-wide px-5 py-3 rounded-xl rounded-tl-none cursor-pointer hover:bg-blue-500 transition-colors"
+					onClick={() => {
+						togglePopup(!popup);
+					}}
+				>
 					<p>{message}</p>
 				</div>
 			</div>

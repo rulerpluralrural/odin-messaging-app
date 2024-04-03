@@ -1,7 +1,7 @@
 import React from "react";
 
 const DeleteRoom = ({ setPopupDeleteRoom, selectedRoom }) => {
-	console.log(selectedRoom);
+	
 	return (
 		<div className="fixed inset-0 h-screen bg-slate-700 bg-opacity-80 flex items-center justify-center z-10">
 			<div className="flex flex-col gap-3 bg-white p-10 relative shadow-sm shadow-slate-700 rounded-md text-center">

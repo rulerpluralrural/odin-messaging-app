@@ -32,7 +32,7 @@ const Register = () => {
 		try {
 			setLoading(true);
 
-			const response = await fetch("http://localhost:8000/api/v1/register", {
+			const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/register`, {
 				method: "POST",
 				body: JSON.stringify(formData),
 				credentials: "include",

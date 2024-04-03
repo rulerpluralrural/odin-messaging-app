@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Message from "./Message";
-import AddUserForm from "./Popups/AddUsers/AddUserForm";
+import AddUserForm from "../Popups/AddUsers/AddUserForm";
 import { PulseLoader } from "react-spinners";
 import { useParams } from "react-router-dom";
-import ChatboxHeader from "./Chatbox/ChatboxHeader";
-import ChatboxInput from "./Chatbox/ChatboxInput";
-import ChatboxMessages from "./Chatbox/ChatboxMessages";
-import DeleteRoom from "./Popups/DeleteRoom/DeleteRoom";
+import ChatboxHeader from "./ChatboxHeader";
+import ChatboxInput from "./ChatboxInput";
+import ChatboxMessages from "./ChatboxMessages";
+import DeleteRoom from "../Popups/DeleteRoom/DeleteRoom";
 
 const ChatBox = ({
 	user,
@@ -27,7 +27,7 @@ const ChatBox = ({
 			setLoading(true);
 
 			const response = await fetch(
-				`http://localhost:8000/api/v1/message/${id}`,
+				`${import.meta.env.VITE_BACKEND_URL}/api/v1/message/${id}`,
 				{
 					credentials: "include",
 				}
@@ -50,7 +50,7 @@ const ChatBox = ({
 		e.preventDefault();
 
 		try {
-			await fetch(`http://localhost:8000/api/v1/message/${id}`, {
+			await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/message/${id}`, {
 				credentials: "include",
 				method: "POST",
 				body: JSON.stringify({ message }),

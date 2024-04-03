@@ -6,7 +6,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Messages from "./pages/Messages";
 import { useEffect, useState } from "react";
-import ChatBox from "./components/Messages/ChatBox";
+import ChatBox from "./components/Messages/Chatbox/ChatBox";
 import { PulseLoader } from "react-spinners";
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
 			try {
 				setLoadingSession(true);
 
-				const response = await fetch("http://localhost:8000/api/v1/session", {
+				const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/session`, {
 					credentials: "include",
 				}).then((res) => res.json());
 
@@ -39,7 +39,7 @@ function App() {
 			try {
 				setLoadingInfo(true);
 
-				const response = await fetch("http://localhost:8000/api/v1/user", {
+				const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user`, {
 					credentials: "include",
 				}).then((res) => res.json());
 

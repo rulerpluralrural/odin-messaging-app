@@ -28,7 +28,7 @@ const Login = ({ setUser, user, setRefreshKey }) => {
 		try {
 			setLoading(true);
 
-			const response = await fetch("http://localhost:8000/api/v1/login", {
+			const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/login`, {
 				method: "POST",
 				body: JSON.stringify(formData),
 				credentials: "include",
