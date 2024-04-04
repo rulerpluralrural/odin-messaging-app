@@ -44,20 +44,35 @@ export default {
 		res.status(StatusCodes.OK).json({ room });
 	}),
 
-	post_create_room: asyncHandler(async (req, res) => {
-		const newRoom = new ChatRoom({
-			name: req.body.name,
-			users: [{ _id: req.user._id }],
-			messages: [],
-		});
+	post_create_room: [
+		check("roomName")
+			.isLength({ min: 1 })
+			.withMessage("Chat room name is required."),
 
-		await newRoom.save();
-		res.status(StatusCodes.CREATED).json({ newRoom });
-	}),
+		asyncHandler(async (req, res) => {
+			const errors = validationResult(req);
+
+			if (!errors.isEmpty()) {
+				throw new BadRequestError(errors.array());
+			}
+
+			const newRoom = new ChatRoom({
+				name: req.body.roomName,
+				users: [{ _id: req.user._id }],
+				roomImg: req.body.roomImg,
+				messages: [],
+			});
+
+			await newRoom.save();
+			res
+				.status(StatusCodes.CREATED)
+				.json({ msg: `Successfully created new room: ${req.body.name}` });
+		}),
+	],
 
 	delete_room: asyncHandler(async (req, res) => {
 		const roomID = req.params.id;
-		const room = await ChatRoom.findByIdAndDelete({ _id: roomID });
+		await ChatRoom.findByIdAndDelete({ _id: roomID });
 
 		res.status(StatusCodes.OK).json({ msg: "Chatroom deleted successfully!" });
 	}),

@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { FaPlusCircle, FaRegPlusSquare, FaSearch } from "react-icons/fa";
+import { FaPlus, FaSearch } from "react-icons/fa";
 import ChatRooms from "../components/Messages/ChatRooms";
 import Sidebar from "../components/Messages/Sidebar";
 import AccessDenied from "./AccessDenied";
 import { Outlet } from "react-router-dom";
-import { FaRegSquarePlus } from "react-icons/fa6";
+import AddRoom from "../components/Messages/Popups/AddRooms/AddRoom";
 
 const Messages = ({ user }) => {
 	const [chatRooms, setChatRooms] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [notif, setNotif] = useState("");
+	const [addRoom, setAddRoom] = useState(false);
+	const [formData, setFormData] = useState({
+		roomName: "",
+		roomImg: "",
+	});
+	const { roomName, roomImg } = formData;
 
 	useEffect(() => {
 		const getMessages = async () => {
@@ -32,6 +39,39 @@ const Messages = ({ user }) => {
 		getMessages();
 	}, []);
 
+	const handleChange = (e) => {
+		setFormData((prevState) => ({
+			...prevState,
+			[e.target.name]: e.target.value,
+		}));
+	};
+
+	const handleForm = async (e) => {
+		e.target.preventDefault();
+
+		try {
+			const response = await fetch(
+				`${import.meta.env.VITE_BACKEND_URL}/api/v1/messages`,
+				{
+					method: "POST",
+					credentials: "include",
+					body: JSON.stringify(formData),
+					headers: {
+						["Content-Type"]: "application/json; charset=utf-8",
+					},
+				}
+			).then((res) => res.json());
+
+			if (response.msg) {
+				setNotif(response.msg);
+			} else {
+				setNotif("There was an error, please try again.");
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	if (!user) {
 		return <AccessDenied />;
 	}
@@ -46,6 +86,15 @@ const Messages = ({ user }) => {
 						Loading...
 					</p>
 				</div>
+			)}
+			{addRoom && (
+				<AddRoom
+					setAddRoom={setAddRoom}
+					handleForm={handleForm}
+					handleChange={handleChange}
+					roomName={roomName}
+					roomImg={roomImg}
+				/>
 			)}
 			<div className="flex flex-col px-7 pt-1 pb-8">
 				<h1 className="text-2xl text-slate-800 font-serif py-3">Chat</h1>
@@ -79,8 +128,14 @@ const Messages = ({ user }) => {
 										/>
 									);
 								})}
-								<div className="flex flex-col items-center justify-center px-5 py-4">
-									<FaRegPlusSquare className="cursor-pointer text-3xl text-slate-600 hover:text-slate-700"></FaRegPlusSquare>
+								<div
+									className="flex flex-col items-center justify-center px-5 py-4 border-b-[1px] border-slate-300 cursor-pointer hover:bg-blue-500 group transition-all"
+									title="Create new room"
+									onClick={() => {
+										setAddRoom(!addRoom);
+									}}
+								>
+									<FaPlus className="text-4xl border-4 border-slate-500 rounded-full p-1 text-slate-500 group-hover:text-white group-hover:border-white"></FaPlus>
 								</div>
 							</div>
 						)}
