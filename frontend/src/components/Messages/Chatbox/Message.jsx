@@ -42,7 +42,7 @@ const UserMessage = ({
 	popup,
 	togglePopup,
 }) => {
-	console.log(popup);
+	
 	return (
 		<div className="flex gap-2 py-5 relative">
 			{popup && <PopupDeleteMessage />}

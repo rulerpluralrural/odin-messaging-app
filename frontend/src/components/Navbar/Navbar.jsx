@@ -7,7 +7,6 @@ import { ClipLoader } from "react-spinners";
 
 const Navbar = ({
 	userInfo,
-	userSession,
 	setUserInfo,
 	setUserSession,
 	loadingInfo,

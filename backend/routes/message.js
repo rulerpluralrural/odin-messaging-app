@@ -4,6 +4,7 @@ import multer from "multer";
 
 import messageController from "../controllers/message.js";
 import authenticateUser from "../middlewares/auth.js";
+import message from "../models/message.js";
 
 const storage = multer.diskStorage({
 	destination: "./public/images/room-images",
@@ -19,6 +20,9 @@ router.get("/messages", authenticateUser, messageController.get_rooms);
 // POST route for creating a chat room
 router.post("/messages", authenticateUser, messageController.post_create_room);
 
+// POST route for deleting chat room
+router.post("/messages/:id/delete", authenticateUser, messageController.delete_room)
+
 // PUT route for updating chat room
 router.put(
 	"/messages/:id/upload",
@@ -33,6 +37,7 @@ router.post(
 	authenticateUser,
 	messageController.post_send_message
 );
+
 
 // GET route for messages in a chatroom
 router.get("/message/:id", authenticateUser, messageController.get_messages);

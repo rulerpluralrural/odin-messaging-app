@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { FaPlusCircle, FaRegPlusSquare, FaSearch } from "react-icons/fa";
 import ChatRooms from "../components/Messages/ChatRooms";
 import Sidebar from "../components/Messages/Sidebar";
 import AccessDenied from "./AccessDenied";
 import { Outlet } from "react-router-dom";
+import { FaRegSquarePlus } from "react-icons/fa6";
 
 const Messages = ({ user }) => {
 	const [chatRooms, setChatRooms] = useState(null);
@@ -14,9 +15,12 @@ const Messages = ({ user }) => {
 			try {
 				setLoading(true);
 
-				const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/messages`,{
-					credentials: "include",
-				}).then((res) => res.json());
+				const response = await fetch(
+					`${import.meta.env.VITE_BACKEND_URL}/api/v1/messages`,
+					{
+						credentials: "include",
+					}
+				).then((res) => res.json());
 				setChatRooms(response.chatRooms);
 				setLoading(false);
 			} catch (error) {
@@ -75,6 +79,9 @@ const Messages = ({ user }) => {
 										/>
 									);
 								})}
+								<div className="flex flex-col items-center justify-center px-5 py-4">
+									<FaRegPlusSquare className="cursor-pointer text-3xl text-slate-600 hover:text-slate-700"></FaRegPlusSquare>
+								</div>
 							</div>
 						)}
 					</div>

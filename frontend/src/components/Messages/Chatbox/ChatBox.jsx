@@ -7,6 +7,7 @@ import ChatboxHeader from "./ChatboxHeader";
 import ChatboxInput from "./ChatboxInput";
 import ChatboxMessages from "./ChatboxMessages";
 import DeleteRoom from "../Popups/DeleteRoom/DeleteRoom";
+import DeleteNotif from "../Popups/DeleteRoom/DeleteNotif";
 
 const ChatBox = ({
 	user,
@@ -18,6 +19,7 @@ const ChatBox = ({
 	setPopupDeleteRoom,
 }) => {
 	const [message, editMessage] = useState("");
+	const [deleteNotif, setDeleteNotif] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [room, setRoom] = useState(null);
 	const { id } = useParams();
@@ -117,8 +119,14 @@ const ChatBox = ({
 				/>
 			)}
 			{popupDeleteRoom && (
-				<DeleteRoom setPopupDeleteRoom={setPopupDeleteRoom} selectedRoom={room}/>
+				<DeleteRoom
+					setPopupDeleteRoom={setPopupDeleteRoom}
+					selectedRoom={room}
+					id={id}
+					setDeleteNotif={setDeleteNotif}
+				/>
 			)}
+			{deleteNotif && <DeleteNotif message={deleteNotif} setDeleteNotif={setDeleteNotif} setRefreshKey={setRefreshKey}/>}
 		</div>
 	);
 };

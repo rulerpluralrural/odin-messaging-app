@@ -55,6 +55,33 @@ export default {
 		res.status(StatusCodes.CREATED).json({ newRoom });
 	}),
 
+	delete_room: asyncHandler(async (req, res) => {
+		const roomID = req.params.id;
+		const room = await ChatRoom.findByIdAndDelete({ _id: roomID });
+
+		res.status(StatusCodes.OK).json({ msg: "Chatroom deleted successfully!" });
+	}),
+
+	edit_room: asyncHandler(async (req, res) => {
+		const room = {
+			roomImg: `/images/room-images/${req.file.filename}`,
+			_id: req.params.id,
+		};
+
+		if (!room) {
+			throw new NotFoundError(`No user found with this id: ${req.params.id}`);
+		}
+
+		await ChatRoom.findByIdAndUpdate(
+			{
+				_id: req.params.id,
+			},
+			room
+		);
+
+		res.status(StatusCodes.OK).json({ msg: "Uploaded Successfully!" });
+	}),
+
 	post_send_message: [
 		check("message").isLength({ min: 1 }).withMessage("Message is required"),
 		check("id").isLength({ min: 1 }).withMessage("Room ID is required"),
@@ -83,24 +110,4 @@ export default {
 			res.status(StatusCodes.CREATED).json({ sendMessage });
 		}),
 	],
-
-	edit_room: asyncHandler(async (req, res) => {
-		const room = {
-			roomImg: `/images/room-images/${req.file.filename}`,
-			_id: req.params.id,
-		};
-
-		if (!room) {
-			throw new NotFoundError(`No user found with this id: ${req.params.id}`);
-		}
-
-		await ChatRoom.findByIdAndUpdate(
-			{
-				_id: req.params.id,
-			},
-			room
-		);
-
-		res.status(StatusCodes.OK).json({ msg: "Uploaded Successfully!" });
-	})
 };

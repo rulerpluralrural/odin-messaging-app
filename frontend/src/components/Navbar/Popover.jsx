@@ -11,7 +11,7 @@ const Popover = ({ setUserInfo, setUserSession, isPopoverOpen, setIsPopoverOpen 
 
 	const logout = async () => {
 		try {
-			await fetch("http://localhost:8000/api/v1/logout", {
+			await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/logout`, {
 				method: "POST",
 				credentials: "include",
 			});
