@@ -101,7 +101,7 @@ const ChatBox = ({
 						popupDeleteRoom={popupDeleteRoom}
 						setPopupDeleteRoom={setPopupDeleteRoom}
 					/>
-					<ChatboxMessages selectedRoom={room} user={user} />
+					<ChatboxMessages selectedRoom={room} user={user} setRefreshKey={setRefreshKey}/>
 				</>
 			)}
 

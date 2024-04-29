@@ -5,6 +5,7 @@ import Message from "../models/message.js";
 import User from "../models/user.js";
 import ChatRoom from "../models/chatRoom.js";
 import { BadRequestError, NotFoundError } from "../errors/index.js";
+import { ObjectId } from "mongodb";
 
 export default {
 	get_rooms: asyncHandler(async (req, res) => {
@@ -74,7 +75,9 @@ export default {
 		const roomID = req.params.id;
 		await ChatRoom.findByIdAndDelete({ _id: roomID });
 
-		res.status(StatusCodes.OK).json({ msg: "Chatroom deleted successfully!" });
+		res
+			.status(StatusCodes.OK)
+			.json({ msg: "Chatroom has been deleted successfully!" });
 	}),
 
 	edit_room: asyncHandler(async (req, res) => {
@@ -125,4 +128,31 @@ export default {
 			res.status(StatusCodes.CREATED).json({ sendMessage });
 		}),
 	],
+
+	delete_message: asyncHandler(async (req, res) => {
+		const messageID = req.params.id;
+		const roomID = req.body.roomID;
+
+		if (!messageID) {
+			throw new NotFoundError(`There is no message with this ID: ${messageID}`);
+		} else if (!roomID) {
+			throw new NotFoundError(`There is no chat room with this ID: ${roomID}`);
+		}
+
+		await ChatRoom.findByIdAndUpdate(
+			roomID,
+			{
+				$pull: {
+					messages: {
+						_id: new ObjectId(messageID),
+					},
+				},
+			},
+			{ new: true }
+		);
+
+		res
+			.status(StatusCodes.OK)
+			.json({ msg: "Message has been deleted successfully!" });
+	}),
 };

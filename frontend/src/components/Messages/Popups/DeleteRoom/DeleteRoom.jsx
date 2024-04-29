@@ -7,7 +7,7 @@ const DeleteRoom = ({ setPopupDeleteRoom, selectedRoom, id, setDeleteNotif }) =>
 			const response = await fetch(
 				`${import.meta.env.VITE_BACKEND_URL}/api/v1/messages/${id}/delete`,
 				{
-					method: "POST",
+					method: "DELETE",
 					credentials: "include",
 					headers: {
 						["Content-Type"]: "application/json; charset=utf-8",

@@ -3,11 +3,14 @@ import PopupDeleteMessage from "../Popups/ChatboxMessage/PopupDeleteMessage";
 
 const Message = ({
 	message,
+	messageID,
 	senderID,
 	senderName,
 	profileImg,
 	dateSent,
 	user,
+	selectedRoom,
+	setRefreshKey
 }) => {
 	const [popup, togglePopup] = useState(false);
 
@@ -17,10 +20,13 @@ const Message = ({
 				<UserMessage
 					dateSent={dateSent}
 					message={message}
+					messageID={messageID}
 					profileImg={profileImg}
 					senderName={senderName}
 					popup={popup}
 					togglePopup={togglePopup}
+					selectedRoom={selectedRoom}
+					setRefreshKey={setRefreshKey}
 				/>
 			) : (
 				<OtherMessage
@@ -37,15 +43,18 @@ const Message = ({
 const UserMessage = ({
 	dateSent,
 	message,
+	messageID,
 	profileImg,
 	senderName,
 	popup,
 	togglePopup,
+	selectedRoom,
 }) => {
-	
 	return (
 		<div className="flex gap-2 py-5 relative">
-			{popup && <PopupDeleteMessage />}
+			{popup && (
+				<PopupDeleteMessage messageID={messageID} selectedRoom={selectedRoom} />
+			)}
 			<div className="rounded-full aspect-square w-[50px] flex items-center self-start">
 				<img
 					src={`${import.meta.env.VITE_BACKEND_URL}${profileImg}`}
