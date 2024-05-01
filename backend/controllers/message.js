@@ -60,14 +60,14 @@ export default {
 			const newRoom = new ChatRoom({
 				name: req.body.roomName,
 				users: [{ _id: req.user._id }],
-				roomImg: req.body.roomImg,
+				roomImg: `/images/room-images/${req.file.filename}`,
 				messages: [],
 			});
 
 			await newRoom.save();
 			res
 				.status(StatusCodes.CREATED)
-				.json({ msg: `Successfully created new room: ${req.body.name}` });
+				.json({ msg: `Successfully created new room: ${req.body.roomName}` });
 		}),
 	],
 

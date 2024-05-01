@@ -5,17 +5,17 @@ import Sidebar from "../components/Messages/Sidebar";
 import AccessDenied from "./AccessDenied";
 import { Outlet } from "react-router-dom";
 import AddRoom from "../components/Messages/Popups/AddRooms/AddRoom";
+import { PulseLoader } from "react-spinners";
 
 const Messages = ({ user }) => {
 	const [chatRooms, setChatRooms] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [notif, setNotif] = useState("");
 	const [addRoom, setAddRoom] = useState(false);
-	const [formData, setFormData] = useState({
-		roomName: "",
-		roomImg: "",
-	});
-	const { roomName, roomImg } = formData;
+	const [refreshKey, setRefreshKey] = useState(0);
+	const [file, setFile] = useState(null);
+	const [imgURL, setImgURL] = useState(null);
+	const [roomName, setRoomName] = useState("");
 
 	useEffect(() => {
 		const getMessages = async () => {
@@ -28,8 +28,8 @@ const Messages = ({ user }) => {
 						credentials: "include",
 					}
 				).then((res) => res.json());
-				setChatRooms(response.chatRooms);
 				setLoading(false);
+				setChatRooms(response.chatRooms);
 			} catch (error) {
 				console.log(error);
 				setLoading(false);
@@ -37,17 +37,30 @@ const Messages = ({ user }) => {
 		};
 
 		getMessages();
-	}, []);
+	}, [refreshKey]);
+
+	const fr = new FileReader();
+	fr.onload = function (e) {
+		setImgURL(e.target.result);
+	};
+
+	const handleFileChange = (e) => {
+		setFile(e.target.files);
+		fr.readAsDataURL(e.target.files[0]);
+	};
 
 	const handleChange = (e) => {
-		setFormData((prevState) => ({
-			...prevState,
-			[e.target.name]: e.target.value,
-		}));
+		setRoomName(e.target.value);
 	};
 
 	const handleForm = async (e) => {
-		e.target.preventDefault();
+		e.preventDefault();
+
+		const formData = new FormData();
+		formData.append("roomImg", file[0]);
+		formData.append("roomName", roomName);
+
+		setLoading(true);
 
 		try {
 			const response = await fetch(
@@ -55,10 +68,7 @@ const Messages = ({ user }) => {
 				{
 					method: "POST",
 					credentials: "include",
-					body: JSON.stringify(formData),
-					headers: {
-						["Content-Type"]: "application/json; charset=utf-8",
-					},
+					body: formData,
 				}
 			).then((res) => res.json());
 
@@ -67,8 +77,15 @@ const Messages = ({ user }) => {
 			} else {
 				setNotif("There was an error, please try again.");
 			}
+
+			setLoading(false);
+			setAddRoom(false);
+			setRefreshKey((prev) => prev + 1);
+
+			e.target.reset();
 		} catch (error) {
 			console.log(error);
+			setLoading(false);
 		}
 	};
 
@@ -92,8 +109,12 @@ const Messages = ({ user }) => {
 					setAddRoom={setAddRoom}
 					handleForm={handleForm}
 					handleChange={handleChange}
+					handleFileChange={handleFileChange}
 					roomName={roomName}
-					roomImg={roomImg}
+					placeholderImg={`${
+						import.meta.env.VITE_BACKEND_URL
+					}/images/room-images/placeholder-image.jpg`}
+					imgURL={imgURL}
 				/>
 			)}
 			<div className="flex flex-col px-7 pt-1 pb-8">
@@ -106,11 +127,11 @@ const Messages = ({ user }) => {
 						</p>
 						{loading ? (
 							<div className="text-center text-slate-500 flex items-center justify-center mt-40 animate-bounce">
-								Fetching Chatrooms...
+								<PulseLoader size={15} color="#0D98BA" />
 							</div>
 						) : chatRooms === null ? (
 							<div className="text-center text-slate-500 flex items-center justify-center mt-40 animate-bounce">
-								Fetching Chatrooms...
+								<PulseLoader size={15} color="#0D98BA" />
 							</div>
 						) : (
 							<div>
@@ -132,7 +153,7 @@ const Messages = ({ user }) => {
 									className="flex flex-col items-center justify-center px-5 py-4 border-b-[1px] border-slate-300 cursor-pointer hover:bg-blue-500 group transition-all"
 									title="Create new room"
 									onClick={() => {
-										setAddRoom(!addRoom);
+										setAddRoom(true);
 									}}
 								>
 									<FaPlus className="text-4xl border-4 border-slate-500 rounded-full p-1 text-slate-500 group-hover:text-white group-hover:border-white"></FaPlus>

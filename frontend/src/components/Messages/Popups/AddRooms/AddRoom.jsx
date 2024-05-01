@@ -5,9 +5,20 @@ const AddRoom = ({
 	setAddRoom,
 	handleForm,
 	handleChange,
+	handleFileChange,
 	roomName,
-	roomImg,
+	placeholderImg,
+	imgURL,
 }) => {
+	console.log({
+		setAddRoom,
+		handleForm,
+		handleChange,
+		handleFileChange,
+		roomName,
+		placeholderImg,
+		imgURL,
+	});
 	return (
 		<div className="fixed inset-0 h-screen bg-slate-700 bg-opacity-80 flex items-center justify-center z-10">
 			<div className="flex flex-col gap-3 bg-white p-10 relative shadow-sm shadow-slate-700 rounded-md overflow-scroll w-[500px]">
@@ -20,8 +31,15 @@ const AddRoom = ({
 				<div className="text-center flex flex-col">
 					<h1 className="text-2xl font-Roboto underline">Create a room</h1>
 					<form onSubmit={handleForm} className="flex flex-col gap-3 py-3">
+						<img
+							src={imgURL || placeholderImg}
+							alt="Chatroom Image"
+							className="w-[150px] aspect-square rounded-full object-cover border-[2px] border-slate-50 self-center flex items-center justify-center"
+						/>
 						<div className="flex flex-col justify-start items-start">
-							<label htmlFor="roomName" className="text-lg font-serif">Chatroom Name:</label>
+							<label htmlFor="roomName" className="text-lg font-serif">
+								Chatroom Name:
+							</label>
 							<input
 								type="text"
 								name="roomName"
@@ -35,7 +53,7 @@ const AddRoom = ({
 							<small className="absolute top-2 right-1 italic">
 								(optional)
 							</small>
-                            <p className="text-lg font-serif">Chatroom Image:</p>
+							<p className="text-lg font-serif">Chatroom Image:</p>
 							<label
 								htmlFor="roomImg"
 								className="cursor-pointer border-[1px] border-slate-500 rounded-sm px-3 py-2 flex items-center gap-2 justify-center w-full hover:opacity-90"
@@ -46,8 +64,7 @@ const AddRoom = ({
 								type="file"
 								name="roomImg"
 								id="roomImg"
-								onChange={handleChange}
-								value={roomImg}
+								onChange={handleFileChange}
 								className="hidden"
 							/>
 						</div>

@@ -18,10 +18,19 @@ const upload = multer({ storage: storage });
 router.get("/messages", authenticateUser, messageController.get_rooms);
 
 // POST route for creating a chat room
-router.post("/messages", authenticateUser, messageController.post_create_room);
+router.post(
+	"/messages",
+	authenticateUser,
+	upload.single("roomImg"),
+	messageController.post_create_room
+);
 
 // DELETE route for deleting chat room
-router.delete("/messages/:id/delete", authenticateUser, messageController.delete_room)
+router.delete(
+	"/messages/:id/delete",
+	authenticateUser,
+	messageController.delete_room
+);
 
 // PUT route for updating chat room
 router.put(
@@ -39,7 +48,11 @@ router.post(
 );
 
 // DELETE route for deleting a message
-router.delete("/message/:id/delete", authenticateUser, messageController.delete_message)
+router.delete(
+	"/message/:id/delete",
+	authenticateUser,
+	messageController.delete_message
+);
 
 // GET route for messages in a chatroom
 router.get("/message/:id", authenticateUser, messageController.get_messages);
