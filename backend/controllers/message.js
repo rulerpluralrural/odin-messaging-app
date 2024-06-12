@@ -60,7 +60,9 @@ export default {
 			const newRoom = new ChatRoom({
 				name: req.body.roomName,
 				users: [{ _id: req.user._id }],
-				roomImg: `/images/room-images/${req.file.filename}`,
+				roomImg: req.file
+					? `/images/room-images/${req.file.filename}`
+					: "",
 				messages: [],
 			});
 

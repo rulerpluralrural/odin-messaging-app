@@ -1,7 +1,11 @@
 import React from "react";
 
-const DeleteRoom = ({ setPopupDeleteRoom, selectedRoom, id, setDeleteNotif }) => {
-
+const DeleteRoom = ({
+	setPopupDeleteRoom,
+	selectedRoom,
+	id,
+	setDeleteNotif,
+}) => {
 	const handleDeleteRoom = async () => {
 		try {
 			const response = await fetch(
@@ -17,11 +21,10 @@ const DeleteRoom = ({ setPopupDeleteRoom, selectedRoom, id, setDeleteNotif }) =>
 
 			if (response.msg) {
 				setDeleteNotif(response.msg);
-				setPopupDeleteRoom(false)
+				setPopupDeleteRoom(false);
 			} else {
-				setDeleteNotif("There was an error please try again.")
+				setDeleteNotif("There was an error please try again.");
 			}
-			
 		} catch (error) {
 			console.log(error);
 		}
@@ -38,7 +41,10 @@ const DeleteRoom = ({ setPopupDeleteRoom, selectedRoom, id, setDeleteNotif }) =>
 				</div>
 				<div className="flex flex-col items-center gap-2">
 					<img
-						src={`${import.meta.env.VITE_BACKEND_URL}${selectedRoom.roomImg}`}
+						src={`${import.meta.env.VITE_BACKEND_URL}${
+							selectedRoom.roomImg ||
+							"/images/room-images/placeholder-image.jpg"
+						} `}
 						alt={`${selectedRoom.name}.jpg`}
 						className="w-[100px] aspect-square rounded-md border-[1px] object-cover border-slate-50 cursor-pointer hover:opacity-80 transition-opacity flex items-center text-xs justify-center text-center"
 					/>

@@ -57,7 +57,9 @@ const Messages = ({ user }) => {
 		e.preventDefault();
 
 		const formData = new FormData();
-		formData.append("roomImg", file[0]);
+		if (file) {
+			formData.append("roomImg", file[0]);
+		}
 		formData.append("roomName", roomName);
 
 		setLoading(true);
@@ -120,7 +122,7 @@ const Messages = ({ user }) => {
 			<div className="flex flex-col px-7 pt-1 pb-8">
 				<h1 className="text-2xl text-slate-800 font-serif py-3">Chat</h1>
 				<div className="grid grid-cols-[350px_1fr] gap-5  rounded-md">
-					<div className="h-[775px] max-h-[775px] bg-white py-2 rounded-md overflow-x-hidden overflow-y-scroll">
+					<div className="h-[750px] max-h-[750px] bg-white py-2 rounded-md overflow-x-hidden overflow-y-scroll">
 						<SearchbarHeader />
 						<p className="mt-3 px-5	font-bold font-Roboto tracking-wide text-lg border-b-[1px] border-slate-300">
 							Room List
@@ -129,7 +131,7 @@ const Messages = ({ user }) => {
 							<div className="text-center text-slate-500 flex items-center justify-center mt-40 animate-bounce">
 								<PulseLoader size={15} color="#0D98BA" />
 							</div>
-						) : chatRooms === null ? (
+						) : !chatRooms ? (
 							<div className="text-center text-slate-500 flex items-center justify-center mt-40 animate-bounce">
 								<PulseLoader size={15} color="#0D98BA" />
 							</div>
@@ -141,7 +143,7 @@ const Messages = ({ user }) => {
 											key={index}
 											roomName={item.name}
 											roomImg={`${import.meta.env.VITE_BACKEND_URL}${
-												item.roomImg
+												item.roomImg || "/images/room-images/placeholder-image.jpg"
 											}`}
 											time={item.time_formatted}
 											lastMessage={item.last_message}

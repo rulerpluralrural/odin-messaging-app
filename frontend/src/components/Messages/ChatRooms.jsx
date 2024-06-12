@@ -1,13 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ChatRooms = ({
-	roomName,
-	roomImg,
-	time,
-	lastMessage,
-	roomID,
-}) => {
+const ChatRooms = ({ roomName, roomImg, time, lastMessage, roomID }) => {
 	return (
 		<Link
 			className="flex gap-2 items-start justify-between cursor-pointer hover:bg-slate-100 hover:scale-105 group transition-all px-5 py-4 border-b-[1px] border-slate-300"
@@ -23,7 +17,6 @@ const ChatRooms = ({
 								: roomName
 						} Img`}
 						className="rounded-full  aspect-square hover:opacity-90 transition-opacity object-cover"
-						title="Change Image"
 					/>
 					<div className="absolute top-[2px] right-0 rounded-full bg-green-600 w-[12px] aspect-square border-2 border-white"></div>
 				</div>

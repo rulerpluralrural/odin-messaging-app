@@ -63,13 +63,15 @@ const ChatboxHeader = ({
 					handleSubmit={handleSubmit}
 					editRoom={editRoom}
 					imgURL={imgURL}
-					roomImg={`${import.meta.env.VITE_BACKEND_URL}${selectedRoom.roomImg}`}
+					roomImg={`${import.meta.env.VITE_BACKEND_URL}${
+						selectedRoom.roomImg || "/images/room-images/placeholder-image.jpg"
+					}`}
 				/>
 			)}
 			{message && <PopupMessage message={message} setMessage={setMessage} />}
 			<div className="flex gap-2">
 				<img
-					src={`${import.meta.env.VITE_BACKEND_URL}${selectedRoom.roomImg}`}
+					src={`${import.meta.env.VITE_BACKEND_URL}${selectedRoom.roomImg || "/images/room-images/placeholder-image.jpg"}`}
 					alt={`${selectedRoom.name}.jpg`}
 					className="w-[50px] aspect-square rounded-md border-[1px] object-cover border-slate-50 cursor-pointer hover:opacity-80 transition-opacity flex items-center text-xs justify-center text-center"
 					title="Change Image"
